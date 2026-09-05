@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AktuelltRouteImport } from './routes/aktuellt'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
 import { Route as OmOssRouteImport } from './routes/om-oss'
@@ -20,6 +21,11 @@ import { Route as TjansterSlugRouteImport } from './routes/tjanster.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AktuelltRoute = AktuelltRouteImport.update({
+  id: '/aktuellt',
+  path: '/aktuellt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -55,6 +61,7 @@ const TjansterSlugRoute = TjansterSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aktuellt': typeof AktuelltRoute
   '/faq': typeof FaqRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aktuellt': typeof AktuelltRoute
   '/faq': typeof FaqRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
@@ -73,6 +81,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aktuellt': typeof AktuelltRoute
   '/faq': typeof FaqRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
@@ -84,6 +93,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/aktuellt'
     | '/faq'
     | '/kundreferenser'
     | '/om-oss'
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/aktuellt'
     | '/faq'
     | '/kundreferenser'
     | '/om-oss'
@@ -101,6 +112,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/aktuellt'
     | '/faq'
     | '/kundreferenser'
     | '/om-oss'
@@ -111,6 +123,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AktuelltRoute: typeof AktuelltRoute
   FaqRoute: typeof FaqRoute
   KundreferenserRoute: typeof KundreferenserRoute
   OmOssRoute: typeof OmOssRoute
@@ -124,6 +137,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aktuellt': {
+      id: '/aktuellt'
+      path: '/aktuellt'
+      fullPath: '/aktuellt'
+      preLoaderRoute: typeof AktuelltRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -187,6 +207,7 @@ const TjansterRouteWithChildren = TjansterRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AktuelltRoute: AktuelltRoute,
   FaqRoute: FaqRoute,
   KundreferenserRoute: KundreferenserRoute,
   OmOssRoute: OmOssRoute,
