@@ -15,6 +15,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
 import { Route as OmOssRouteImport } from './routes/om-oss'
 import { Route as TjansterRouteImport } from './routes/tjanster'
+import { Route as AktuelltIndexRouteImport } from './routes/aktuellt.index'
 import { Route as TjansterIndexRouteImport } from './routes/tjanster.index'
 import { Route as TjansterSlugRouteImport } from './routes/tjanster.$slug'
 
@@ -48,6 +49,11 @@ const TjansterRoute = TjansterRouteImport.update({
   path: '/tjanster',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AktuelltIndexRoute = AktuelltIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AktuelltRoute,
+} as any)
 const TjansterIndexRoute = TjansterIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,32 +67,34 @@ const TjansterSlugRoute = TjansterSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/aktuellt': typeof AktuelltRoute
+  '/aktuellt': typeof AktuelltRouteWithChildren
   '/faq': typeof FaqRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/tjanster/$slug': typeof TjansterSlugRoute
+  '/aktuellt/': typeof AktuelltIndexRoute
   '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/aktuellt': typeof AktuelltRoute
   '/faq': typeof FaqRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
+  '/aktuellt': typeof AktuelltIndexRoute
   '/tjanster': typeof TjansterIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/aktuellt': typeof AktuelltRoute
+  '/aktuellt': typeof AktuelltRouteWithChildren
   '/faq': typeof FaqRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/tjanster/$slug': typeof TjansterSlugRoute
+  '/aktuellt/': typeof AktuelltIndexRoute
   '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRouteTypes {
@@ -99,15 +107,16 @@ export interface FileRouteTypes {
     | '/om-oss'
     | '/tjanster'
     | '/tjanster/$slug'
+    | '/aktuellt/'
     | '/tjanster/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/aktuellt'
     | '/faq'
     | '/kundreferenser'
     | '/om-oss'
     | '/tjanster/$slug'
+    | '/aktuellt'
     | '/tjanster'
   id:
     | '__root__'
@@ -118,12 +127,13 @@ export interface FileRouteTypes {
     | '/om-oss'
     | '/tjanster'
     | '/tjanster/$slug'
+    | '/aktuellt/'
     | '/tjanster/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AktuelltRoute: typeof AktuelltRoute
+  AktuelltRoute: typeof AktuelltRouteWithChildren
   FaqRoute: typeof FaqRoute
   KundreferenserRoute: typeof KundreferenserRoute
   OmOssRoute: typeof OmOssRoute
@@ -174,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TjansterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aktuellt/': {
+      id: '/aktuellt/'
+      path: '/'
+      fullPath: '/aktuellt/'
+      preLoaderRoute: typeof AktuelltIndexRouteImport
+      parentRoute: typeof AktuelltRoute
+    }
     '/tjanster/': {
       id: '/tjanster/'
       path: '/'
@@ -191,6 +208,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AktuelltRouteChildren {
+  AktuelltIndexRoute: typeof AktuelltIndexRoute
+}
+
+const AktuelltRouteChildren: AktuelltRouteChildren = {
+  AktuelltIndexRoute: AktuelltIndexRoute,
+}
+
+const AktuelltRouteWithChildren = AktuelltRoute._addFileChildren(
+  AktuelltRouteChildren,
+)
+
 interface TjansterRouteChildren {
   TjansterSlugRoute: typeof TjansterSlugRoute
   TjansterIndexRoute: typeof TjansterIndexRoute
@@ -207,7 +236,7 @@ const TjansterRouteWithChildren = TjansterRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AktuelltRoute: AktuelltRoute,
+  AktuelltRoute: AktuelltRouteWithChildren,
   FaqRoute: FaqRoute,
   KundreferenserRoute: KundreferenserRoute,
   OmOssRoute: OmOssRoute,
