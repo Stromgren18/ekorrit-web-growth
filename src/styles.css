@@ -168,6 +168,26 @@
   }
 }
 
+@utility hero-overlay {
+  background:
+    linear-gradient(
+      100deg,
+      color-mix(in oklab, var(--sage-dark) 88%, transparent) 0%,
+      color-mix(in oklab, var(--sage-dark) 62%, transparent) 45%,
+      color-mix(in oklab, var(--sage-dark) 24%, transparent) 100%
+    ),
+    linear-gradient(
+      to top,
+      color-mix(in oklab, var(--sage-dark) 60%, transparent) 0%,
+      transparent 55%
+    );
+}
+
+@utility hero-fade {
+  background: linear-gradient(to bottom, transparent, var(--background));
+}
+
+
 @utility reveal {
   animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
