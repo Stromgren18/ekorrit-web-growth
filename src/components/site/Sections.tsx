@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { certifications } from "@/content/site";
 import type { Artikel } from "@/content/aktuellt";
 
-const icons = [ShieldCheck, BadgeCheck, Award, Star];
+const icons = [ShieldCheck, BadgeCheck, Award, Star] as const;
 
 export function SectionHeading({
   eyebrow,
