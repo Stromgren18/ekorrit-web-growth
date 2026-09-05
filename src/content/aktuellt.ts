@@ -45,13 +45,13 @@ export const aktuellt: Artikel[] = [
   },
   {
     id: "3",
-    title: "Vi växer i Östersund – nytt kontor med plats för fler",
-    slug: "vi-vaxer-i-ostersund",
+    title: "Jämtländsk redovisningsbyrå för företag i hela Sverige",
+    slug: "jamtlandsk-redovisningsbyra-for-hela-sverige",
     excerpt:
-      "Efterfrågan på kvalificerad redovisning i Jämtland ökar. Nu utökar vi vårt kontor i Östersund för att komma närmare våra kunder.",
+      "Med digitala underlag och möten kan ett personligt samarbete fungera lika bra oavsett var företaget finns.",
     content:
-      "Efterfrågan på kvalificerad redovisning i Jämtland ökar och därför utökar vi vårt kontor i Östersund.\n\nMed fler arbetsplatser kan vi ta emot kunder på plats, hålla genomgångar av bokslut i lugn och ro och samtidigt behålla den personliga kontakt som är själva grunden i vårt arbete.\n\nVårt kontor i Strömsund fortsätter precis som tidigare. Många av våra kunder har verksamhet i båda kommunerna, och för oss är det en styrka att finnas nära på flera platser.\n\nVälkommen in på en kaffe nästa gång du är i stan.",
-    image_url: "/images/hero-kontor.jpg",
+      "Ekorrit har sitt huvudkontor i Strömsund och ett obemannat lokalkontor i Östersund. Den jämtländska förankringen är en viktig del av vilka vi är: personliga, trygga och okomplicerade.\n\nSamtidigt behöver avstånd inte stå i vägen för en nära relation. Digitala underlag och möten via Teams gör att vi kan lära känna både företaget och människorna bakom det, även när kunden finns på en annan plats i Sverige.\n\nDu får kontinuitet och kontakt med människor som känner verksamheten. Det gör det enklare att ställa frågor, följa ekonomin och använda siffrorna för att planera framåt.\n\nFör oss är personlig redovisning ett arbetssätt, inte en geografisk begränsning.",
+    image_url: "/images/aktuellt-jamtland.jpg",
     category: "Kontorsnytt",
     published_at: "2026-06-12",
     created_at: "2026-06-12",
@@ -63,7 +63,7 @@ export const aktuellt: Artikel[] = [
     excerpt:
       "Vill du arbeta nära kunden med hela bredden av redovisning? Vi utökar teamet på vårt kontor i Strömsund.",
     content:
-      "Vi utökar teamet på vårt kontor i Strömsund och söker dig som vill arbeta nära kunden med hela bredden av redovisning.\n\nHos oss får du eget kundansvar, kollegor som gärna delar kunskap och möjlighet att utvecklas mot auktorisation. Du arbetar med löpande bokföring, bokslut, deklarationer och rådgivning.\n\nVi tror att du har erfarenhet från byrå eller ekonomiavdelning, är strukturerad och tycker om kontakten med företagare.\n\nSkicka din ansökan till oss – vi läser ansökningar löpande.",
+      "Vi söker dig som vill arbeta nära kunden med hela bredden av redovisning.\n\nHos oss får du eget kundansvar, kollegor som gärna delar kunskap och möjlighet att utvecklas mot auktorisation. Du arbetar med löpande bokföring, bokslut, deklarationer och rådgivning.\n\nVi tror att du har erfarenhet från byrå eller ekonomiavdelning, är strukturerad och tycker om kontakten med företagare.\n\nSkicka din ansökan till oss – vi läser ansökningar löpande.",
     image_url: "/images/aktuellt-mote.jpg",
     category: "Lediga tjänster",
     published_at: "2026-05-28",
@@ -89,7 +89,7 @@ export const aktuellt: Artikel[] = [
     excerpt:
       "Våra kunder har svarat och vi är stolta över resultatet. Här berättar vi vad vi tar med oss framåt.",
     content:
-      "Våra kunder har svarat i den årliga kundundersökningen och vi är stolta över resultatet.\n\nDet som lyfts fram tydligast är tillgängligheten: att det går att ringa och få svar av någon som känner företaget. Det är precis den ambitionen vi har på båda våra kontor.\n\nVi tar också med oss förbättringsförslagen. Flera kunder vill ha ännu tydligare återkoppling under året, inte bara vid bokslutet, och det arbetar vi vidare med.\n\nStort tack till alla som tog sig tid att svara.",
+      "Våra kunder har svarat i den årliga kundundersökningen och vi är stolta över resultatet.\n\nDet som lyfts fram tydligast är tillgängligheten: att det går att ringa och få svar av någon som känner företaget. Det är precis den kontinuitet och personliga kontakt vi vill erbjuda.\n\nVi tar också med oss förbättringsförslagen. Flera kunder vill ha ännu tydligare återkoppling under året, inte bara vid bokslutet, och det arbetar vi vidare med.\n\nStort tack till alla som tog sig tid att svara.",
     image_url: "/images/aktuellt-jamtland.jpg",
     category: "Kontorsnytt",
     published_at: "2026-03-02",

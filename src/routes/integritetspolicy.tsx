@@ -15,6 +15,7 @@ export const Route = createFileRoute("/integritetspolicy")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/integritetspolicy" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/integritetspolicy" }],
   }),

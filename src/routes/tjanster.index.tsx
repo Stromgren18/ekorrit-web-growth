@@ -8,7 +8,7 @@ import { tjanster } from "@/content/tjanster";
 
 const TITLE = "Tjänster – bokföring, bokslut, löner & rådgivning | Ekorrit AB";
 const DESCRIPTION =
-  "Våra tjänster: löpande bokföring, årsredovisning och bokslut, lönehantering samt kvalificerad rådgivning för företag i Strömsund, Östersund och övriga Jämtland.";
+  "Bokföring, bokslut, lönehantering, budget och rådgivning med personlig kontakt för företag i Jämtland och hela Sverige.";
 
 export const Route = createFileRoute("/tjanster/")({
   head: () => ({
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/tjanster/")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/tjanster" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/tjanster" }],
   }),
@@ -33,8 +34,8 @@ function TjansterPage() {
           <SectionHeading
             as="h1"
             eyebrow="Tjänster"
-            title="Redovisningstjänster för företag i Jämtland"
-            intro="Välj de delar du vill lämna ifrån dig – eller lämna hela ekonomifunktionen till oss. Du får en fast kontaktperson som känner ditt bolag."
+            title="Redovisning som hjälper dig framåt"
+            intro="Välj de delar du vill lämna ifrån dig – eller låt oss ta hand om hela ekonomifunktionen. Du får en personlig kontakt som lär känna ditt företag och hjälper dig att använda siffrorna för bättre beslut."
           />
         </div>
       </section>

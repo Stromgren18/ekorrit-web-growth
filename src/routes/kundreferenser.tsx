@@ -6,7 +6,7 @@ import { getKundreferenser } from "@/lib/content/kundreferenser";
 
 const TITLE = "Kundreferenser – vad våra kunder säger | Ekorrit AB";
 const DESCRIPTION =
-  "Läs vad företagare i Strömsund, Östersund och övriga Jämtland säger om att ha Ekorrit AB som redovisningsbyrå.";
+  "Läs vad företagare säger om personlig kontakt, kontinuitet och ekonomisk rådgivning från Ekorrit AB.";
 
 export const Route = createFileRoute("/kundreferenser")({
   head: () => ({
@@ -17,6 +17,7 @@ export const Route = createFileRoute("/kundreferenser")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/kundreferenser" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/kundreferenser" }],
   }),
@@ -33,8 +34,8 @@ function KundreferenserPage() {
           <SectionHeading
             as="h1"
             eyebrow="Kundreferenser"
-            title="Sveriges nöjdaste kunder – enligt dem själva"
-            intro="Företag i alla storlekar litar på oss för bokföring, bokslut och löner. Här är några av dem."
+            title="Långsiktiga relationer med våra kunder"
+            intro="När vi lär känna företaget kan vi bidra med mer än bokföring. Här berättar några kunder om samarbetet med Ekorrit."
           />
         </div>
       </section>

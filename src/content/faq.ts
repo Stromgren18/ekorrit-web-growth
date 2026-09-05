@@ -14,7 +14,7 @@ export const faq: FaqPost[] = [
     id: "1",
     question: "Hur blir jag kund hos er?",
     answer:
-      "Du hör av dig via formuläret eller telefon, och vi bokar ett förutsättningslöst möte på kontoret i Strömsund eller Östersund – eller digitalt om det passar bättre. Vi går igenom din verksamhet, vilka delar du vill lämna ifrån dig och vad det kostar. Därefter får du en tydlig uppdragsbeskrivning att ta ställning till.",
+      "Du hör av dig via formuläret eller telefon, och vi bokar ett förutsättningslöst möte på huvudkontoret i Strömsund eller digitalt. Besök på vårt obemannade lokalkontor i Östersund sker efter överenskommelse. Vi går igenom verksamheten och lämnar sedan en tydlig uppdragsbeskrivning.",
     category: "Bli kund",
     sort_order: 1,
   },
@@ -36,9 +36,9 @@ export const faq: FaqPost[] = [
   },
   {
     id: "4",
-    question: "Arbetar ni med företag utanför Strömsund och Östersund?",
+    question: "Kan ni hjälpa företag i hela Sverige?",
     answer:
-      "Ja. Våra kontor ligger i Strömsund och Östersund, men vi har kunder i hela Jämtland och i övriga landet. Med digitala underlag fungerar samarbetet lika bra på distans, och vi ses fysiskt när det behövs.",
+      "Ja. Ekorrit har sitt huvudkontor i Strömsund och ett obemannat lokalkontor i Östersund, men digitala underlag och möten gör att vi kan arbeta personligt med företag i hela Sverige.",
     category: "Bli kund",
     sort_order: 4,
   },
@@ -129,5 +129,13 @@ export const faq: FaqPost[] = [
       "Allt vi får tillgång till omfattas av sekretess. Personuppgifter behandlas enligt dataskyddsförordningen och lagras i system med behörighetsstyrning. Läs mer i vår integritetspolicy.",
     category: "Bli kund",
     sort_order: 15,
+  },
+  {
+    id: "16",
+    question: "Får jag en fast kontaktperson?",
+    answer:
+      "Ja. Personlig kontakt och kontinuitet är en viktig del av vårt arbetssätt. Du samarbetar med människor som lär känna företaget och kan följa ekonomin över tid, i stället för att börja om med en ny handläggare vid varje fråga.",
+    category: "Bli kund",
+    sort_order: 16,
   },
 ];

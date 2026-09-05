@@ -15,7 +15,7 @@ export const kundreferenser: Kundreferens[] = [
     client_name: "Anna Lindgren",
     company_name: "Lindgrens Bygg & Entreprenad AB",
     quote:
-      "Vi lämnade över hela bokföringen och lönehanteringen och har inte ångrat oss en dag. Det märks att de förstår hur ett byggföretag faktiskt fungerar.",
+      "Vi lämnade över bokföringen och lönehanteringen och fick samtidigt ett bollplank som förstår hur ett byggföretag faktiskt fungerar.",
     logo_url: null,
     is_featured: true,
     created_at: "2026-05-02",
@@ -35,7 +35,7 @@ export const kundreferenser: Kundreferens[] = [
     client_name: "Karin Ohlsson",
     company_name: "Fjällkraft Installation AB",
     quote:
-      "Inför bokslutet fick vi konkreta råd som gjorde verklig skillnad för resultatet. Rådgivningen är värd varje krona.",
+      "Vi pratar inte bara om året som gått. Inför bokslutet fick vi konkreta råd som hjälpte oss att planera framåt och gjorde verklig skillnad.",
     logo_url: null,
     is_featured: true,
     created_at: "2026-03-27",
@@ -65,7 +65,7 @@ export const kundreferenser: Kundreferens[] = [
     client_name: "Peter Åberg",
     company_name: "Åbergs Konsult & Handel",
     quote:
-      "Som ensamföretagare vill jag ha en byrå som förklarar utan krångel. Här får jag raka svar och känner mig aldrig som en liten kund.",
+      "Som ensamföretagare vill jag ha en byrå som förklarar utan krångel. Jag får raka svar från människor som känner mitt företag och känner mig aldrig som en liten kund.",
     logo_url: null,
     is_featured: false,
     created_at: "2025-12-08",

@@ -11,7 +11,7 @@ export function Footer() {
         <div className="md:col-span-1">
           <Logo className="text-primary-foreground" />
           <p className="mt-4 text-sm text-primary-foreground/75">
-            Auktoriserad redovisningsbyrå i Strömsund och Östersund. Vi kan ekonomi – räkna med oss.
+            Personlig, jämtländsk redovisningsbyrå för företag i hela Sverige. Vi kan ekonomi – räkna med oss.
           </p>
           <div className="mt-5 flex gap-3">
             <a
@@ -38,6 +38,7 @@ export function Footer() {
         {site.offices.map((office) => (
           <div key={office.id}>
             <h2 className="font-display text-base">{office.city}</h2>
+            <p className="mt-1 text-xs text-primary-foreground/60">{office.role}</p>
             <address className="mt-3 space-y-1 text-sm not-italic text-primary-foreground/75">
               <p>{office.street}</p>
               <p>{office.postal}</p>
