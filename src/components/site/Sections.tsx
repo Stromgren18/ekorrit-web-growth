@@ -38,7 +38,7 @@ export function TrustBar() {
     <section aria-label="Certifieringar och utmärkelser" className="border-y border-border/60 bg-secondary/60">
       <div className="mx-auto grid max-w-6xl gap-4 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
         {certifications.map((cert, i) => {
-          const Icon = icons[i % icons.length];
+          const Icon = icons[i % icons.length]!;
           return (
             <div key={cert.name} className="flex items-center gap-3">
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-background text-primary">
