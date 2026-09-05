@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TjansterRouteImport } from './routes/tjanster'
 import { Route as TjansterIndexRouteImport } from './routes/tjanster.index'
+import { Route as TjansterSlugRouteImport } from './routes/tjanster.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,28 +29,36 @@ const TjansterIndexRoute = TjansterIndexRouteImport.update({
   path: '/',
   getParentRoute: () => TjansterRoute,
 } as any)
+const TjansterSlugRoute = TjansterSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => TjansterRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/tjanster': typeof TjansterRouteWithChildren
+  '/tjanster/$slug': typeof TjansterSlugRoute
   '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/tjanster/$slug': typeof TjansterSlugRoute
   '/tjanster': typeof TjansterIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/tjanster': typeof TjansterRouteWithChildren
+  '/tjanster/$slug': typeof TjansterSlugRoute
   '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tjanster' | '/tjanster/'
+  fullPaths: '/' | '/tjanster' | '/tjanster/$slug' | '/tjanster/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tjanster'
-  id: '__root__' | '/' | '/tjanster' | '/tjanster/'
+  to: '/' | '/tjanster/$slug' | '/tjanster'
+  id: '__root__' | '/' | '/tjanster' | '/tjanster/$slug' | '/tjanster/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +89,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TjansterIndexRouteImport
       parentRoute: typeof TjansterRoute
     }
+    '/tjanster/$slug': {
+      id: '/tjanster/$slug'
+      path: '/$slug'
+      fullPath: '/tjanster/$slug'
+      preLoaderRoute: typeof TjansterSlugRouteImport
+      parentRoute: typeof TjansterRoute
+    }
   }
 }
 
 interface TjansterRouteChildren {
+  TjansterSlugRoute: typeof TjansterSlugRoute
   TjansterIndexRoute: typeof TjansterIndexRoute
 }
 
 const TjansterRouteChildren: TjansterRouteChildren = {
+  TjansterSlugRoute: TjansterSlugRoute,
   TjansterIndexRoute: TjansterIndexRoute,
 }
 
