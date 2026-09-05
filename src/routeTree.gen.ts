@@ -10,33 +10,185 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AktuelltRouteImport } from './routes/aktuellt'
+import { Route as DokumentRouteImport } from './routes/dokument'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
+import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
+import { Route as OmOssRouteImport } from './routes/om-oss'
+import { Route as TjansterRouteImport } from './routes/tjanster'
+import { Route as AktuelltIndexRouteImport } from './routes/aktuellt.index'
+import { Route as AktuelltSlugRouteImport } from './routes/aktuellt.$slug'
+import { Route as TjansterIndexRouteImport } from './routes/tjanster.index'
+import { Route as TjansterSlugRouteImport } from './routes/tjanster.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AktuelltRoute = AktuelltRouteImport.update({
+  id: '/aktuellt',
+  path: '/aktuellt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DokumentRoute = DokumentRouteImport.update({
+  id: '/dokument',
+  path: '/dokument',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
+  id: '/integritetspolicy',
+  path: '/integritetspolicy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontaktRoute = KontaktRouteImport.update({
+  id: '/kontakt',
+  path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KundreferenserRoute = KundreferenserRouteImport.update({
+  id: '/kundreferenser',
+  path: '/kundreferenser',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OmOssRoute = OmOssRouteImport.update({
+  id: '/om-oss',
+  path: '/om-oss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TjansterRoute = TjansterRouteImport.update({
+  id: '/tjanster',
+  path: '/tjanster',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AktuelltIndexRoute = AktuelltIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AktuelltRoute,
+} as any)
+const AktuelltSlugRoute = AktuelltSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => AktuelltRoute,
+} as any)
+const TjansterIndexRoute = TjansterIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TjansterRoute,
+} as any)
+const TjansterSlugRoute = TjansterSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => TjansterRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aktuellt': typeof AktuelltRouteWithChildren
+  '/dokument': typeof DokumentRoute
+  '/faq': typeof FaqRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
+  '/kundreferenser': typeof KundreferenserRoute
+  '/om-oss': typeof OmOssRoute
+  '/tjanster': typeof TjansterRouteWithChildren
+  '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/tjanster/$slug': typeof TjansterSlugRoute
+  '/aktuellt/': typeof AktuelltIndexRoute
+  '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dokument': typeof DokumentRoute
+  '/faq': typeof FaqRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
+  '/kundreferenser': typeof KundreferenserRoute
+  '/om-oss': typeof OmOssRoute
+  '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/tjanster/$slug': typeof TjansterSlugRoute
+  '/aktuellt': typeof AktuelltIndexRoute
+  '/tjanster': typeof TjansterIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aktuellt': typeof AktuelltRouteWithChildren
+  '/dokument': typeof DokumentRoute
+  '/faq': typeof FaqRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
+  '/kundreferenser': typeof KundreferenserRoute
+  '/om-oss': typeof OmOssRoute
+  '/tjanster': typeof TjansterRouteWithChildren
+  '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/tjanster/$slug': typeof TjansterSlugRoute
+  '/aktuellt/': typeof AktuelltIndexRoute
+  '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/aktuellt'
+    | '/dokument'
+    | '/faq'
+    | '/integritetspolicy'
+    | '/kontakt'
+    | '/kundreferenser'
+    | '/om-oss'
+    | '/tjanster'
+    | '/aktuellt/$slug'
+    | '/tjanster/$slug'
+    | '/aktuellt/'
+    | '/tjanster/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dokument'
+    | '/faq'
+    | '/integritetspolicy'
+    | '/kontakt'
+    | '/kundreferenser'
+    | '/om-oss'
+    | '/aktuellt/$slug'
+    | '/tjanster/$slug'
+    | '/aktuellt'
+    | '/tjanster'
+  id:
+    | '__root__'
+    | '/'
+    | '/aktuellt'
+    | '/dokument'
+    | '/faq'
+    | '/integritetspolicy'
+    | '/kontakt'
+    | '/kundreferenser'
+    | '/om-oss'
+    | '/tjanster'
+    | '/aktuellt/$slug'
+    | '/tjanster/$slug'
+    | '/aktuellt/'
+    | '/tjanster/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AktuelltRoute: typeof AktuelltRouteWithChildren
+  DokumentRoute: typeof DokumentRoute
+  FaqRoute: typeof FaqRoute
+  IntegritetspolicyRoute: typeof IntegritetspolicyRoute
+  KontaktRoute: typeof KontaktRoute
+  KundreferenserRoute: typeof KundreferenserRoute
+  OmOssRoute: typeof OmOssRoute
+  TjansterRoute: typeof TjansterRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +200,131 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aktuellt': {
+      id: '/aktuellt'
+      path: '/aktuellt'
+      fullPath: '/aktuellt'
+      preLoaderRoute: typeof AktuelltRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dokument': {
+      id: '/dokument'
+      path: '/dokument'
+      fullPath: '/dokument'
+      preLoaderRoute: typeof DokumentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integritetspolicy': {
+      id: '/integritetspolicy'
+      path: '/integritetspolicy'
+      fullPath: '/integritetspolicy'
+      preLoaderRoute: typeof IntegritetspolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakt': {
+      id: '/kontakt'
+      path: '/kontakt'
+      fullPath: '/kontakt'
+      preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kundreferenser': {
+      id: '/kundreferenser'
+      path: '/kundreferenser'
+      fullPath: '/kundreferenser'
+      preLoaderRoute: typeof KundreferenserRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/om-oss': {
+      id: '/om-oss'
+      path: '/om-oss'
+      fullPath: '/om-oss'
+      preLoaderRoute: typeof OmOssRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tjanster': {
+      id: '/tjanster'
+      path: '/tjanster'
+      fullPath: '/tjanster'
+      preLoaderRoute: typeof TjansterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aktuellt/': {
+      id: '/aktuellt/'
+      path: '/'
+      fullPath: '/aktuellt/'
+      preLoaderRoute: typeof AktuelltIndexRouteImport
+      parentRoute: typeof AktuelltRoute
+    }
+    '/aktuellt/$slug': {
+      id: '/aktuellt/$slug'
+      path: '/$slug'
+      fullPath: '/aktuellt/$slug'
+      preLoaderRoute: typeof AktuelltSlugRouteImport
+      parentRoute: typeof AktuelltRoute
+    }
+    '/tjanster/': {
+      id: '/tjanster/'
+      path: '/'
+      fullPath: '/tjanster/'
+      preLoaderRoute: typeof TjansterIndexRouteImport
+      parentRoute: typeof TjansterRoute
+    }
+    '/tjanster/$slug': {
+      id: '/tjanster/$slug'
+      path: '/$slug'
+      fullPath: '/tjanster/$slug'
+      preLoaderRoute: typeof TjansterSlugRouteImport
+      parentRoute: typeof TjansterRoute
+    }
   }
 }
 
+interface AktuelltRouteChildren {
+  AktuelltSlugRoute: typeof AktuelltSlugRoute
+  AktuelltIndexRoute: typeof AktuelltIndexRoute
+}
+
+const AktuelltRouteChildren: AktuelltRouteChildren = {
+  AktuelltSlugRoute: AktuelltSlugRoute,
+  AktuelltIndexRoute: AktuelltIndexRoute,
+}
+
+const AktuelltRouteWithChildren = AktuelltRoute._addFileChildren(
+  AktuelltRouteChildren,
+)
+
+interface TjansterRouteChildren {
+  TjansterSlugRoute: typeof TjansterSlugRoute
+  TjansterIndexRoute: typeof TjansterIndexRoute
+}
+
+const TjansterRouteChildren: TjansterRouteChildren = {
+  TjansterSlugRoute: TjansterSlugRoute,
+  TjansterIndexRoute: TjansterIndexRoute,
+}
+
+const TjansterRouteWithChildren = TjansterRoute._addFileChildren(
+  TjansterRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AktuelltRoute: AktuelltRouteWithChildren,
+  DokumentRoute: DokumentRoute,
+  FaqRoute: FaqRoute,
+  IntegritetspolicyRoute: IntegritetspolicyRoute,
+  KontaktRoute: KontaktRoute,
+  KundreferenserRoute: KundreferenserRoute,
+  OmOssRoute: OmOssRoute,
+  TjansterRoute: TjansterRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
