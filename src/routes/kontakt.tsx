@@ -57,7 +57,7 @@ export const Route = createFileRoute("/kontakt")({
 
 function KontaktPage() {
   const [skickat, setSkickat] = useState(false);
-  const [arende, setArende] = useState("Allmänt");
+  const [arende, setArende] = useState("Digitalt eller allmänt");
 
   return (
     <>
