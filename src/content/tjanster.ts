@@ -15,17 +15,17 @@ export const tjanster: Tjanst[] = [
     slug: "bokforing",
     title: "Bokföring",
     short:
-      "Löpande bokföring, momsredovisning och avstämningar – med digitala flöden som sparar tid varje månad.",
-    metaTitle: "Bokföring Östersund & Strömsund | Ekorrit AB",
+      "Löpande bokföring, moms och avstämningar med en personlig kontakt som ser helheten och hjälper dig framåt.",
+    metaTitle: "Personlig bokföring i Jämtland och hela Sverige | Ekorrit",
     metaDescription:
-      "Löpande bokföring, momsredovisning och avstämningar av auktoriserad redovisningsbyrå i Strömsund och Östersund. Digitala flöden och personlig kontakt.",
-    heading: "Bokföring i Östersund och Strömsund",
+      "Löpande bokföring, moms och rapporter med personlig kontakt. Ekorrit hjälper företag i Jämtland och hela Sverige med digitala flöden.",
+    heading: "Personlig bokföring – nära dig även på distans",
     intro:
-      "Vi sköter den löpande bokföringen så att du kan lägga tiden på verksamheten. Du får ordning på siffrorna, koll på momsen och en redovisningskonsult som känner ditt bolag.",
+      "Vi sköter den löpande bokföringen så att du kan lägga tiden på verksamheten. Du får ordning på siffrorna och en redovisningskonsult som lär känna ditt företag, oavsett var i Sverige du finns.",
     sections: [
       {
         heading: "Löpande redovisning varje månad",
-        body: "Vi bokför leverantörsfakturor, kundfakturor, kvitton och banktransaktioner löpande och stämmer av balanskonton. Du får en resultatrapport som går att lita på, inte bara en gång om året utan under hela räkenskapsåret.",
+        body: "Vi bokför leverantörsfakturor, kundfakturor, kvitton och banktransaktioner löpande och stämmer av balanskonton. Tydliga rapporter under året gör siffrorna användbara när du ska planera och fatta beslut.",
       },
       {
         heading: "Moms och skattedeklarationer",
@@ -33,7 +33,7 @@ export const tjanster: Tjanst[] = [
       },
       {
         heading: "Digitalt flöde från start",
-        body: "Vi sätter upp ett digitalt underlagsflöde tillsammans med dig: fakturor direkt in i systemet och kvitton via app. Det ger snabbare rapporter och lägre kostnad över tid.",
+        body: "Vi sätter upp ett digitalt underlagsflöde tillsammans med dig: fakturor direkt in i systemet och kvitton via app. Det ger snabbare rapporter och gör det enkelt att samarbeta personligt även på distans.",
       },
     ],
     bullets: [
@@ -48,13 +48,13 @@ export const tjanster: Tjanst[] = [
     slug: "arsredovisning-bokslut",
     title: "Årsredovisning & Bokslut",
     short:
-      "Bokslut, årsredovisning och deklaration enligt gällande regelverk – med genomgång av resultatet tillsammans med dig.",
+      "Bokslut, årsredovisning och deklaration – med en personlig genomgång som också hjälper dig att blicka framåt.",
     metaTitle: "Årsredovisning Jämtland & bokslut | Ekorrit AB",
     metaDescription:
-      "Årsredovisning i Jämtland: bokslut, noter, inkomstdeklaration och inlämning till Bolagsverket. Auktoriserad redovisningskonsult i Strömsund och Östersund.",
+      "Årsredovisning och bokslut med personlig genomgång. Ekorrit hjälper företag i Jämtland och hela Sverige att förstå resultatet och planera framåt.",
     heading: "Årsredovisning i Jämtland – bokslut du kan lita på",
     intro:
-      "Vi upprättar bokslut och årsredovisning enligt gällande regelverk, tar fram inkomstdeklarationen och går igenom resultatet med dig innan allt lämnas in.",
+      "Vi upprättar bokslut och årsredovisning, tar fram inkomstdeklarationen och går igenom resultatet med dig. Tillsammans ser vi också vad siffrorna betyder för året som kommer.",
     sections: [
       {
         heading: "Bokslut och årsredovisning",
@@ -81,13 +81,13 @@ export const tjanster: Tjanst[] = [
     slug: "lonehantering",
     title: "Lönehantering",
     short:
-      "Löner, lönespecifikationer, semester och arbetsgivardeklaration – rätt belopp i rätt tid, varje månad.",
-    metaTitle: "Lönehantering i Strömsund & Östersund | Ekorrit AB",
+      "Trygg löneadministration med kontinuitet – rätt belopp, rätt rapportering och samma personliga kontakt varje månad.",
+    metaTitle: "Personlig lönehantering för företag | Ekorrit AB",
     metaDescription:
       "Outsourca lönehanteringen till Ekorrit AB. Löneberäkning, lönespecifikationer, semester, förmåner och arbetsgivardeklaration på individnivå.",
     heading: "Lönehantering utan administrativt krångel",
     intro:
-      "Löner ska bara fungera. Vi tar hand om hela löneprocessen – eller de delar du vill lämna ifrån dig – och håller reda på regler, avtal och rapportering.",
+      "Löner ska bara fungera. Vi tar hand om hela löneprocessen – eller de delar du vill lämna ifrån dig – med en kontakt som känner företaget, medarbetarna och era rutiner.",
     sections: [
       {
         heading: "Hela löneprocessen",
@@ -114,13 +114,13 @@ export const tjanster: Tjanst[] = [
     slug: "radgivning",
     title: "Kvalificerad Rådgivning",
     short:
-      "Skatt, ägarfrågor, likviditet och tillväxt – rådgivning från auktoriserad redovisningskonsult som kan ditt bolag.",
+      "Budget, skatt, likviditet och tillväxt – ett ekonomiskt bollplank som känner ditt företag och ser framåt.",
     metaTitle: "Auktoriserad redovisningskonsult – rådgivning | Ekorrit AB",
     metaDescription:
-      "Kvalificerad ekonomisk rådgivning av auktoriserad redovisningskonsult i Strömsund och Östersund. Skatt, ägarfrågor, budget, likviditet och tillväxt.",
+      "Personlig ekonomisk rådgivning för företag i hela Sverige. Få stöd med budget, skatt, ägarfrågor, likviditet och tillväxt från Ekorrit.",
     heading: "Kvalificerad rådgivning av auktoriserad redovisningskonsult",
     intro:
-      "När besluten är större än den löpande bokföringen behövs någon som ser hela bilden. Vi finns med som bollplank i frågor om skatt, ägande, finansiering och tillväxt.",
+      "Bra redovisning handlar inte bara om det som redan har hänt. Som ditt ekonomiska bollplank hjälper vi dig att använda siffrorna för att planera, fatta bättre beslut och skapa förutsättningar för lönsamhet.",
     sections: [
       {
         heading: "Skatt och ägarfrågor",
@@ -128,7 +128,7 @@ export const tjanster: Tjanst[] = [
       },
       {
         heading: "Budget, prognos och likviditet",
-        body: "Vi bygger budget och likviditetsprognos utifrån din verksamhet och följer upp mot utfallet, så att du ser i tid var det behöver justeras.",
+        body: "Vi bygger budget och likviditetsprognos utifrån din verksamhet och följer upp mot utfallet. Inför ett nytt verksamhetsår får du ett tydligt underlag för prioriteringar och beslut.",
       },
       {
         heading: "Bollplank i vardagen",
