@@ -1,11 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CtaSection, SectionHeading, TrustBar } from "@/components/site/Sections";
-import { site } from "@/content/site";
-
-const TITLE = "Om oss – auktoriserad redovisningsbyrå i Jämtland | Ekorrit AB";
+const TITLE = "Om Ekorrit – personlig redovisningsbyrå i Jämtland";
 const DESCRIPTION =
-  "Ekorrit AB är en auktoriserad redovisningsbyrå med kontor i Strömsund och Östersund. Möt teamet och läs om hur vi arbetar med kvalitet och personlig service.";
+  "Ekorrit är en privatägd, lokalt förankrad redovisningsbyrå med fem auktoriserade konsulter och kunder i hela Sverige.";
 
 export const Route = createFileRoute("/om-oss")({
   head: () => ({
@@ -24,16 +22,16 @@ export const Route = createFileRoute("/om-oss")({
 
 const varderingar = [
   {
-    title: "Nära dig",
-    body: "Du har en fast kontaktperson som känner ditt bolag och svarar när du ringer – inget växelsystem, inga ärendenummer.",
+    title: "Personlig kontinuitet",
+    body: "Du vet vem du pratar med och bygger en långsiktig relation med människor som lär känna ditt företag och din vardag.",
   },
   {
-    title: "Kvalitetssäkrat arbete",
-    body: "Vi arbetar enligt ISO 9001 och Srf Konsulternas regelverk, med dokumenterade rutiner för varje uppdrag.",
+    title: "Auktoriserad kompetens",
+    body: "Fem auktoriserade redovisningskonsulter ger dig trygg, kvalitetssäkrad hjälp enligt ISO 9001 och Srf Konsulternas regelverk.",
   },
   {
-    title: "Rådgivning som lönar sig",
-    body: "Vi nöjer oss inte med att bokföra historik. Du får underlag och förslag som påverkar resultatet framåt.",
+    title: "Ett ekonomiskt bollplank",
+    body: "Vi redovisar inte bara det som har hänt. Du får stöd att planera framåt, fatta bättre beslut och skapa lönsamhet.",
   },
 ];
 
@@ -45,8 +43,8 @@ function OmOssPage() {
           <SectionHeading
             as="h1"
             eyebrow="Om oss"
-            title="Auktoriserad redovisningskonsult i Strömsund och Östersund"
-            intro="Ekorrit AB har hjälpt företag i Jämtland med ekonomi sedan starten. Vi kombinerar lokal närhet med kompetensen hos en auktoriserad byrå."
+            title="Personligt, tryggt och okomplicerat"
+            intro="Som privatägd och lokalt förankrad redovisningsbyrå erbjuder vi personlig kontakt, kontinuitet och ett långsiktigt samarbete."
           />
         </div>
       </section>
@@ -62,20 +60,21 @@ function OmOssPage() {
             className="aspect-[4/3] w-full rounded-2xl object-cover shadow-lg"
           />
           <div>
-            <h2 className="text-3xl">Ekonomi ska kännas tryggt</h2>
+            <h2 className="text-3xl">Här vet du vem du pratar med</h2>
             <p className="mt-4 leading-relaxed text-muted-foreground">
-              Vi är ett team av redovisningskonsulter och lönespecialister som arbetar för små och medelstora
-              företag – från enskilda firmor till koncerner med flera bolag. Med kontor i både Strömsund och
-              Östersund finns vi nära dig, och digitala flöden gör att avståndet aldrig behöver vara ett hinder.
+              Hos Ekorrit finns fem auktoriserade redovisningskonsulter. Du får möjlighet att bygga en relation
+              med människor som lär känna ditt företag och din verksamhet, i stället för att möta en ny
+              handläggare från gång till gång.
             </p>
             <p className="mt-4 leading-relaxed text-muted-foreground">
-              Vår ambition är enkel: du ska kunna fokusera på din verksamhet och känna dig helt trygg med att
-              bokföring, bokslut, löner och deklarationer sköts i tid och rätt.
+              Huvudkontoret finns i Strömsund och i Östersund har vi ett obemannat lokalkontor. Digitala möten
+              gör att vi kan vara den personliga jämtländska redovisningsbyrån även för företag i andra delar
+              av Sverige – med ett norrländskt lugn i samarbetet.
             </p>
             <dl className="mt-8 grid grid-cols-2 gap-6">
               <div>
-                <dt className="text-sm text-muted-foreground">Kontor</dt>
-                <dd className="font-display text-2xl">{site.offices.length}</dd>
+                <dt className="text-sm text-muted-foreground">Auktoriserade konsulter</dt>
+                <dd className="font-display text-2xl">5</dd>
               </div>
               <div>
                 <dt className="text-sm text-muted-foreground">Kvalitetsledning</dt>

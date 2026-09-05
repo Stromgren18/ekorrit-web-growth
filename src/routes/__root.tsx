@@ -80,11 +80,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ekorrit AB – Redovisningsbyrå i Strömsund & Östersund" },
+      { title: "Ekorrit AB – Personlig redovisningsbyrå i Jämtland" },
       {
         name: "description",
         content:
-          "Auktoriserad redovisningsbyrå i Strömsund och Östersund. Bokföring, bokslut, löner och rådgivning.",
+          "Privatägd redovisningsbyrå med personlig kontakt, fem auktoriserade konsulter och kunder i hela Sverige.",
       },
       { property: "og:site_name", content: "Ekorrit AB" },
       { property: "og:type", content: "website" },

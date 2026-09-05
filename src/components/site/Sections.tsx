@@ -94,11 +94,11 @@ export function CtaSection() {
     <section className="section-y bg-sage-dark text-primary-foreground">
       <div className="mx-auto max-w-3xl px-4 text-center">
         <h2 className="text-3xl leading-tight text-balance md:text-4xl">
-          Boka ett möte på kontoret i Strömsund eller Östersund
+          Låt oss bli ditt ekonomiska bollplank
         </h2>
         <p className="mt-4 text-base leading-relaxed text-primary-foreground/80">
-          Berätta hur din verksamhet ser ut idag, så föreslår vi ett upplägg och ett pris. Första samtalet
-          är alltid förutsättningslöst.
+          Vi träffas på huvudkontoret i Strömsund eller digitalt, oavsett var i Sverige ditt företag finns.
+          Första samtalet är alltid förutsättningslöst.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" variant="secondary" className="rounded-full">

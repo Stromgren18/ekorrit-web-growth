@@ -36,7 +36,7 @@ export const Route = createFileRoute("/tjanster/$slug")({
             "@type": "Service",
             name: tjanst.title,
             description: tjanst.metaDescription,
-            areaServed: "Strömsund, Östersund, Jämtland",
+            areaServed: "Sverige",
             provider: { "@type": "AccountingService", name: "Ekorrit AB" },
           }),
         },

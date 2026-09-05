@@ -15,7 +15,7 @@ import { getFaq } from "@/lib/content/faq";
 
 const TITLE = "Frågor & svar om bokföring och redovisning | Ekorrit AB";
 const DESCRIPTION =
-  "Vanliga frågor om att bli kund, löpande bokföring, löner och årsbokslut – svarade av auktoriserade redovisningskonsulter i Strömsund och Östersund.";
+  "Vanliga frågor om personlig redovisning, distanssamarbete, bokföring, löner och bokslut hos Ekorrit AB."
 
 export const Route = createFileRoute("/faq")({
   head: () => ({

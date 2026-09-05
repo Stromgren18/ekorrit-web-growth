@@ -16,9 +16,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { SectionHeading } from "@/components/site/Sections";
 import { site } from "@/content/site";
 
-const TITLE = "Kontakta oss – Strömsund & Östersund | Ekorrit AB";
+const TITLE = "Kontakta Ekorrit – Strömsund eller digitalt";
 const DESCRIPTION =
-  "Kontakta Ekorrit AB. Kontor på Lövbergavägen 8 i Strömsund och i Östersund – ring, mejla eller skicka ett meddelande via formuläret.";
+  "Kontakta Ekorrits huvudkontor i Strömsund eller boka ett digitalt möte. Obemannat lokalkontor finns i Östersund för besök efter överenskommelse.";
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
@@ -65,8 +65,8 @@ function KontaktPage() {
           <SectionHeading
             as="h1"
             eyebrow="Kontakt"
-            title="Redovisningsbyrå i Strömsund och Östersund"
-            intro="Ring, mejla eller skicka ett meddelande. Vi svarar oftast samma arbetsdag."
+            title="Vi lär gärna känna ditt företag"
+            intro="Ring, mejla eller skicka ett meddelande. Vi träffas på huvudkontoret i Strömsund eller digitalt, och i Östersund efter överenskommelse."
           />
         </div>
       </section>
@@ -77,6 +77,7 @@ function KontaktPage() {
             {site.offices.map((office) => (
               <div key={office.id} className="rounded-2xl border border-border/70 bg-card p-7 shadow-sm">
                 <h2 className="text-xl">{office.city}</h2>
+                <p className="mt-1 text-xs font-medium text-primary">{office.role}</p>
                 <dl className="mt-4 space-y-3 text-sm">
                   <div className="flex gap-3">
                     <MapPin className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />

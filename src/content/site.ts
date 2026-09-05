@@ -2,7 +2,7 @@ export const site = {
   name: "Ekorrit AB",
   tagline: "Vi kan ekonomi – räkna med oss",
   description:
-    "Auktoriserad redovisningsbyrå i Strömsund och Östersund. Bokföring, årsredovisning, lönehantering och kvalificerad ekonomisk rådgivning.",
+    "Privatägd och auktoriserad redovisningsbyrå med rötterna i Strömsund. Personlig redovisning, lönehantering och ekonomisk rådgivning för företag i hela Sverige.",
   // TODO: Ersätt platshållarna nedan med era riktiga uppgifter.
   phone: "TELEFONNUMMER SAKNAS",
   email: "E-POST SAKNAS",
@@ -16,6 +16,7 @@ export const site = {
     {
       id: "stromsund",
       city: "Strömsund",
+      role: "Huvudkontor",
       street: "Lövbergavägen 8",
       postal: "POSTNUMMER SAKNAS Strömsund",
       phone: "TELEFONNUMMER SAKNAS",
@@ -25,6 +26,7 @@ export const site = {
     {
       id: "ostersund",
       city: "Östersund",
+      role: "Obemannat lokalkontor – besök efter överenskommelse",
       street: "GATUADRESS SAKNAS",
       postal: "POSTNUMMER SAKNAS Östersund",
       phone: "TELEFONNUMMER SAKNAS",

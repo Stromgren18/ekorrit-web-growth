@@ -16,9 +16,9 @@ import { getFeaturedKundreferenser } from "@/lib/content/kundreferenser";
 import { tjanster } from "@/content/tjanster";
 import { site } from "@/content/site";
 
-const TITLE = "Redovisningsbyrå Strömsund & Östersund | Ekorrit AB";
+const TITLE = "Personlig redovisningsbyrå i Strömsund | Ekorrit AB";
 const DESCRIPTION =
-  "Ekorrit AB är en auktoriserad redovisningsbyrå i Strömsund och Östersund. Bokföring, årsredovisning, lönehantering och kvalificerad ekonomisk rådgivning.";
+  "Privatägd redovisningsbyrå med fem auktoriserade konsulter. Personlig kontakt, redovisning och ekonomisk rådgivning för företag i hela Sverige.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
           "@type": "AccountingService",
           name: "Ekorrit AB",
           description: DESCRIPTION,
-          areaServed: "Jämtland, Sverige",
+          areaServed: "Sverige",
           address: site.offices.map((o) => ({
             "@type": "PostalAddress",
             streetAddress: o.street,
@@ -65,14 +65,14 @@ function Index() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:py-24 lg:grid-cols-2">
           <div className="reveal">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-              Auktoriserad redovisningskonsult
+              Personlig redovisning med jämtländska rötter
             </p>
             <h1 className="mt-4 text-4xl leading-[1.08] text-balance md:text-6xl">
               Vi kan ekonomi – räkna med oss
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Ekonomisk rådgivning &amp; redovisning i Strömsund &amp; Östersund. Vi tar hand om
-              bokföring, bokslut och löner – du får tid till din verksamhet.
+              Hos oss vet du vem du pratar med. Fem auktoriserade redovisningskonsulter lär känna ditt
+              företag och blir ett tryggt ekonomiskt bollplank – i Jämtland eller digitalt i hela Sverige.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full">
@@ -101,12 +101,12 @@ function Index() {
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
             eyebrow="Våra tjänster"
-            title="Bokföring i Östersund och redovisning i Strömsund"
-            intro="Vi arbetar med hela ekonomifunktionen för små och medelstora företag i Jämtland – från löpande bokföring till kvalificerad rådgivning."
+            title="Mer än en redovisningsbyrå"
+            intro="Bra redovisning visar inte bara vad som har hänt. Med löpande bokföring, bokslut, löneadministration, budget och rådgivning hjälper vi dig också att planera framåt och fatta bättre beslut."
           />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {tjanster.map((tjanst, i) => {
-              const Icon = tjansteIkoner[i % tjansteIkoner.length]!;
+              const Icon = tjansteIkoner[i % tjansteIkoner.length] ?? Calculator;
               return (
                 <Card
                   key={tjanst.slug}

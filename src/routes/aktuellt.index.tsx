@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const TITLE = "Aktuellt – skattenyheter och kontorsnytt | Ekorrit AB";
 const DESCRIPTION =
-  "Skattenyheter, kontorsnytt och lediga tjänster från Ekorrit AB – redovisningsbyrå i Strömsund och Östersund.";
+  "Aktuellt om skatt, bokslut, budget, löner och rådgivning från den personliga jämtländska redovisningsbyrån Ekorrit.";
 
 export const Route = createFileRoute("/aktuellt/")({
   head: () => ({
@@ -43,8 +43,8 @@ function AktuelltPage() {
           <SectionHeading
             as="h1"
             eyebrow="Aktuellt"
-            title="Nyheter från din redovisningsbyrå i Jämtland"
-            intro="Nya regler, förändringar hos Skatteverket och vad som händer på våra kontor i Strömsund och Östersund."
+            title="Kunskap för bättre ekonomiska beslut"
+            intro="Aktuellt om skatt, bokslut, budget, löner och sådant som hjälper dig att planera företagets ekonomi framåt."
           />
           <div className="mt-8 flex flex-wrap gap-2.5">
             {filter.map((f) => (
