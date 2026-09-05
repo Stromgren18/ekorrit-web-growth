@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TjansterRouteImport } from './routes/tjanster'
+import { Route as TjansterIndexRouteImport } from './routes/tjanster.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,38 @@ const TjansterRoute = TjansterRouteImport.update({
   path: '/tjanster',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TjansterIndexRoute = TjansterIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TjansterRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/tjanster': typeof TjansterRoute
+  '/tjanster': typeof TjansterRouteWithChildren
+  '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/tjanster': typeof TjansterRoute
+  '/tjanster': typeof TjansterIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/tjanster': typeof TjansterRoute
+  '/tjanster': typeof TjansterRouteWithChildren
+  '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tjanster'
+  fullPaths: '/' | '/tjanster' | '/tjanster/'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/tjanster'
-  id: '__root__' | '/' | '/tjanster'
+  id: '__root__' | '/' | '/tjanster' | '/tjanster/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TjansterRoute: typeof TjansterRoute
+  TjansterRoute: typeof TjansterRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +73,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TjansterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tjanster/': {
+      id: '/tjanster/'
+      path: '/'
+      fullPath: '/tjanster/'
+      preLoaderRoute: typeof TjansterIndexRouteImport
+      parentRoute: typeof TjansterRoute
+    }
   }
 }
 
+interface TjansterRouteChildren {
+  TjansterIndexRoute: typeof TjansterIndexRoute
+}
+
+const TjansterRouteChildren: TjansterRouteChildren = {
+  TjansterIndexRoute: TjansterIndexRoute,
+}
+
+const TjansterRouteWithChildren = TjansterRoute._addFileChildren(
+  TjansterRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TjansterRoute: TjansterRoute,
+  TjansterRoute: TjansterRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
