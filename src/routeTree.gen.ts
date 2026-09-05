@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
 import { Route as OmOssRouteImport } from './routes/om-oss'
 import { Route as TjansterRouteImport } from './routes/tjanster'
 import { Route as TjansterIndexRouteImport } from './routes/tjanster.index'
@@ -18,6 +19,11 @@ import { Route as TjansterSlugRouteImport } from './routes/tjanster.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KundreferenserRoute = KundreferenserRouteImport.update({
+  id: '/kundreferenser',
+  path: '/kundreferenser',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OmOssRoute = OmOssRouteImport.update({
@@ -43,6 +49,7 @@ const TjansterSlugRoute = TjansterSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/tjanster/$slug': typeof TjansterSlugRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
   '/tjanster': typeof TjansterIndexRoute
@@ -57,6 +65,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/tjanster/$slug': typeof TjansterSlugRoute
@@ -64,12 +73,19 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/om-oss' | '/tjanster' | '/tjanster/$slug' | '/tjanster/'
+  fullPaths:
+    | '/'
+    | '/kundreferenser'
+    | '/om-oss'
+    | '/tjanster'
+    | '/tjanster/$slug'
+    | '/tjanster/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/om-oss' | '/tjanster/$slug' | '/tjanster'
+  to: '/' | '/kundreferenser' | '/om-oss' | '/tjanster/$slug' | '/tjanster'
   id:
     | '__root__'
     | '/'
+    | '/kundreferenser'
     | '/om-oss'
     | '/tjanster'
     | '/tjanster/$slug'
@@ -78,6 +94,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KundreferenserRoute: typeof KundreferenserRoute
   OmOssRoute: typeof OmOssRoute
   TjansterRoute: typeof TjansterRouteWithChildren
 }
@@ -89,6 +106,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kundreferenser': {
+      id: '/kundreferenser'
+      path: '/kundreferenser'
+      fullPath: '/kundreferenser'
+      preLoaderRoute: typeof KundreferenserRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/om-oss': {
@@ -138,6 +162,7 @@ const TjansterRouteWithChildren = TjansterRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KundreferenserRoute: KundreferenserRoute,
   OmOssRoute: OmOssRoute,
   TjansterRoute: TjansterRouteWithChildren,
 }
