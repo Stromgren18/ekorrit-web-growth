@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AktuelltRouteImport } from './routes/aktuellt'
 import { Route as DokumentRouteImport } from './routes/dokument'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
 import { Route as OmOssRouteImport } from './routes/om-oss'
@@ -40,6 +41,11 @@ const DokumentRoute = DokumentRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
+  id: '/integritetspolicy',
+  path: '/integritetspolicy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontaktRoute = KontaktRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/aktuellt': typeof AktuelltRouteWithChildren
   '/dokument': typeof DokumentRoute
   '/faq': typeof FaqRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dokument': typeof DokumentRoute
   '/faq': typeof FaqRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/aktuellt': typeof AktuelltRouteWithChildren
   '/dokument': typeof DokumentRoute
   '/faq': typeof FaqRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRoute
   '/om-oss': typeof OmOssRoute
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/aktuellt'
     | '/dokument'
     | '/faq'
+    | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
     | '/om-oss'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dokument'
     | '/faq'
+    | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
     | '/om-oss'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/aktuellt'
     | '/dokument'
     | '/faq'
+    | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
     | '/om-oss'
@@ -172,6 +184,7 @@ export interface RootRouteChildren {
   AktuelltRoute: typeof AktuelltRouteWithChildren
   DokumentRoute: typeof DokumentRoute
   FaqRoute: typeof FaqRoute
+  IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   KundreferenserRoute: typeof KundreferenserRoute
   OmOssRoute: typeof OmOssRoute
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integritetspolicy': {
+      id: '/integritetspolicy'
+      path: '/integritetspolicy'
+      fullPath: '/integritetspolicy'
+      preLoaderRoute: typeof IntegritetspolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontakt': {
@@ -300,6 +320,7 @@ const rootRouteChildren: RootRouteChildren = {
   AktuelltRoute: AktuelltRouteWithChildren,
   DokumentRoute: DokumentRoute,
   FaqRoute: FaqRoute,
+  IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   KundreferenserRoute: KundreferenserRoute,
   OmOssRoute: OmOssRoute,
