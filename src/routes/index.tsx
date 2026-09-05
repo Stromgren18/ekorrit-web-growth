@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calculator, FileText, Landmark, Users } from "lucide-react";
+import { ArrowRight, Calculator, ChevronDown, FileText, Landmark, Users } from "lucide-react";
+
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -59,19 +61,52 @@ const tjansteIkoner = [Calculator, FileText, Users, Landmark] as const;
 function Index() {
   const senaste = getSenasteAktuellt(3);
   const referenser = getFeaturedKundreferenser();
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const el = imgRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const y = Math.min(window.scrollY, 900);
+        el.style.transform = `translate3d(0, ${y * 0.18}px, 0) scale(1.08)`;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
     <>
-      <section className="relative overflow-hidden bg-secondary/50">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:py-24 lg:grid-cols-2">
-          <div className="reveal">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+      <section className="relative isolate flex min-h-[78vh] items-center overflow-hidden md:min-h-[80vh]">
+        <img
+          ref={imgRef}
+          src="/images/hero-fjall.jpg"
+          alt="Snötäckta jämtländska fjälltoppar i mjukt morgonljus"
+          width={1920}
+          height={1088}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 -z-20 size-full scale-[1.08] object-cover object-center will-change-transform"
+        />
+        <div className="hero-overlay absolute inset-0 -z-10" aria-hidden />
+        <div className="mx-auto w-full max-w-6xl px-4 py-24 md:py-32">
+          <div className="reveal max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/85">
               Personlig redovisning med jämtländska rötter
             </p>
-            <h1 className="mt-4 text-4xl leading-[1.08] text-balance md:text-6xl">
+            <h1 className="mt-4 text-4xl leading-[1.08] text-balance text-primary-foreground drop-shadow-sm md:text-6xl">
               Vi kan ekonomi – räkna med oss
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-primary-foreground/85">
               Hos oss vet du vem du pratar med. Fem auktoriserade redovisningskonsulter lär känna ditt
               företag och blir ett tryggt ekonomiskt bollplank – i Jämtland eller digitalt i hela Sverige.
             </p>
@@ -79,22 +114,26 @@ function Index() {
               <Button asChild size="lg" className="rounded-full">
                 <Link to="/tjanster">Våra tjänster</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full bg-background">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              >
                 <Link to="/kontakt">Kontakta oss</Link>
               </Button>
             </div>
           </div>
-          <div className="reveal">
-            <img
-              src="/images/hero-kontor.jpg"
-              alt="Ljust kontor med dokument och dator hos redovisningsbyrån Ekorrit AB"
-              width={1600}
-              height={1104}
-              className="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl"
-            />
-          </div>
         </div>
+        <div className="hero-fade pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24" aria-hidden />
+        <span
+          className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-primary-foreground/70"
+          aria-hidden
+        >
+          <ChevronDown className="size-6 animate-bounce" />
+        </span>
       </section>
+
 
       <TrustBar />
 
