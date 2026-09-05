@@ -27,6 +27,7 @@ export const Route = createFileRoute("/aktuellt/$slug")({
         { property: "og:description", content: artikel.excerpt },
         { property: "og:type", content: "article" },
         { property: "og:url", content: `/aktuellt/${params.slug}` },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [{ rel: "canonical", href: `/aktuellt/${params.slug}` }],
       scripts: [

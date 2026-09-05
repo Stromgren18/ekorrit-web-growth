@@ -26,6 +26,7 @@ export const Route = createFileRoute("/faq")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/faq" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/faq" }],
   }),

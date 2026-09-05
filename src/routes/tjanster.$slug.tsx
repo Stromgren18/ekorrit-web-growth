@@ -26,6 +26,7 @@ export const Route = createFileRoute("/tjanster/$slug")({
         { property: "og:description", content: tjanst.metaDescription },
         { property: "og:type", content: "website" },
         { property: "og:url", content: `/tjanster/${params.slug}` },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [{ rel: "canonical", href: `/tjanster/${params.slug}` }],
       scripts: [

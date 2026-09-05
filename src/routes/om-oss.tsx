@@ -14,6 +14,7 @@ export const Route = createFileRoute("/om-oss")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/om-oss" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/om-oss" }],
   }),

@@ -29,6 +29,7 @@ export const Route = createFileRoute("/kontakt")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/kontakt" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/kontakt" }],
     scripts: [
@@ -169,12 +170,14 @@ function KontaktPage() {
                   <Label htmlFor="arende">Ärendet gäller</Label>
                   <Select value={arende} onValueChange={setArende}>
                     <SelectTrigger id="arende" className="w-full rounded-xl">
-                      <SelectValue placeholder="Välj kontor" />
+                      <SelectValue placeholder="Välj ärende" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="Strömsund">Strömsund</SelectItem>
-                      <SelectItem value="Östersund">Östersund</SelectItem>
-                      <SelectItem value="Allmänt">Allmänt</SelectItem>
+                      <SelectItem value="Östersund – besök efter överenskommelse">
+                        Östersund – besök efter överenskommelse
+                      </SelectItem>
+                      <SelectItem value="Digitalt eller allmänt">Digitalt eller allmänt</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

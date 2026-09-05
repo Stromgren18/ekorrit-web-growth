@@ -19,6 +19,7 @@ export const Route = createFileRoute("/tjanster/")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/tjanster" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/tjanster" }],
   }),

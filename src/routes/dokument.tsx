@@ -6,7 +6,7 @@ import { dokument } from "@/content/dokument";
 
 const TITLE = "Dokument och blanketter för kunder | Ekorrit AB";
 const DESCRIPTION =
-  "Ladda ner blanketter, checklistor och mallar du behöver som kund hos Ekorrit AB – redovisningsbyrå i Strömsund och Östersund.";
+  "Ladda ner blanketter, checklistor och mallar för samarbetet med Ekorrit – personlig redovisningsbyrå för företag i hela Sverige.";
 
 export const Route = createFileRoute("/dokument")({
   head: () => ({
@@ -17,6 +17,7 @@ export const Route = createFileRoute("/dokument")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/dokument" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/dokument" }],
   }),
