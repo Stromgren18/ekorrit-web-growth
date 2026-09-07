@@ -3,6 +3,8 @@ export const site = {
   tagline: "Vi kan ekonomi – räkna med oss",
   description:
     "Privatägd och auktoriserad redovisningsbyrå med rötterna i Strömsund. Personlig redovisning, lönehantering och ekonomisk rådgivning för företag i hela Sverige.",
+  phone: "+4667017570",
+  email: "info@ekorrit.se",
   // TODO: Ersätt platshållaren nedan med organisationens riktiga nummer.
   orgNumber: "ORGANISATIONSNUMMER SAKNAS",
   social: {
