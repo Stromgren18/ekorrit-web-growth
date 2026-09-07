@@ -5,8 +5,7 @@ export const site = {
     "Privatägd och auktoriserad redovisningsbyrå med rötterna i Strömsund. Personlig redovisning, lönehantering och ekonomisk rådgivning för företag i hela Sverige.",
   phone: "+4667017570",
   email: "info@ekorrit.se",
-  // TODO: Ersätt platshållaren nedan med organisationens riktiga nummer.
-  orgNumber: "ORGANISATIONSNUMMER SAKNAS",
+  orgNumber: "5566536321",
   social: {
     instagram: "https://instagram.com/",
     facebook: "https://facebook.com/",
