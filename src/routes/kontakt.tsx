@@ -104,10 +104,6 @@ function KontaktPage() {
                       </a>
                     </dd>
                   </div>
-                  <div className="flex gap-3">
-                    <Clock className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                    <dd>{office.hours}</dd>
-                  </div>
                 </dl>
               </div>
             ))}
