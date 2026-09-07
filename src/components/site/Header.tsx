@@ -50,10 +50,6 @@ export function Header() {
           <Logo />
         </Link>
 
-        <span className="hidden items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1 text-[11px] font-medium text-secondary-foreground lg:inline-flex">
-          <ShieldCheck className="size-3.5" aria-hidden /> ISO 9001-certifierad
-        </span>
-
         <nav aria-label="Huvudmeny" className="ml-auto hidden items-center gap-1 xl:flex">
           {navigation.map((item) => (
             <Link
