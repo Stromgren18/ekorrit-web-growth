@@ -44,7 +44,6 @@ export function Footer() {
               <p>{office.postal}</p>
               <p>{office.phone}</p>
               <p>{office.email}</p>
-              <p className="pt-2">{office.hours}</p>
             </address>
           </div>
         ))}

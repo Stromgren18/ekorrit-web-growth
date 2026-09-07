@@ -3,11 +3,8 @@ export const site = {
   tagline: "Vi kan ekonomi – räkna med oss",
   description:
     "Privatägd och auktoriserad redovisningsbyrå med rötterna i Strömsund. Personlig redovisning, lönehantering och ekonomisk rådgivning för företag i hela Sverige.",
-  // TODO: Ersätt platshållarna nedan med era riktiga uppgifter.
-  phone: "TELEFONNUMMER SAKNAS",
-  email: "E-POST SAKNAS",
+  // TODO: Ersätt platshållaren nedan med organisationens riktiga nummer.
   orgNumber: "ORGANISATIONSNUMMER SAKNAS",
-  openingHours: "Mån–fre: ÖPPETTIDER SAKNAS",
   social: {
     instagram: "https://instagram.com/",
     facebook: "https://facebook.com/",
@@ -18,20 +15,18 @@ export const site = {
       city: "Strömsund",
       role: "Huvudkontor",
       street: "Lövbergavägen 8",
-      postal: "POSTNUMMER SAKNAS Strömsund",
-      phone: "TELEFONNUMMER SAKNAS",
-      email: "E-POST SAKNAS",
-      hours: "Mån–fre: ÖPPETTIDER SAKNAS",
+      postal: "833 35 Strömsund",
+      phone: "+4667017570",
+      email: "info@ekorrit.se",
     },
     {
       id: "ostersund",
       city: "Östersund",
       role: "Obemannat lokalkontor – besök efter överenskommelse",
-      street: "GATUADRESS SAKNAS",
-      postal: "POSTNUMMER SAKNAS Östersund",
-      phone: "TELEFONNUMMER SAKNAS",
-      email: "E-POST SAKNAS",
-      hours: "Mån–fre: ÖPPETTIDER SAKNAS",
+      street: "Armégränd 6",
+      postal: "831 32 Östersund",
+      phone: "+4667017570",
+      email: "info@ekorrit.se",
     },
   ],
 } as const;
