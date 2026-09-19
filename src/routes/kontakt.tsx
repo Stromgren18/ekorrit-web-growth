@@ -14,9 +14,13 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { SectionHeading } from "@/components/site/Sections";
-import { useSite } from "@/lib/content/site";
+import { siteQuery, useSite } from "@/lib/content/site";
 import { useSida } from "@/lib/content/sidor";
 import { SIDOR, type HeroSida } from "@/content/sidor";
+import { demoStore, type SiteContent } from "@/lib/demoStore";
+
+const demoSite: SiteContent = demoStore.site;
+
 
 const KONTAKT_FALLBACK = SIDOR["kontakt"] as unknown as HeroSida;
 
