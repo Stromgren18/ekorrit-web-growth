@@ -1,10 +1,17 @@
-/** Byt kropparna mot Supabase-anrop mot tabellen `kundreferenser` när databasen kopplas. */
-import { kundreferenser, type Kundreferens } from "@/content/kundreferenser";
+import { queryOptions } from "@tanstack/react-query";
+import type { Kundreferens } from "@/content/kundreferenser";
+import { demoStore } from "@/lib/demoStore";
+import { hamtaTabell } from "./backend";
 
-export function getKundreferenser(): Kundreferens[] {
-  return kundreferenser;
-}
-
-export function getFeaturedKundreferenser(): Kundreferens[] {
-  return kundreferenser.filter((k) => k.is_featured);
-}
+/** Supabase-tabellen `kundreferenser` om kopplad, annars demoläget. */
+export const kundreferenserQuery = () =>
+  queryOptions({
+    queryKey: ["kundreferenser"],
+    initialData: demoStore.kundreferenser,
+    queryFn: async () =>
+      hamtaTabell<Kundreferens>(
+        "kundreferenser",
+        demoStore.kundreferenser,
+        "sort_order",
+      ),
+  });

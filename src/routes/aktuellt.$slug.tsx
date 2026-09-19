@@ -1,13 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { ArrowLeft, Calendar } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ArtikelCard, CtaSection } from "@/components/site/Sections";
-import { getAktuellt, getArtikel } from "@/lib/content/aktuellt";
+import { aktuelltQuery } from "@/lib/content/aktuellt";
+import type { Artikel } from "@/content/aktuellt";
 
 export const Route = createFileRoute("/aktuellt/$slug")({
-  loader: ({ params }) => {
-    const artikel = getArtikel(params.slug);
+  loader: async ({ params, context }) => {
+    const alla = await context.queryClient.ensureQueryData(aktuelltQuery());
+    const artikel = alla.find((a) => a.slug === params.slug);
     if (!artikel) throw notFound();
     return { artikel };
   },
@@ -50,6 +53,7 @@ export const Route = createFileRoute("/aktuellt/$slug")({
   notFoundComponent: () => (
     <div className="mx-auto max-w-3xl px-4 py-24 text-center">
       <h1 className="text-3xl">Artikeln hittades inte</h1>
+      <p className="mt-3 text-muted-foreground">Länken kan vara gammal eller felstavad.</p>
       <Button asChild className="mt-6 rounded-full">
         <Link to="/aktuellt">Till Aktuellt</Link>
       </Button>
@@ -60,57 +64,59 @@ export const Route = createFileRoute("/aktuellt/$slug")({
 
 function ArtikelPage() {
   const { artikel } = Route.useLoaderData();
-  const ovriga = getAktuellt()
-    .filter((a) => a.slug !== artikel.slug)
-    .slice(0, 3);
-
-  const datum = new Date(artikel.published_at).toLocaleDateString("sv-SE", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const { data: alla } = useSuspenseQuery(aktuelltQuery());
+  const relaterade = alla.filter((a) => a.slug !== artikel.slug).slice(0, 3);
+  const stycken = artikel.content.split("\n\n").filter(Boolean);
 
   return (
     <>
-      <article className="section-y">
-        <div className="mx-auto max-w-3xl px-4">
-          <Link
-            to="/aktuellt"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
-          >
+      <article className="mx-auto max-w-3xl px-4 py-14 md:py-20">
+        <Button asChild variant="ghost" className="rounded-full -ml-4 mb-6">
+          <Link to="/aktuellt">
             <ArrowLeft className="size-4" aria-hidden /> Tillbaka till Aktuellt
           </Link>
-          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+        </Button>
+
+        <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+          <span className="rounded-full bg-secondary px-2.5 py-1 font-medium text-secondary-foreground">
             {artikel.category}
-          </p>
-          <h1 className="mt-3 text-4xl leading-tight text-balance md:text-5xl">{artikel.title}</h1>
-          <time dateTime={artikel.published_at} className="mt-4 block text-sm text-muted-foreground">
-            {datum}
-          </time>
-          <img
-            src={artikel.image_url}
-            alt={artikel.title}
-            width={1200}
-            height={800}
-            className="mt-8 aspect-[3/2] w-full rounded-2xl object-cover shadow-lg"
-          />
-          <div className="mt-10 space-y-5 text-lg leading-relaxed text-muted-foreground">
-            {artikel.content
-              .split("\n\n")
-              .map((stycke) => stycke.trim())
-              .filter(Boolean)
-              .map((stycke) => (
-                <p key={stycke.slice(0, 40)}>{stycke}</p>
-              ))}
-          </div>
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Calendar className="size-3.5" aria-hidden />
+            <time dateTime={artikel.published_at}>
+              {new Date(artikel.published_at).toLocaleDateString("sv-SE", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </span>
+        </div>
+
+        <h1 className="mt-4 text-3xl leading-tight text-balance md:text-4xl">{artikel.title}</h1>
+        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{artikel.excerpt}</p>
+
+        <img
+          src={artikel.image_url}
+          alt={artikel.title}
+          loading="lazy"
+          width={1200}
+          height={800}
+          className="mt-8 aspect-[3/2] w-full rounded-2xl object-cover"
+        />
+
+        <div className="prose-sv mt-10 space-y-5 text-base leading-relaxed">
+          {stycken.map((stycke, i) => (
+            <p key={i}>{stycke}</p>
+          ))}
         </div>
       </article>
 
-      <section className="section-y bg-secondary/50">
+      <section className="section-y border-t border-border/60 bg-secondary/40">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-2xl">Fler artiklar</h2>
+          <h2 className="font-display text-2xl">Fler artiklar</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {ovriga.map((a) => (
+            {relaterade.map((a: Artikel) => (
               <ArtikelCard key={a.id} artikel={a} />
             ))}
           </div>

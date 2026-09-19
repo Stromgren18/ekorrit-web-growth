@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Download, FileText } from "lucide-react";
 
 import { CtaSection, SectionHeading } from "@/components/site/Sections";
-import { dokument } from "@/content/dokument";
+import { dokumentQuery } from "@/lib/content/dokument";
+import { useSida } from "@/lib/content/sidor";
+import { SIDOR, type HeroSida } from "@/content/sidor";
+
+const DOK_FALLBACK = SIDOR["dokument"] as unknown as HeroSida;
 
 const TITLE = "Dokument och blanketter för kunder | Ekorrit AB";
 const DESCRIPTION =
@@ -25,7 +30,9 @@ export const Route = createFileRoute("/dokument")({
 });
 
 function DokumentPage() {
-  const kategorier = [...new Set(dokument.map((d) => d.category))];
+  const { data: dokumentLista } = useSuspenseQuery(dokumentQuery());
+  const sida = useSida<HeroSida>("dokument", DOK_FALLBACK);
+  const kategorier = [...new Set(dokumentLista.map((d) => d.category))];
 
   return (
     <>
@@ -33,9 +40,9 @@ function DokumentPage() {
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
             as="h1"
-            eyebrow="Dokument"
-            title="Blanketter och checklistor"
-            intro="Här samlar vi de dokument våra kunder använder oftast. Saknar du något? Hör av dig, vi skickar det direkt."
+            eyebrow={sida.hero.eyebrow}
+            title={sida.hero.title}
+            intro={sida.hero.intro}
           />
         </div>
       </section>
@@ -46,7 +53,7 @@ function DokumentPage() {
             <div key={kategori}>
               <h2 className="text-xl">{kategori}</h2>
               <ul className="mt-4 divide-y divide-border/60 overflow-hidden rounded-2xl border border-border/70 bg-card">
-                {dokument
+                {dokumentLista
                   .filter((d) => d.category === kategori)
                   .map((d) => (
                     <li key={d.id}>

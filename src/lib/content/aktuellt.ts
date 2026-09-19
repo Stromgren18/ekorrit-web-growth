@@ -1,20 +1,21 @@
+import { queryOptions } from "@tanstack/react-query";
+import type { Artikel } from "@/content/aktuellt";
+import { demoStore } from "@/lib/demoStore";
+import { hamtaTabell } from "./backend";
+
 /**
- * Enda stället som behöver bytas när Supabase kopplas in manuellt.
- * Ersätt kropparna med anrop mot tabellen `aktuellt`.
+ * Dubbelmode: Supabase-tabellen `aktuellt` om kopplad, annars demoläget.
+ * Byt endast här när datakällan ändras.
  */
-import { aktuellt, type Artikel } from "@/content/aktuellt";
+export const sorteraAktuellt = (lista: Artikel[]) =>
+  [...lista].sort((a, b) => (a.published_at < b.published_at ? 1 : -1));
 
-const sorted = () =>
-  [...aktuellt].sort((a, b) => (a.published_at < b.published_at ? 1 : -1));
-
-export function getAktuellt(): Artikel[] {
-  return sorted();
-}
-
-export function getSenasteAktuellt(limit = 3): Artikel[] {
-  return sorted().slice(0, limit);
-}
-
-export function getArtikel(slug: string): Artikel | undefined {
-  return aktuellt.find((a) => a.slug === slug);
-}
+export const aktuelltQuery = () =>
+  queryOptions({
+    queryKey: ["aktuellt"],
+    initialData: sorteraAktuellt(demoStore.aktuellt),
+    queryFn: async () =>
+      sorteraAktuellt(
+        await hamtaTabell<Artikel>("aktuellt", demoStore.aktuellt, "published_at"),
+      ),
+  });

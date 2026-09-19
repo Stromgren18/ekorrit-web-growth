@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Quote } from "lucide-react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { CtaSection, SectionHeading } from "@/components/site/Sections";
-import { getKundreferenser } from "@/lib/content/kundreferenser";
+import { kundreferenserQuery } from "@/lib/content/kundreferenser";
+import { useSida } from "@/lib/content/sidor";
+import { SIDOR, type HeroSida } from "@/content/sidor";
+
+const KR_FALLBACK = SIDOR["kundreferenser"] as unknown as HeroSida;
 
 const TITLE = "Kundreferenser – vad våra kunder säger | Ekorrit AB";
 const DESCRIPTION =
@@ -25,7 +30,8 @@ export const Route = createFileRoute("/kundreferenser")({
 });
 
 function KundreferenserPage() {
-  const referenser = getKundreferenser();
+  const { data: referenser } = useSuspenseQuery(kundreferenserQuery());
+  const sida = useSida<HeroSida>("kundreferenser", KR_FALLBACK);
 
   return (
     <>
@@ -33,9 +39,9 @@ function KundreferenserPage() {
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
             as="h1"
-            eyebrow="Kundreferenser"
-            title="Långsiktiga relationer med våra kunder"
-            intro="När vi lär känna företaget kan vi bidra med mer än bokföring. Här berättar några kunder om samarbetet med Ekorrit."
+            eyebrow={sida.hero.eyebrow}
+            title={sida.hero.title}
+            intro={sida.hero.intro}
           />
         </div>
       </section>

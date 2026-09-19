@@ -1,10 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { ArtikelCard, CtaSection, SectionHeading } from "@/components/site/Sections";
 import { AKTUELLT_KATEGORIER } from "@/content/aktuellt";
-import { getAktuellt } from "@/lib/content/aktuellt";
+import { aktuelltQuery } from "@/lib/content/aktuellt";
+import { useSida } from "@/lib/content/sidor";
+import { SIDOR, type HeroSida } from "@/content/sidor";
 import { cn } from "@/lib/utils";
+
+const AKTUELLT_FALLBACK = SIDOR["aktuellt"] as unknown as HeroSida;
 
 const TITLE = "Aktuellt – skattenyheter och kontorsnytt | Ekorrit AB";
 const DESCRIPTION =
@@ -27,7 +32,8 @@ export const Route = createFileRoute("/aktuellt/")({
 });
 
 function AktuelltPage() {
-  const artiklar = getAktuellt();
+  const { data: artiklar } = useSuspenseQuery(aktuelltQuery());
+  const sida = useSida<HeroSida>("aktuellt", AKTUELLT_FALLBACK);
   const [kategori, setKategori] = useState<string | null>(null);
 
   const filtrerade = useMemo(
@@ -41,12 +47,7 @@ function AktuelltPage() {
     <>
       <section className="border-b border-border/60 bg-secondary/50 py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4">
-          <SectionHeading
-            as="h1"
-            eyebrow="Aktuellt"
-            title="Kunskap för bättre ekonomiska beslut"
-            intro="Aktuellt om skatt, bokslut, budget, löner och sådant som hjälper dig att planera företagets ekonomi framåt."
-          />
+          <SectionHeading as="h1" eyebrow={sida.hero.eyebrow} title={sida.hero.title} intro={sida.hero.intro} />
           <div className="mt-8 flex flex-wrap gap-2.5">
             {filter.map((f) => (
               <button

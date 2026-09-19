@@ -1,13 +1,15 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CtaSection } from "@/components/site/Sections";
-import { getTjanst, tjanster } from "@/content/tjanster";
+import { tjansterQuery } from "@/lib/content/tjanster";
 
 export const Route = createFileRoute("/tjanster/$slug")({
-  loader: ({ params }) => {
-    const tjanst = getTjanst(params.slug);
+  loader: async ({ params, context }) => {
+    const lista = await context.queryClient.ensureQueryData(tjansterQuery());
+    const tjanst = lista.find((t) => t.slug === params.slug);
     if (!tjanst) throw notFound();
     return { tjanst };
   },
@@ -20,10 +22,10 @@ export const Route = createFileRoute("/tjanster/$slug")({
     const { tjanst } = loaderData;
     return {
       meta: [
-        { title: tjanst.metaTitle },
-        { name: "description", content: tjanst.metaDescription },
-        { property: "og:title", content: tjanst.metaTitle },
-        { property: "og:description", content: tjanst.metaDescription },
+        { title: tjanst.meta_title },
+        { name: "description", content: tjanst.meta_description },
+        { property: "og:title", content: tjanst.meta_title },
+        { property: "og:description", content: tjanst.meta_description },
         { property: "og:type", content: "website" },
         { property: "og:url", content: `/tjanster/${params.slug}` },
         { name: "twitter:card", content: "summary_large_image" },
@@ -36,7 +38,7 @@ export const Route = createFileRoute("/tjanster/$slug")({
             "@context": "https://schema.org",
             "@type": "Service",
             name: tjanst.title,
-            description: tjanst.metaDescription,
+            description: tjanst.meta_description,
             areaServed: "Sverige",
             provider: { "@type": "AccountingService", name: "Ekorrit AB" },
           }),
@@ -100,26 +102,33 @@ function TjanstPage() {
           </aside>
         </div>
 
-        <div className="mx-auto mt-16 max-w-6xl px-4">
-          <h2 className="text-xl">Andra tjänster</h2>
-          <div className="mt-4 flex flex-wrap gap-2.5">
-            {tjanster
-              .filter((t) => t.slug !== tjanst.slug)
-              .map((t) => (
-                <Link
-                  key={t.slug}
-                  to="/tjanster/$slug"
-                  params={{ slug: t.slug }}
-                  className="rounded-full border border-border bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary"
-                >
-                  {t.title}
-                </Link>
-              ))}
-          </div>
-        </div>
+        <AndraTjanster aktivSlug={tjanst.slug} />
       </section>
 
       <CtaSection />
     </>
+  );
+}
+
+function AndraTjanster({ aktivSlug }: { aktivSlug: string }) {
+  const { data: lista } = useSuspenseQuery(tjansterQuery());
+  return (
+    <div className="mx-auto mt-16 max-w-6xl px-4">
+      <h2 className="text-xl">Andra tjänster</h2>
+      <div className="mt-4 flex flex-wrap gap-2.5">
+        {lista
+          .filter((t) => t.slug !== aktivSlug)
+          .map((t) => (
+            <Link
+              key={t.slug}
+              to="/tjanster/$slug"
+              params={{ slug: t.slug }}
+              className="rounded-full border border-border bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary"
+            >
+              {t.title}
+            </Link>
+          ))}
+      </div>
+    </div>
   );
 }

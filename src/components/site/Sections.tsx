@@ -3,7 +3,7 @@ import { Award, BadgeCheck, ShieldCheck, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { certifications } from "@/content/site";
+import { useSite } from "@/lib/content/site";
 import type { Artikel } from "@/content/aktuellt";
 
 const icons = [ShieldCheck, BadgeCheck, Award, Star] as const;
@@ -34,10 +34,11 @@ export function SectionHeading({
 }
 
 export function TrustBar() {
+  const site = useSite();
   return (
     <section aria-label="Certifieringar och utmärkelser" className="border-y border-border/60 bg-secondary/60">
       <div className="mx-auto grid max-w-6xl gap-4 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
-        {certifications.map((cert, i) => {
+        {site.certifications.map((cert, i) => {
           const Icon = icons[i % icons.length]!;
           return (
             <div key={cert.name} className="flex items-center gap-3">
@@ -90,15 +91,15 @@ export function ArtikelCard({ artikel }: { artikel: Artikel }) {
 }
 
 export function CtaSection() {
+  const site = useSite();
   return (
     <section className="section-y bg-sage-dark text-primary-foreground">
       <div className="mx-auto max-w-3xl px-4 text-center">
         <h2 className="text-3xl leading-tight text-balance md:text-4xl">
-          Låt oss bli ditt ekonomiska bollplank
+          {site.cta.title}
         </h2>
         <p className="mt-4 text-base leading-relaxed text-primary-foreground/80">
-          Vi träffas på huvudkontoret i Strömsund eller digitalt, oavsett var i Sverige ditt företag finns.
-          Första samtalet är alltid förutsättningslöst.
+          {site.cta.body}
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" variant="secondary" className="rounded-full">
