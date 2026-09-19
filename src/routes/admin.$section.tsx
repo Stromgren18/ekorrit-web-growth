@@ -180,7 +180,7 @@ function setRedigerarRad(
 
 function tomRad(sektion: NonNullable<ReturnType<typeof hittaSektion>>, rader: Rad[]): Record<string, unknown> {
   const falt = sektion.falt ?? [];
-  const mall = rader.length > 0 ? rader[0]! : {};
+  const mall: Record<string, unknown> = rader.length > 0 ? rader[0]! : {};
   const ut: Record<string, unknown> = {};
   for (const f of falt) {
     if (f.typ === "boolean") ut[f.nyckel] = false;
