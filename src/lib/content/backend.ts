@@ -36,7 +36,8 @@ export async function hamtaJsonRad(
       .eq(nyckelKolumn, nyckel)
       .maybeSingle();
     if (error || !data) return null;
-    const varde = data[vardeKolumn];
+    const rad = data as unknown as Record<string, unknown>;
+    const varde = rad[vardeKolumn];
     return varde && typeof varde === "object" ? (varde as Record<string, unknown>) : null;
   } catch {
     return null;
