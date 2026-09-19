@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -110,7 +111,7 @@ function TjanstPage() {
 }
 
 function AndraTjanster({ aktivSlug }: { aktivSlug: string }) {
-  const { data: lista } = tjansterOther();
+  const { data: lista } = useSuspenseQuery(tjansterQuery());
   return (
     <div className="mx-auto mt-16 max-w-6xl px-4">
       <h2 className="text-xl">Andra tjänster</h2>
@@ -130,12 +131,4 @@ function AndraTjanster({ aktivSlug }: { aktivSlug: string }) {
       </div>
     </div>
   );
-}
-
-import { useSuspenseQuery } from "@tanstack/react-query";
-
-function tjansterOther() {
-  return {
-    data: useSuspenseQuery(tjansterQuery()),
-  };
 }
