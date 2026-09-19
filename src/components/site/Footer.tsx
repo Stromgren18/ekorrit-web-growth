@@ -2,9 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram } from "lucide-react";
 
 import { Logo } from "./Logo";
-import { navigation, site } from "@/content/site";
+import { navigation } from "@/content/site";
+import { useSite } from "@/lib/content/site";
 
 export function Footer() {
+  const site = useSite();
   return (
     <footer className="mt-auto border-t border-border/60 bg-sage-dark text-primary-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-4">

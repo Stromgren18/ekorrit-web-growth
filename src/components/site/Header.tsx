@@ -5,9 +5,11 @@ import { useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { navigation, site } from "@/content/site";
+import { navigation } from "@/content/site";
+import { useSite } from "@/lib/content/site";
 
 export function Header() {
+  const site = useSite();
   const [open, setOpen] = useState(false);
 
   return (

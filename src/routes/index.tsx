@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, Calculator, ChevronDown, FileText, Landmark, Users } from "lucide-react";
-
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,54 +13,72 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ArtikelCard, CtaSection, SectionHeading, TrustBar } from "@/components/site/Sections";
-import { getSenasteAktuellt } from "@/lib/content/aktuellt";
-import { getFeaturedKundreferenser } from "@/lib/content/kundreferenser";
-import { tjanster } from "@/content/tjanster";
-import { site } from "@/content/site";
+import { aktuelltQuery } from "@/lib/content/aktuellt";
+import { kundreferenserQuery } from "@/lib/content/kundreferenser";
+import { tjansterQuery } from "@/lib/content/tjanster";
+import { useSida } from "@/lib/content/sidor";
+import { siteQuery } from "@/lib/content/site";
+import { demoStore, type SiteContent } from "@/lib/demoStore";
+import { SIDOR, type HemSida } from "@/content/sidor";
+
+const HEM_FALLBACK = SIDOR["hem"] as unknown as HemSida;
 
 const TITLE = "Personlig redovisningsbyrå i Strömsund | Ekorrit AB";
 const DESCRIPTION =
   "Privatägd redovisningsbyrå med fem auktoriserade konsulter. Personlig kontakt, redovisning och ekonomisk rådgivning för företag i hela Sverige.";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "AccountingService",
-          name: "Ekorrit AB",
-          description: DESCRIPTION,
-          areaServed: "Sverige",
-          address: site.offices.map((o) => ({
-            "@type": "PostalAddress",
-            streetAddress: o.street,
-            addressLocality: o.city,
-            addressCountry: "SE",
-          })),
-        }),
-      },
-    ],
-  }),
+  loader: async ({ context }) => {
+    const site = await context.queryClient.ensureQueryData(siteQuery());
+    return { site };
+  },
+  head: ({ loaderData }) => {
+    const site: SiteContent = loaderData?.site ?? demoStore.site;
+    return {
+      meta: [
+        { title: TITLE },
+        { name: "description", content: DESCRIPTION },
+        { property: "og:title", content: TITLE },
+        { property: "og:description", content: DESCRIPTION },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: "/" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [{ rel: "canonical", href: "/" }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AccountingService",
+            name: site.name,
+            description: DESCRIPTION,
+            areaServed: "Sverige",
+            address: site.offices.map((o) => ({
+              "@type": "PostalAddress",
+              streetAddress: o.street,
+              addressLocality: o.city,
+              addressCountry: "SE",
+            })),
+          }),
+        },
+      ],
+    };
+  },
   component: Index,
 });
 
 const tjansteIkoner = [Calculator, FileText, Users, Landmark] as const;
 
 function Index() {
-  const senaste = getSenasteAktuellt(3);
-  const referenser = getFeaturedKundreferenser();
+  const hem = useSida<HemSida>("hem", HEM_FALLBACK);
+  const { data: allaArtiklar } = useSuspenseQuery(aktuelltQuery());
+  const { data: referenser } = useSuspenseQuery(kundreferenserQuery());
+  const { data: tjansterLista } = useSuspenseQuery(tjansterQuery());
+
+  const senaste = allaArtiklar.slice(0, 3);
+  const featured = referenser.filter((r) => r.is_featured);
+
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -89,8 +107,8 @@ function Index() {
       <section className="relative isolate flex min-h-[78vh] items-center overflow-hidden md:min-h-[80vh]">
         <img
           ref={imgRef}
-          src="/images/hero-fjall.jpg"
-          alt="Snötäckta jämtländska fjälltoppar i mjukt morgonljus"
+          src={hem.hero.image}
+          alt={hem.hero.imageAlt}
           width={1920}
           height={1088}
           fetchPriority="high"
@@ -101,14 +119,13 @@ function Index() {
         <div className="mx-auto w-full max-w-6xl px-4 py-24 md:py-32">
           <div className="reveal max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/85">
-              Personlig redovisning med jämtländska rötter
+              {hem.hero.eyebrow}
             </p>
             <h1 className="mt-4 text-4xl leading-[1.08] text-balance text-primary-foreground drop-shadow-sm md:text-6xl">
-              Vi kan ekonomi – räkna med oss
+              {hem.hero.title}
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-primary-foreground/85">
-              Hos oss vet du vem du pratar med. Fem auktoriserade redovisningskonsulter lär känna ditt
-              företag och blir ett tryggt ekonomiskt bollplank – i Jämtland eller digitalt i hela Sverige.
+              {hem.hero.subtitle}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full">
@@ -140,12 +157,12 @@ function Index() {
       <section className="section-y">
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
-            eyebrow="Våra tjänster"
-            title="Mer än en redovisningsbyrå"
-            intro="Bra redovisning visar inte bara vad som har hänt. Med löpande bokföring, bokslut, löneadministration, budget och rådgivning hjälper vi dig också att planera framåt och fatta bättre beslut."
+            eyebrow={hem.tjanster.eyebrow}
+            title={hem.tjanster.title}
+            intro={hem.tjanster.intro}
           />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {tjanster.map((tjanst, i) => {
+            {tjansterLista.map((tjanst, i) => {
               const Icon = tjansteIkoner[i % tjansteIkoner.length] ?? Calculator;
               return (
                 <Card
@@ -175,10 +192,10 @@ function Index() {
 
       <section className="section-y bg-secondary/50">
         <div className="mx-auto max-w-6xl px-4">
-          <SectionHeading eyebrow="Kundreferenser" title="Vad våra kunder säger" center />
+          <SectionHeading eyebrow={hem.referenser.eyebrow} title={hem.referenser.title} center />
           <Carousel className="mx-auto mt-12 max-w-4xl" opts={{ loop: true }}>
             <CarouselContent>
-              {referenser.map((ref) => (
+              {featured.map((ref) => (
                 <CarouselItem key={ref.id}>
                   <figure className="rounded-2xl bg-card p-8 text-center shadow-sm md:p-12">
                     <blockquote className="font-display text-xl leading-relaxed text-balance md:text-2xl">
@@ -206,7 +223,7 @@ function Index() {
       <section className="section-y">
         <div className="mx-auto max-w-6xl px-4">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading eyebrow="Aktuellt" title="Senaste nytt från byrån" />
+            <SectionHeading eyebrow={hem.aktuellt.eyebrow} title={hem.aktuellt.title} />
             <Button asChild variant="ghost" className="rounded-full">
               <Link to="/aktuellt">Se allt</Link>
             </Button>
