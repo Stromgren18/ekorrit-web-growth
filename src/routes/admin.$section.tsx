@@ -99,7 +99,9 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           <FaltForm
             falt={sektion.falt ?? []}
             rad={rad}
-            onAndra={(nyckel, varde) => setRedigerarRad({ ...rad, [nyckel]: varde }, setRedigerar, nyRad)}
+            onAndra={(nyckel, varde) =>
+              setRedigerar((prev) => (prev ? { ...prev, [nyckel]: varde } : prev))
+            }
           />
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -168,15 +170,6 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   );
 }
 
-/** Behåller det pågående redigerade värdet medan fälten uppdateras. */
-function setRedigerarRad(
-  rad: Rad,
-  setRedigerar: React.Dispatch<React.SetStateAction<Rad | null>>,
-  nyRad: boolean,
-) {
-  if (nyRad) return; // ny post hålls i komponentens egen state via rad-objektet
-  setRedigerar(rad);
-}
 
 function tomRad(sektion: NonNullable<ReturnType<typeof hittaSektion>>, rader: Rad[]): Record<string, unknown> {
   const falt = sektion.falt ?? [];
