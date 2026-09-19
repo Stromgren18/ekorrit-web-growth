@@ -30,7 +30,7 @@ export const Route = createFileRoute("/kontakt")({
     return { site };
   },
   head: ({ loaderData }) => {
-    const site = loaderData?.site ?? demoSite;
+    const site = (loaderData?.site as unknown as SiteContent | undefined) ?? demoSite;
     return {
       meta: [
         { title: TITLE },
