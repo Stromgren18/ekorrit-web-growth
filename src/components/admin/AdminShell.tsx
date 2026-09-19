@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link, Outlet } from "@tanstack/react-router";
 import { ArrowLeft, LogOut } from "lucide-react";
 
@@ -6,9 +7,10 @@ import { Logo } from "@/components/site/Logo";
 import { SEKTIONER } from "@/lib/admin/sections";
 import { loggaUt } from "@/lib/admin/auth";
 
-export function AdminShell() {
+export function AdminShell({ children }: { children?: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-muted/40">
+      {children}
       <aside className="hidden w-64 shrink-0 flex-col border-r border-border bg-card p-4 md:flex">
         <Logo className="scale-90 origin-left" />
         <p className="mt-1 px-3 text-xs text-muted-foreground">Adminpanel</p>
