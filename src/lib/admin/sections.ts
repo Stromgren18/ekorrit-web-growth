@@ -36,7 +36,7 @@ export type Sektion = {
   tabell?: string;
   sidnyckel?: string;
   rubrikNyckel: string;
-  falt: Falt[];
+  falt?: Falt[];
 };
 
 export const SEKTIONER: Sektion[] = [
