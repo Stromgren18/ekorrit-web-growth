@@ -26,7 +26,8 @@ export async function loggaIn(epost: string, losenord: string): Promise<{ ok: bo
   if (!supabase) return { ok: false, fel: "Supabase är inte kopplat än." };
   const { error } = await supabase.auth.signInWithPassword({ email: epost, password: losenord });
   if (error) return { ok: false, fel: error.message };
-  return arAdmin() ? { ok: true } : { ok: false, fel: "Kontot saknar admin-roll." };
+  const admin = await arAdmin();
+  return admin ? { ok: true } : { ok: false, fel: "Kontot saknar admin-roll." };
 }
 
 export async function arAdmin(): Promise<boolean> {
@@ -44,7 +45,12 @@ export async function arAdmin(): Promise<boolean> {
   return !error && Boolean(data);
 }
 
-export async function hamtaSessionInfo(): Promise<{ kopplat: boolean; inloggad: boolean; admin: boolean; epost?: string }> {
+export async function hamtaSessionInfo(): Promise<{
+  kopplat: boolean;
+  inloggad: boolean;
+  admin: boolean;
+  epost?: string | undefined;
+}> {
   if (!isSupabaseConfigured || !supabase) {
     return { kopplat: false, inloggad: arAdminDemo(), admin: arAdminDemo() };
   }
