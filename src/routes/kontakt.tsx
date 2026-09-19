@@ -70,9 +70,6 @@ export const Route = createFileRoute("/kontakt")({
   component: KontaktPage,
 });
 
-// Fallback om head() körs utan loaderData (t.ex. vid client navigation).
-import { demoStore, type SiteContent } from "@/lib/demoStore";
-const demoSite: SiteContent = demoStore.site;
 
 function KontaktPage() {
   const site = useSite();
