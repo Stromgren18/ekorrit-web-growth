@@ -18,8 +18,8 @@ export const tjanster: Tjanst[] = [
     title: "Bokföring",
     short:
       "Löpande bokföring, moms och avstämningar med en personlig kontakt som ser helheten och hjälper dig framåt.",
-    metaTitle: "Personlig bokföring i Jämtland och hela Sverige | Ekorrit",
-    metaDescription:
+    meta_title: "Personlig bokföring i Jämtland och hela Sverige | Ekorrit",
+    meta_description:
       "Löpande bokföring, moms och rapporter med personlig kontakt. Ekorrit hjälper företag i Jämtland och hela Sverige med digitala flöden.",
     heading: "Personlig bokföring – nära dig även på distans",
     intro:
@@ -51,8 +51,8 @@ export const tjanster: Tjanst[] = [
     title: "Årsredovisning & Bokslut",
     short:
       "Bokslut, årsredovisning och deklaration – med en personlig genomgång som också hjälper dig att blicka framåt.",
-    metaTitle: "Årsredovisning Jämtland & bokslut | Ekorrit AB",
-    metaDescription:
+    meta_title: "Årsredovisning Jämtland & bokslut | Ekorrit AB",
+    meta_description:
       "Årsredovisning och bokslut med personlig genomgång. Ekorrit hjälper företag i Jämtland och hela Sverige att förstå resultatet och planera framåt.",
     heading: "Årsredovisning i Jämtland – bokslut du kan lita på",
     intro:
@@ -84,8 +84,8 @@ export const tjanster: Tjanst[] = [
     title: "Lönehantering",
     short:
       "Trygg löneadministration med kontinuitet – rätt belopp, rätt rapportering och samma personliga kontakt varje månad.",
-    metaTitle: "Personlig lönehantering för företag | Ekorrit AB",
-    metaDescription:
+    meta_title: "Personlig lönehantering för företag | Ekorrit AB",
+    meta_description:
       "Outsourca lönehanteringen till Ekorrit AB. Löneberäkning, lönespecifikationer, semester, förmåner och arbetsgivardeklaration på individnivå.",
     heading: "Lönehantering utan administrativt krångel",
     intro:
@@ -117,8 +117,8 @@ export const tjanster: Tjanst[] = [
     title: "Kvalificerad Rådgivning",
     short:
       "Budget, skatt, likviditet och tillväxt – ett ekonomiskt bollplank som känner ditt företag och ser framåt.",
-    metaTitle: "Auktoriserad redovisningskonsult – rådgivning | Ekorrit AB",
-    metaDescription:
+    meta_title: "Auktoriserad redovisningskonsult – rådgivning | Ekorrit AB",
+    meta_description:
       "Personlig ekonomisk rådgivning för företag i hela Sverige. Få stöd med budget, skatt, ägarfrågor, likviditet och tillväxt från Ekorrit.",
     heading: "Kvalificerad rådgivning av auktoriserad redovisningskonsult",
     intro:

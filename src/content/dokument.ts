@@ -4,6 +4,7 @@ export type Dokument = {
   description: string;
   category: string;
   href: string;
+  sort_order?: number;
 };
 
 export const dokument: Dokument[] = [

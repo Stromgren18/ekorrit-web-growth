@@ -6,6 +6,7 @@ export type Kundreferens = {
   quote: string;
   logo_url: string | null;
   is_featured: boolean;
+  sort_order?: number;
   created_at: string;
 };
 
