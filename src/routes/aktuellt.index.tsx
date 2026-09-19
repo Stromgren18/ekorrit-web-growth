@@ -5,8 +5,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArtikelCard, CtaSection, SectionHeading } from "@/components/site/Sections";
 import { AKTUELLT_KATEGORIER } from "@/content/aktuellt";
 import { aktuelltQuery } from "@/lib/content/aktuellt";
-import { useSida, type HeroSida } from "@/lib/content/sidor";
-import { SIDOR } from "@/content/sidor";
+import { useSida } from "@/lib/content/sidor";
+import { SIDOR, type HeroSida } from "@/content/sidor";
 import { cn } from "@/lib/utils";
 
 const AKTUELLT_FALLBACK = SIDOR["aktuellt"] as unknown as HeroSida;
