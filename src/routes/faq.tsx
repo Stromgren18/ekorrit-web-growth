@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import {
   Accordion,
@@ -11,11 +12,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { CtaSection, SectionHeading } from "@/components/site/Sections";
 import { FAQ_KATEGORIER } from "@/content/faq";
-import { getFaq } from "@/lib/content/faq";
+import { faqQuery } from "@/lib/content/faq";
+import { useSida } from "@/lib/content/sidor";
+import { SIDOR, type HeroSida } from "@/content/sidor";
+
+const FAQ_FALLBACK = SIDOR["faq"] as unknown as HeroSida;
 
 const TITLE = "Frågor & svar om bokföring och redovisning | Ekorrit AB";
 const DESCRIPTION =
-  "Vanliga frågor om personlig redovisning, distanssamarbete, bokföring, löner och bokslut hos Ekorrit AB."
+  "Vanliga frågor om personlig redovisning, distanssamarbete, bokföring, löner och bokslut hos Ekorrit AB.";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -34,7 +39,8 @@ export const Route = createFileRoute("/faq")({
 });
 
 function FaqPage() {
-  const alla = getFaq();
+  const { data: alla } = useSuspenseQuery(faqQuery());
+  const sida = useSida<HeroSida>("faq", FAQ_FALLBACK);
   const [query, setQuery] = useState("");
 
   const traffar = useMemo(() => {
@@ -51,9 +57,9 @@ function FaqPage() {
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
             as="h1"
-            eyebrow="Frågor & svar"
-            title="Vanliga frågor om redovisning och bokföring"
-            intro="Hittar du inte svaret här? Ring oss eller skicka ett meddelande – vi svarar gärna."
+            eyebrow={sida.hero.eyebrow}
+            title={sida.hero.title}
+            intro={sida.hero.intro}
           />
           <div className="relative mt-8 max-w-md">
             <Search
