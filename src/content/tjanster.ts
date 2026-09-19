@@ -2,12 +2,14 @@ export type Tjanst = {
   slug: string;
   title: string;
   short: string;
-  metaTitle: string;
-  metaDescription: string;
+  meta_title: string;
+  meta_description: string;
   heading: string;
   intro: string;
   sections: { heading: string; body: string }[];
   bullets: string[];
+  image_url?: string;
+  sort_order?: number;
 };
 
 export const tjanster: Tjanst[] = [
