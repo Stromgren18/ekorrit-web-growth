@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -14,48 +14,65 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { SectionHeading } from "@/components/site/Sections";
-import { site } from "@/content/site";
+import { useSite } from "@/lib/content/site";
+import { useSida } from "@/lib/content/sidor";
+import { SIDOR, type HeroSida } from "@/content/sidor";
+
+const KONTAKT_FALLBACK = SIDOR["kontakt"] as unknown as HeroSida;
 
 const TITLE = "Kontakta Ekorrit – Strömsund eller digitalt";
 const DESCRIPTION =
   "Kontakta Ekorrits huvudkontor i Strömsund eller boka ett digitalt möte. Obemannat lokalkontor finns i Östersund för besök efter överenskommelse.";
 
 export const Route = createFileRoute("/kontakt")({
-  head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/kontakt" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "/kontakt" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "AccountingService",
-          name: site.name,
-          telephone: site.phone,
-          email: site.email,
-          address: site.offices.map((o) => ({
-            "@type": "PostalAddress",
-            streetAddress: o.street,
-            postalCode: o.postal.split(" ")[0],
-            addressLocality: o.city,
-            addressCountry: "SE",
-          })),
-        }),
-      },
-    ],
-  }),
+  loader: async ({ context }) => {
+    const site = await context.queryClient.ensureQueryData(siteQuery());
+    return { site };
+  },
+  head: ({ loaderData }) => {
+    const site = loaderData?.site ?? demoSite;
+    return {
+      meta: [
+        { title: TITLE },
+        { name: "description", content: DESCRIPTION },
+        { property: "og:title", content: TITLE },
+        { property: "og:description", content: DESCRIPTION },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: "/kontakt" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [{ rel: "canonical", href: "/kontakt" }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AccountingService",
+            name: site.name,
+            telephone: site.phone,
+            email: site.email,
+            address: site.offices.map((o) => ({
+              "@type": "PostalAddress",
+              streetAddress: o.street,
+              postalCode: o.postal.split(" ")[0],
+              addressLocality: o.city,
+              addressCountry: "SE",
+            })),
+          }),
+        },
+      ],
+    };
+  },
   component: KontaktPage,
 });
 
+// Fallback om head() körs utan loaderData (t.ex. vid client navigation).
+import { demoStore, type SiteContent } from "@/lib/demoStore";
+const demoSite: SiteContent = demoStore.site;
+
 function KontaktPage() {
+  const site = useSite();
+  const sida = useSida<HeroSida>("kontakt", KONTAKT_FALLBACK);
   const [skickat, setSkickat] = useState(false);
   const [arende, setArende] = useState("Digitalt eller allmänt");
 
@@ -65,9 +82,9 @@ function KontaktPage() {
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
             as="h1"
-            eyebrow="Kontakt"
-            title="Vi lär gärna känna ditt företag"
-            intro="Ring, mejla eller skicka ett meddelande. Vi träffas på huvudkontoret i Strömsund eller digitalt, och i Östersund efter överenskommelse."
+            eyebrow={sida.hero.eyebrow}
+            title={sida.hero.title}
+            intro={sida.hero.intro}
           />
         </div>
       </section>
