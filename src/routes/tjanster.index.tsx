@@ -1,10 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CtaSection, SectionHeading } from "@/components/site/Sections";
-import { tjanster } from "@/content/tjanster";
+import { tjansterQuery } from "@/lib/content/tjanster";
+import { useSida } from "@/lib/content/sidor";
+import { SIDOR, type HeroSida } from "@/content/sidor";
+
+const TJANSTER_FALLBACK = SIDOR["tjanster"] as unknown as HeroSida;
 
 const TITLE = "Tjänster – bokföring, bokslut, löner & rådgivning | Ekorrit AB";
 const DESCRIPTION =
@@ -27,22 +32,25 @@ export const Route = createFileRoute("/tjanster/")({
 });
 
 function TjansterPage() {
+  const { data: tjansterLista } = useSuspenseQuery(tjansterQuery());
+  const sida = useSida<HeroSida>("tjanster", TJANSTER_FALLBACK);
+
   return (
     <>
       <section className="border-b border-border/60 bg-secondary/50 py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
             as="h1"
-            eyebrow="Tjänster"
-            title="Redovisning som hjälper dig framåt"
-            intro="Välj de delar du vill lämna ifrån dig – eller låt oss ta hand om hela ekonomifunktionen. Du får en personlig kontakt som lär känna ditt företag och hjälper dig att använda siffrorna för bättre beslut."
+            eyebrow={sida.hero.eyebrow}
+            title={sida.hero.title}
+            intro={sida.hero.intro}
           />
         </div>
       </section>
 
       <section className="section-y">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-2">
-          {tjanster.map((tjanst) => (
+          {tjansterLista.map((tjanst) => (
             <Card key={tjanst.slug} className="group rounded-2xl border-border/70 transition-shadow hover:shadow-lg">
               <CardContent className="p-8">
                 <h2 className="text-2xl">{tjanst.title}</h2>
