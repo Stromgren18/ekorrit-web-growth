@@ -3,11 +3,12 @@ import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ArtikelCard, CtaSection } from "@/components/site/Sections";
-import { getAktuellt, getArtikel } from "@/lib/content/aktuellt";
+import { aktuelltQuery } from "@/lib/content/aktuellt";
 
 export const Route = createFileRoute("/aktuellt/$slug")({
-  loader: ({ params }) => {
-    const artikel = getArtikel(params.slug);
+  loader: async ({ params, context }) => {
+    const alla = await context.queryClient.ensureQueryData(aktuelltQuery());
+    const artikel = alla.find((a) => a.slug === params.slug);
     if (!artikel) throw notFound();
     return { artikel };
   },
@@ -60,64 +61,17 @@ export const Route = createFileRoute("/aktuellt/$slug")({
 
 function ArtikelPage() {
   const { artikel } = Route.useLoaderData();
-  const ovriga = getAktuellt()
-    .filter((a) => a.slug !== artikel.slug)
-    .slice(0, 3);
+  const { data: alla } = Route.useRouteContext().queryClient
+    ? { data: undefined as never }
+    : { data: undefined as never };
 
-  const datum = new Date(artikel.published_at).toLocaleDateString("sv-SE", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  return <ArtikelInnehall artikel={artikel} />;
+}
 
-  return (
-    <>
-      <article className="section-y">
-        <div className="mx-auto max-w-3xl px-4">
-          <Link
-            to="/aktuellt"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="size-4" aria-hidden /> Tillbaka till Aktuellt
-          </Link>
-          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-            {artikel.category}
-          </p>
-          <h1 className="mt-3 text-4xl leading-tight text-balance md:text-5xl">{artikel.title}</h1>
-          <time dateTime={artikel.published_at} className="mt-4 block text-sm text-muted-foreground">
-            {datum}
-          </time>
-          <img
-            src={artikel.image_url}
-            alt={artikel.title}
-            width={1200}
-            height={800}
-            className="mt-8 aspect-[3/2] w-full rounded-2xl object-cover shadow-lg"
-          />
-          <div className="mt-10 space-y-5 text-lg leading-relaxed text-muted-foreground">
-            {artikel.content
-              .split("\n\n")
-              .map((stycke) => stycke.trim())
-              .filter(Boolean)
-              .map((stycke) => (
-                <p key={stycke.slice(0, 40)}>{stycke}</p>
-              ))}
-          </div>
-        </div>
-      </article>
+function ArtikelInnehall({ artikel }: { artikel: Awaited<ReturnType<typeof hamtaArtiklar>>[number] }) {
+  return null;
+}
 
-      <section className="section-y bg-secondary/50">
-        <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-2xl">Fler artiklar</h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {ovriga.map((a) => (
-              <ArtikelCard key={a.id} artikel={a} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CtaSection />
-    </>
-  );
+async function hamtaArtiklar() {
+  return [] as never[];
 }
