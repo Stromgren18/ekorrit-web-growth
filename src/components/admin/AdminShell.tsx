@@ -10,7 +10,6 @@ import { loggaUt } from "@/lib/admin/auth";
 export function AdminShell({ children }: { children?: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-muted/40">
-      {children}
       <aside className="hidden w-64 shrink-0 flex-col border-r border-border bg-card p-4 md:flex">
         <Logo className="scale-90 origin-left" />
         <p className="mt-1 px-3 text-xs text-muted-foreground">Adminpanel</p>
@@ -70,6 +69,8 @@ export function AdminShell({ children }: { children?: ReactNode }) {
         </nav>
 
         <main className="min-w-0 flex-1 p-4 md:p-8">
+          {children}
+          {/* Required: nested routes render here. */}
           <Outlet />
         </main>
       </div>
