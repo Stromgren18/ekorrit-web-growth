@@ -59,7 +59,7 @@ const hero = (intro = true): Grupp => ({
 
 const enklaSidor = ["tjanster", "kundreferenser", "faq", "aktuellt", "dokument", "kontakt"];
 const SIDSCHEMAN: Record<string, Grupp[]> = Object.fromEntries(enklaSidor.map((s) => [s, [hero()]]));
-SIDSCHEMAN.hem = [
+SIDSCHEMAN["hem"] = [
   {
     ...hero(false),
     falt: [
@@ -278,10 +278,12 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
 function EnkeltFalt({ falt, varde, onAndra }: { falt: EnkelFalt; varde: unknown; onAndra: (v: unknown) => void }) {
   const id = falt.path.join("-");
   if (falt.typ === "image") {
-    return <FaltForm falt={[{ nyckel: "value", label: falt.label, typ: "image", hjalp: falt.hjalp }]} rad={{ id, value: varde }} onAndra={(_, v) => onAndra(v)} />;
+    const formularFalt = { nyckel: "value", label: falt.label, typ: "image" as const, ...(falt.hjalp ? { hjalp: falt.hjalp } : {}) };
+    return <FaltForm falt={[formularFalt]} rad={{ id, value: varde }} onAndra={(_, v) => onAndra(v)} />;
   }
   if (falt.typ === "stringList") {
-    return <FaltForm falt={[{ nyckel: "value", label: falt.label, typ: "stringList", hjalp: falt.hjalp }]} rad={{ id, value: varde }} onAndra={(_, v) => onAndra(v)} />;
+    const formularFalt = { nyckel: "value", label: falt.label, typ: "stringList" as const, ...(falt.hjalp ? { hjalp: falt.hjalp } : {}) };
+    return <FaltForm falt={[formularFalt]} rad={{ id, value: varde }} onAndra={(_, v) => onAndra(v)} />;
   }
   const gemensamt = { id, required: falt.krav, value: String(varde ?? ""), placeholder: falt.placeholder, onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onAndra(e.target.value) };
   return (
@@ -301,7 +303,7 @@ function UpprepadLista({ falt, varde, onAndra }: { falt: UpprepatFalt; varde: un
   return (
     <div className="space-y-4">
       {poster.map((post, index) => (
-        <div key={String(post.id ?? `${falt.path.join("-")}-${index}`)} className="rounded-xl border border-border p-4">
+        <div key={String(post["id"] ?? `${falt.path.join("-")}-${index}`)} className="rounded-xl border border-border p-4">
           <div className="mb-4 flex items-center justify-between gap-3">
             <h3 className="font-medium">{falt.singular.charAt(0).toUpperCase() + falt.singular.slice(1)} {index + 1}</h3>
             <Button type="button" variant="ghost" size="sm" className="rounded-full text-destructive" onClick={() => setRadera(index)} aria-label={`Ta bort ${falt.singular} ${index + 1}`}>
