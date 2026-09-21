@@ -285,7 +285,15 @@ function EnkeltFalt({ falt, varde, onAndra }: { falt: EnkelFalt; varde: unknown;
     const formularFalt = { nyckel: "value", label: falt.label, typ: "stringList" as const, ...(falt.hjalp ? { hjalp: falt.hjalp } : {}) };
     return <FaltForm falt={[formularFalt]} rad={{ id, value: varde }} onAndra={(_, v) => onAndra(v)} />;
   }
-  const gemensamt = { id, required: falt.krav, value: String(varde ?? ""), placeholder: falt.placeholder, onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onAndra(e.target.value) };
+  const arOrganisationsnummer = falt.path.length === 1 && falt.path[0] === "orgNumber";
+  const gemensamt = {
+    id,
+    required: falt.krav,
+    value: String(varde ?? ""),
+    placeholder: falt.placeholder,
+    ...(arOrganisationsnummer ? { pattern: "[0-9]{6}-?[0-9]{4}", title: "Ange tio siffror, med eller utan bindestreck." } : {}),
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onAndra(e.target.value),
+  };
   return (
     <div className="space-y-1.5">
       <Label htmlFor={id}>{falt.label}</Label>
