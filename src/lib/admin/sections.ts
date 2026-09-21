@@ -149,8 +149,8 @@ export const SEKTIONER: Sektion[] = [
   },
   {
     nyckel: "sidor",
-    namn: "Sidtexter (hero m.m.)",
-    beskrivning: "Rubriker och inledningar på varje sida – lagras som JSON per sida.",
+    namn: "Sidtexter",
+    beskrivning: "Rubriker, inledningar och bilder på webbplatsens olika sidor.",
     slag: "json",
     sidnyckel: "sidor",
     rubrikNyckel: "page",
@@ -158,7 +158,7 @@ export const SEKTIONER: Sektion[] = [
   {
     nyckel: "site",
     namn: "Företagsuppgifter",
-    beskrivning: "Telefon, e-post, org.nr, kontor, certifieringar och CTA-texten.",
+    beskrivning: "Telefon, e-post, organisationsnummer, kontor och gemensamma kontakttexter.",
     slag: "json",
     sidnyckel: "site",
     rubrikNyckel: "key",

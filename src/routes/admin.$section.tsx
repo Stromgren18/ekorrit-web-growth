@@ -5,12 +5,11 @@ import { Plus, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { FaltForm } from "@/components/admin/EntityForm";
+import { AdminJsonForm } from "@/components/admin/AdminJsonForms";
 import { arAdmin } from "@/lib/admin/auth";
 import { hittaSektion, SEKTIONER } from "@/lib/admin/sections";
 import {
-  hamtaJson,
   listaRader,
-  sparaJson,
   sparaRad,
   sidNycklar,
   taBortRad,
@@ -37,7 +36,11 @@ function SektionSida() {
       <h1 className="font-display text-2xl">{sektion.namn}</h1>
       <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{sektion.beskrivning}</p>
       <div className="mt-8">
-        {sektion.slag === "tabell" ? <TabellVy sektion={sektion} /> : <JsonVy sektion={sektion} />}
+        {sektion.slag === "tabell" ? (
+          <TabellVy sektion={sektion} />
+        ) : (
+          <AdminJsonForm sektion={sektion} sidNycklar={[...sidNycklar]} />
+        )}
       </div>
     </AdminShell>
   );
@@ -187,67 +190,3 @@ function tomRad(sektion: NonNullable<ReturnType<typeof hittaSektion>>, rader: Ra
   return ut;
 }
 
-function JsonVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSektion>> }) {
-  const [nycklar] = useState<string[]>(sektion.sidnyckel === "site" ? ["site"] : [...sidNycklar]);
-  const [vald, setVald] = useState<string>(nycklar[0] ?? "hem");
-  const [text, setText] = useState("");
-  const [status, setStatus] = useState<string | null>(null);
-  const uppdateraSajt = useUppdateraSajt();
-
-  useEffect(() => {
-    let aktivt = true;
-    hamtaJson(sektion, vald).then((varde) => {
-      if (aktivt) setText(JSON.stringify(varde, null, 2));
-    });
-    return () => {
-      aktivt = false;
-    };
-  }, [sektion, vald]);
-
-  async function spara() {
-    try {
-      const varde = JSON.parse(text) as Record<string, unknown>;
-      const res = await sparaJson(sektion, vald, varde);
-      setStatus(res.ok ? "Sparat!" : `Kunde inte spara: ${res.fel}`);
-      if (res.ok) uppdateraSajt();
-    } catch {
-      setStatus("Ogiltig JSON – kontrollera klamrar och kommatecken.");
-    }
-  }
-
-  return (
-    <div className="max-w-3xl">
-      {nycklar.length > 1 ? (
-        <div className="flex flex-wrap gap-2">
-          {nycklar.map((n) => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => setVald(n)}
-              className={
-                vald === n
-                  ? "rounded-full bg-primary px-3.5 py-1.5 text-xs text-primary-foreground"
-                  : "rounded-full border border-border px-3.5 py-1.5 text-xs hover:bg-secondary"
-              }
-            >
-              {n}
-            </button>
-          ))}
-        </div>
-      ) : null}
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        rows={22}
-        spellCheck={false}
-        className="mt-4 w-full rounded-2xl border border-border bg-card p-4 font-mono text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
-      />
-      <div className="mt-4 flex items-center gap-3">
-        <Button className="rounded-full" onClick={() => void spara()}>
-          <Save className="size-4" aria-hidden /> Spara
-        </Button>
-        {status ? <p className="text-sm text-muted-foreground">{status}</p> : null}
-      </div>
-    </div>
-  );
-}
