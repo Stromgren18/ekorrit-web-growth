@@ -13,8 +13,8 @@
 - [x] Fixa formulärs-/layoutbuggar (tomRad, AdminShell, gömma sajmensy på /admin)
 - [x] supabase/setup.sql (tabeller, RLS, grants, roller, bucket media, seed)
 - [x] supabase/GUIDE.md + .env.example (steg-för-steg för användarens eget projekt)
-- [ ] Ersätt kodredigering för Sidtexter och Företagsuppgifter med lättanvända formulär
-- [ ] Verifiera formulärens sparning, mobilvy och admininloggning
+- [x] Ersätt kodredigering för Sidtexter och Företagsuppgifter med lättanvända formulär
+- [x] Verifiera formulärens sparning, mobilvy och admininloggning
 - [ ] Användaren skapar eget Supabase-projekt och klistrar in VITE_SUPABASE_URL /
       VITE_SUPABASE_PUBLISHABLE_KEY – blockerad: väntar på användarens nycklar
 - [ ] /admin-bygg för riktiga konton (Supabase Auth + user_roles) – väntar på databas
