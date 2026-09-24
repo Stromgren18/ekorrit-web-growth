@@ -7,7 +7,7 @@ import { SIDOR, type HeroSida } from "@/content/sidor";
 import { medarbetareQuery } from "@/lib/content/medarbetare";
 import { useSida } from "@/lib/content/sidor";
 
-const FALLBACK = SIDOR.medarbetare as unknown as HeroSida;
+const FALLBACK = SIDOR["medarbetare"] as unknown as HeroSida;
 const TITLE = "Medarbetare – möt teamet på Ekorrit AB";
 const DESCRIPTION =
   "Möt redovisningskonsulterna på Ekorrit AB i Strömsund och Östersund. Personliga kontakter inom redovisning, lön och rådgivning.";
