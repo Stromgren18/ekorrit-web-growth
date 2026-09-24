@@ -58,7 +58,7 @@ Så fort nycklarna finns på plats:
 1. Gå till `/admin`. Du skickas till `/admin/login`.
 2. Logga in med e-post och lösenord från steg 3.
 3. Välj sektion i menyn (Aktuellt, Kundreferenser, Frågor & svar,
-   Tjänster, Dokument, Sidtexter, Företagsuppgifter) och redigera.
+   Tjänster, Medarbetare, Dokument, Sidtexter, Företagsuppgifter) och redigera.
 4. Bildfält laddar upp filer till Storage-bucketen `media` och lagrar
    bildens publika webbadress.
 

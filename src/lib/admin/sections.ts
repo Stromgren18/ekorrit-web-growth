@@ -41,6 +41,30 @@ export type Sektion = {
 
 export const SEKTIONER: Sektion[] = [
   {
+    nyckel: "medarbetare",
+    namn: "Medarbetare",
+    beskrivning: "Porträtt, roller och personliga presentationer på medarbetarsidan.",
+    slag: "tabell",
+    tabell: "medarbetare",
+    rubrikNyckel: "name",
+    falt: [
+      { nyckel: "name", label: "Namn", typ: "text", krav: true },
+      { nyckel: "role", label: "Roll", typ: "text", krav: true },
+      {
+        nyckel: "bio",
+        label: "Kort presentation",
+        typ: "textarea",
+        krav: true,
+        hjalp: "Skriv gärna 2–4 meningar om erfarenhet, specialistområden och kundkontakt.",
+      },
+      { nyckel: "image_url", label: "Porträttbild", typ: "image" },
+      { nyckel: "email", label: "E-post", typ: "text" },
+      { nyckel: "phone", label: "Telefon", typ: "text" },
+      { nyckel: "sort_order", label: "Ordning", typ: "number" },
+      { nyckel: "is_visible", label: "Visa på sidan", typ: "boolean" },
+    ],
+  },
+  {
     nyckel: "aktuellt",
     namn: "Aktuellt (artiklar)",
     beskrivning: "Nyhetsflödet på sidan Aktuellt och de tre senaste artiklarna på startsidan.",
