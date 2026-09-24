@@ -43,6 +43,7 @@ export const navigation = [
   { label: "Hem", to: "/" },
   { label: "Tjänster", to: "/tjanster" },
   { label: "Om oss", to: "/om-oss" },
+  { label: "Medarbetare", to: "/medarbetare" },
   { label: "Kundreferenser", to: "/kundreferenser" },
   { label: "Frågor & Svar", to: "/faq" },
   { label: "Aktuellt", to: "/aktuellt" },

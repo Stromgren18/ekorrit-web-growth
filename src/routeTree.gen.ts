@@ -17,6 +17,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
+import { Route as MedarbetareRouteImport } from './routes/medarbetare'
 import { Route as OmOssRouteImport } from './routes/om-oss'
 import { Route as TjansterRouteImport } from './routes/tjanster'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -65,6 +66,11 @@ const KontaktRoute = KontaktRouteImport.update({
 const KundreferenserRoute = KundreferenserRouteImport.update({
   id: '/kundreferenser',
   path: '/kundreferenser',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedarbetareRoute = MedarbetareRouteImport.update({
+  id: '/medarbetare',
+  path: '/medarbetare',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OmOssRoute = OmOssRouteImport.update({
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRoute
+  '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRoute
+  '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
@@ -158,6 +166,7 @@ export interface FileRoutesById {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRoute
+  '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
+    | '/medarbetare'
     | '/om-oss'
     | '/tjanster'
     | '/admin/$section'
@@ -196,6 +206,7 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
+    | '/medarbetare'
     | '/om-oss'
     | '/admin/$section'
     | '/admin/login'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
+    | '/medarbetare'
     | '/om-oss'
     | '/tjanster'
     | '/admin/$section'
@@ -234,6 +246,7 @@ export interface RootRouteChildren {
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   KundreferenserRoute: typeof KundreferenserRoute
+  MedarbetareRoute: typeof MedarbetareRoute
   OmOssRoute: typeof OmOssRoute
   TjansterRoute: typeof TjansterRouteWithChildren
 }
@@ -294,6 +307,13 @@ declare module '@tanstack/react-router' {
       path: '/kundreferenser'
       fullPath: '/kundreferenser'
       preLoaderRoute: typeof KundreferenserRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medarbetare': {
+      id: '/medarbetare'
+      path: '/medarbetare'
+      fullPath: '/medarbetare'
+      preLoaderRoute: typeof MedarbetareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/om-oss': {
@@ -413,6 +433,7 @@ const rootRouteChildren: RootRouteChildren = {
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   KundreferenserRoute: KundreferenserRoute,
+  MedarbetareRoute: MedarbetareRoute,
   OmOssRoute: OmOssRoute,
   TjansterRoute: TjansterRouteWithChildren,
 }

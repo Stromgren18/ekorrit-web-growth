@@ -63,6 +63,22 @@ create table if not exists public.dokument (
   sort_order int
 );
 
+create table if not exists public.medarbetare (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  role text not null,
+  bio text not null,
+  image_url text,
+  email text,
+  phone text,
+  sort_order int,
+  is_visible boolean not null default true
+);
+
+grant select, insert, update, delete on public.medarbetare to authenticated;
+grant all on public.medarbetare to service_role;
+grant select on public.medarbetare to anon;
+
 -- Sidtexter (hero m.m.): en rad per sida
 create table if not exists public.sidor (
   page text primary key,
@@ -113,17 +129,17 @@ $$;
 
 grant select, insert, update, delete on
   public.aktuellt, public.kundreferenser, public.faq, public.tjanster,
-  public.dokument, public.sidor, public.site_installningar
+  public.dokument, public.medarbetare, public.sidor, public.site_installningar
 to authenticated;
 grant all on
   public.aktuellt, public.kundreferenser, public.faq, public.tjanster,
-  public.dokument, public.sidor, public.site_installningar
+  public.dokument, public.medarbetare, public.sidor, public.site_installningar
 to service_role;
 
 -- Publik läsning av sajtinnehållet (anonyma besökare via publiceringsnyckeln)
 grant select on
   public.aktuellt, public.kundreferenser, public.faq, public.tjanster,
-  public.dokument, public.sidor, public.site_installningar
+  public.dokument, public.medarbetare, public.sidor, public.site_installningar
 to anon;
 
 -- ---------- 4. RLS-policyer ----------
@@ -133,6 +149,7 @@ alter table public.kundreferenser enable row level security;
 alter table public.faq enable row level security;
 alter table public.tjanster enable row level security;
 alter table public.dokument enable row level security;
+alter table public.medarbetare enable row level security;
 alter table public.sidor enable row level security;
 alter table public.site_installningar enable row level security;
 
@@ -142,6 +159,7 @@ create policy "Publik läsning" on public.kundreferenser for select using (true)
 create policy "Publik läsning" on public.faq for select using (true);
 create policy "Publik läsning" on public.tjanster for select using (true);
 create policy "Publik läsning" on public.dokument for select using (true);
+create policy "Publik läsning" on public.medarbetare for select using (true);
 create policy "Publik läsning" on public.sidor for select using (true);
 create policy "Publik läsning" on public.site_installningar for select using (true);
 
@@ -155,6 +173,8 @@ create policy "Admin styr allt" on public.faq for all
 create policy "Admin styr allt" on public.tjanster for all
   to authenticated using (public.has_role(auth.uid(), 'admin'));
 create policy "Admin styr allt" on public.dokument for all
+  to authenticated using (public.has_role(auth.uid(), 'admin'));
+create policy "Admin styr allt" on public.medarbetare for all
   to authenticated using (public.has_role(auth.uid(), 'admin'));
 create policy "Admin styr allt" on public.sidor for all
   to authenticated using (public.has_role(auth.uid(), 'admin'));
@@ -254,10 +274,14 @@ insert into public.dokument ("title", "description", "category", "href") values 
 insert into public.dokument ("title", "description", "category", "href") values ('Blankett – reseräkning', 'För redovisning av resor, traktamente och utlägg.', 'Blanketter', '#');
 insert into public.dokument ("title", "description", "category", "href") values ('Integritetspolicy (PDF)', 'Så behandlar vi personuppgifter i våra uppdrag.', 'Villkor & policyer', '#');
 insert into public.dokument ("title", "description", "category", "href") values ('Allmänna villkor för uppdrag', 'Villkoren som gäller för våra redovisningsuppdrag.', 'Villkor & policyer', '#');
+insert into public.medarbetare ("name", "role", "bio", "image_url", "email", "phone", "sort_order", "is_visible") values ('Medarbetare 1', 'Auktoriserad redovisningskonsult', 'Skriv en kort och personlig presentation om erfarenhet, specialistområden och vad personen uppskattar mest i kundsamarbetet.', '/images/medarbetare-1.jpg', 'info@ekorrit.se', '+4667017570', 1, true);
+insert into public.medarbetare ("name", "role", "bio", "image_url", "email", "phone", "sort_order", "is_visible") values ('Medarbetare 2', 'Redovisningskonsult', 'Ersätt exempeltexten med en lättläst presentation som hjälper kunderna att lära känna personen bakom siffrorna.', '/images/medarbetare-2.jpg', 'info@ekorrit.se', '+4667017570', 2, true);
+insert into public.medarbetare ("name", "role", "bio", "image_url", "email", "phone", "sort_order", "is_visible") values ('Medarbetare 3', 'Lönekonsult', 'Berätta gärna om personens roll, kompetens och hur hon eller han hjälper företagets kunder i vardagen.', '/images/medarbetare-3.jpg', 'info@ekorrit.se', '+4667017570', 3, true);
 insert into public.sidor ("page", "content") values ('hem', '{"hero":{"eyebrow":"Personlig redovisning med jämtländska rötter","title":"Vi kan ekonomi – räkna med oss","subtitle":"Hos oss vet du vem du pratar med. Fem auktoriserade redovisningskonsulter lär känna ditt företag och blir ett tryggt ekonomiskt bollplank – i Jämtland eller digitalt i hela Sverige.","image":"/images/hero-fjall.jpg","imageAlt":"Snötäckta jämtländska fjälltoppar i mjukt morgonljus"},"tjanster":{"eyebrow":"Våra tjänster","title":"Mer än en redovisningsbyrå","intro":"Bra redovisning visar inte bara vad som har hänt. Med löpande bokföring, bokslut, löneadministration, budget och rådgivning hjälper vi dig också att planera framåt och fatta bättre beslut."},"referenser":{"eyebrow":"Kundreferenser","title":"Vad våra kunder säger"},"aktuellt":{"eyebrow":"Aktuellt","title":"Senaste nytt från byrån"}}'::jsonb);
 insert into public.sidor ("page", "content") values ('om-oss', '{"hero":{"eyebrow":"Om oss","title":"Personligt, tryggt och okomplicerat","intro":"Som privatägd och lokalt förankrad redovisningsbyrå erbjuder vi personlig kontakt, kontinuitet och ett långsiktigt samarbete."},"bild":{"url":"/images/aktuellt-mote.jpg","alt":"Rådgivningsmöte mellan redovisningskonsult och företagare"},"body":{"title":"Här vet du vem du pratar med","stycken":["Hos Ekorrit finns fem auktoriserade redovisningskonsulter. Du får möjlighet att bygga en relation med människor som lär känna ditt företag och din verksamhet, i stället för att möta en ny handläggare från gång till gång.","Huvudkontoret finns i Strömsund och i Östersund har vi ett obemannat lokalkontor. Digitala möten gör att vi kan vara den personliga jämtländska redovisningsbyrån även för företag i andra delar av Sverige – med ett norrländskt lugn i samarbetet."]},"nyckeltal":[{"label":"Auktoriserade konsulter","varde":"5"},{"label":"Kvalitetsledning","varde":"ISO 9001"}],"varderingar":[{"title":"Personlig kontinuitet","body":"Du vet vem du pratar med och bygger en långsiktig relation med människor som lär känna ditt företag och din vardag."},{"title":"Auktoriserad kompetens","body":"Fem auktoriserade redovisningskonsulter ger dig trygg, kvalitetssäkrad hjälp enligt ISO 9001 och Srf Konsulternas regelverk."},{"title":"Ett ekonomiskt bollplank","body":"Vi redovisar inte bara det som har hänt. Du får stöd att planera framåt, fatta bättre beslut och skapa lönsamhet."}]}'::jsonb);
 insert into public.sidor ("page", "content") values ('tjanster', '{"hero":{"eyebrow":"Tjänster","title":"Redovisning som hjälper dig framåt","intro":"Välj de delar du vill lämna ifrån dig – eller låt oss ta hand om hela ekonomifunktionen. Du får en personlig kontakt som lär känna ditt företag och hjälper dig att använda siffrorna för bättre beslut."}}'::jsonb);
 insert into public.sidor ("page", "content") values ('kundreferenser', '{"hero":{"eyebrow":"Kundreferenser","title":"Långsiktiga relationer med våra kunder","intro":"När vi lär känna företaget kan vi bidra med mer än bokföring. Här berättar några kunder om samarbetet med Ekorrit."}}'::jsonb);
+insert into public.sidor ("page", "content") values ('medarbetare', '{"hero":{"eyebrow":"Möt teamet","title":"Människorna bakom Ekorrit","intro":"Hos oss får du en personlig kontakt som lär känna både dig och ditt företag. Här möter du teamet som hjälper våra kunder med redovisning, lön och rådgivning."}}'::jsonb);
 insert into public.sidor ("page", "content") values ('faq', '{"hero":{"eyebrow":"Frågor & svar","title":"Vanliga frågor om redovisning och bokföring","intro":"Hittar du inte svaret här? Ring oss eller skicka ett meddelande – vi svarar gärna."}}'::jsonb);
 insert into public.sidor ("page", "content") values ('aktuellt', '{"hero":{"eyebrow":"Aktuellt","title":"Kunskap för bättre ekonomiska beslut","intro":"Aktuellt om skatt, bokslut, budget, löner och sådant som hjälper dig att planera företagets ekonomi framåt."}}'::jsonb);
 insert into public.sidor ("page", "content") values ('dokument', '{"hero":{"eyebrow":"Dokument","title":"Blanketter och checklistor","intro":"Här samlar vi de dokument våra kunder använder oftast. Saknar du något? Hör av dig, vi skickar det direkt."}}'::jsonb);

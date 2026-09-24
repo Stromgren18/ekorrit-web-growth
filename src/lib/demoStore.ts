@@ -7,6 +7,7 @@ import { aktuellt as aktuelltSeed } from "@/content/aktuellt";
 import { dokument as dokumentSeed } from "@/content/dokument";
 import { faq as faqSeed } from "@/content/faq";
 import { kundreferenser as kundreferenserSeed } from "@/content/kundreferenser";
+import { medarbetare as medarbetareSeed } from "@/content/medarbetare";
 import { tjanster as tjansterSeed } from "@/content/tjanster";
 import { SIDOR } from "@/content/sidor";
 import { certifications, site as siteSeed } from "@/content/site";
@@ -37,6 +38,7 @@ export type SiteContent = {
 export const demoStore: {
   aktuellt: typeof aktuelltSeed;
   kundreferenser: typeof kundreferenserSeed;
+  medarbetare: typeof medarbetareSeed;
   faq: typeof faqSeed;
   tjanster: typeof tjansterSeed;
   dokument: typeof dokumentSeed;
@@ -45,6 +47,7 @@ export const demoStore: {
 } = {
   aktuellt: [...aktuelltSeed],
   kundreferenser: kundreferenserSeed.map((k) => ({ ...k })),
+  medarbetare: medarbetareSeed.map((m) => ({ ...m })),
   faq: faqSeed.map((f) => ({ ...f })),
   tjanster: tjansterSeed.map((t) => ({ ...t })),
   dokument: dokumentSeed.map((d) => ({ ...d })),

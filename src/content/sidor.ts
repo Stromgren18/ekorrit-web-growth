@@ -105,6 +105,14 @@ export const SIDOR: Record<string, Record<string, unknown>> = {
         "När vi lär känna företaget kan vi bidra med mer än bokföring. Här berättar några kunder om samarbetet med Ekorrit.",
     },
   },
+  medarbetare: {
+    hero: {
+      eyebrow: "Möt teamet",
+      title: "Människorna bakom Ekorrit",
+      intro:
+        "Hos oss får du en personlig kontakt som lär känna både dig och ditt företag. Här möter du teamet som hjälper våra kunder med redovisning, lön och rådgivning.",
+    },
+  },
   faq: {
     hero: {
       eyebrow: "Frågor & svar",
