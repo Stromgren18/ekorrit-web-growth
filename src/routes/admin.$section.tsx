@@ -97,7 +97,9 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
     const rad: Rad = redigerar ?? { id: "", ...(tomRad(sektion, rader)) };
     return (
       <div className="max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <h2 className="text-lg font-semibold">{nyRad ? "Ny post" : "Redigera"}</h2>
+        <h2 className="text-lg font-semibold">
+          {nyRad ? (sektion.nyckel === "medarbetare" ? "Lägg till medarbetare" : "Ny post") : "Redigera"}
+        </h2>
         <div className="mt-5">
           <FaltForm
             falt={sektion.falt ?? []}
@@ -143,7 +145,8 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">{rader.length} poster</p>
         <Button size="sm" className="rounded-full" onClick={() => setNyRad(true)}>
-          <Plus className="size-4" aria-hidden /> Ny post
+          <Plus className="size-4" aria-hidden />
+          {sektion.nyckel === "medarbetare" ? "Lägg till medarbetare" : "Ny post"}
         </Button>
       </div>
       <ul className="mt-4 divide-y divide-border/60 overflow-hidden rounded-2xl border border-border bg-card">

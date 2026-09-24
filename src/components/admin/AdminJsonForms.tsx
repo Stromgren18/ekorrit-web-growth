@@ -41,6 +41,7 @@ const SIDNAMN: Record<string, string> = {
   "om-oss": "Om oss",
   tjanster: "Tjänster",
   kundreferenser: "Kundreferenser",
+  medarbetare: "Medarbetare",
   faq: "Frågor & svar",
   aktuellt: "Aktuellt",
   dokument: "Dokument",
@@ -57,7 +58,7 @@ const hero = (intro = true): Grupp => ({
   ],
 });
 
-const enklaSidor = ["tjanster", "kundreferenser", "faq", "aktuellt", "dokument", "kontakt"];
+const enklaSidor = ["tjanster", "kundreferenser", "medarbetare", "faq", "aktuellt", "dokument", "kontakt"];
 const SIDSCHEMAN: Record<string, Grupp[]> = Object.fromEntries(enklaSidor.map((s) => [s, [hero()]]));
 SIDSCHEMAN["hem"] = [
   {

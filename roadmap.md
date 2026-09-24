@@ -15,8 +15,8 @@
 - [x] supabase/GUIDE.md + .env.example (steg-för-steg för användarens eget projekt)
 - [x] Ersätt kodredigering för Sidtexter och Företagsuppgifter med lättanvända formulär
 - [x] Verifiera formulärens sparning, mobilvy och admininloggning
-- [ ] Skapa publik medarbetarsida med porträtt, roller och presentationer
-- [ ] Lägg till enkel medarbetarredigering i adminpanelen och Supabase-scriptet
+- [x] Skapa publik medarbetarsida med porträtt, roller och presentationer
+- [x] Lägg till enkel medarbetarredigering i adminpanelen och Supabase-scriptet
 - [ ] Användaren skapar eget Supabase-projekt och klistrar in VITE_SUPABASE_URL /
       VITE_SUPABASE_PUBLISHABLE_KEY – blockerad: väntar på användarens nycklar
 - [ ] /admin-bygg för riktiga konton (Supabase Auth + user_roles) – väntar på databas
