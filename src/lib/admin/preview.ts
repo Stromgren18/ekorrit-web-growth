@@ -80,14 +80,18 @@ export function allaUtkast<T>(tabell: string): T[] {
  * Slår ihop en hämtad lista med utkasten: befintliga rader ersätts,
  * helt nya utkast läggs till sist. Körs bara i förhandsgranskningsläge.
  */
-export function appliceraUtkast<T extends { id?: string }>(tabell: string, lista: T[]): T[] {
+export function appliceraUtkast<T>(tabell: string, lista: T[]): T[] {
   if (!arForhandsvisningAktiv()) return lista;
   const utkast = allaUtkast<T>(tabell);
   if (utkast.length === 0) return lista;
-  const perId = new Map(utkast.map((u) => [u.id, u]));
-  const sammanslagen = lista.map((rad) => perId.get(rad.id) ?? rad);
-  const kanda = new Set(lista.map((r) => r.id));
-  for (const u of utkast) if (u.id && !kanda.has(u.id)) sammanslagen.push(u);
+  const idAv = (rad: T) => (rad as { id?: string }).id;
+  const perId = new Map(utkast.map((u) => [idAv(u), u]));
+  const sammanslagen = lista.map((rad) => perId.get(idAv(rad)) ?? rad);
+  const kanda = new Set(lista.map(idAv));
+  for (const u of utkast) {
+    const id = idAv(u);
+    if (id && !kanda.has(id)) sammanslagen.push(u);
+  }
   return sammanslagen;
 }
 
