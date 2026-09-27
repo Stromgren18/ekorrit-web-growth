@@ -108,7 +108,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
       return;
     }
     setRader(await listaRader(sektion));
-    tabortUtkast(sektion.tabell!, rad.id || "ny");
+    tabortUtkast(sektion.tabell!, radIdentitet(rad));
     setRedigerar(null);
     setNyRad(false);
     setVisarForhandsvisning(false);
@@ -176,7 +176,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
             variant="outline"
             className="rounded-full"
             onClick={() => {
-              tabortUtkast(sektion.tabell!, rad.id || "ny");
+              tabortUtkast(sektion.tabell!, radIdentitet(rad));
               setVisarForhandsvisning(false);
               setRedigerar(null);
               setNyRad(false);
