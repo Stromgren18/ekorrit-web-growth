@@ -30,7 +30,7 @@ export function Forhandsvisning({
   }, [version]);
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] min-h-[32rem] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="flex h-[calc(100vh-8rem)] min-h-[32rem] flex-col self-start overflow-hidden rounded-2xl border border-border bg-card shadow-sm xl:sticky xl:top-4">
       <div className="flex flex-wrap items-center gap-2 border-b border-border bg-secondary/50 px-3 py-2">
         <p className="mr-auto text-xs font-medium text-muted-foreground">
           Förhandsgranskning – ändringarna är inte sparade ännu

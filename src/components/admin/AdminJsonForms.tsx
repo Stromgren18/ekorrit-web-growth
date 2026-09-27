@@ -261,7 +261,7 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
   return (
     <div className={visarForhandsvisning ? "grid gap-6 xl:grid-cols-[minmax(0,36rem)_1fr]" : "max-w-4xl"}>
       {!site ? (
-        <div className="mb-6">
+        <div className={visarForhandsvisning ? "mb-6 xl:col-span-2" : "mb-6"}>
           <Label htmlFor="sidval">Välj sida att redigera</Label>
           <select id="sidval" value={vald} onChange={(e) => bytSida(e.target.value)} className="mt-2 h-11 w-full max-w-sm rounded-xl border border-input bg-background px-3 text-sm">
             {sidNycklar.map((nyckel) => <option key={nyckel} value={nyckel}>{SIDNAMN[nyckel] ?? nyckel}</option>)}
