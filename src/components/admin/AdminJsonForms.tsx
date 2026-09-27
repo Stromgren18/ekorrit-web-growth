@@ -308,6 +308,13 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
           </div>
         </form>
       ) : <p className="text-sm text-muted-foreground">Laddar innehåll…</p>}
+      {visarForhandsvisning ? (
+        <Forhandsvisning
+          sokvag={forhandsSokvag}
+          version={forhandsVersion}
+          onStang={() => setVisarForhandsvisning(false)}
+        />
+      ) : null}
     </div>
   );
 }
