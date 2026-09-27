@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { FaqPost } from "@/content/faq";
 import { demoStore } from "@/lib/demoStore";
+import { appliceraUtkast } from "@/lib/admin/preview";
 import { hamtaTabell } from "./backend";
 
 const sorterade = (lista: FaqPost[]) => [...lista].sort((a, b) => a.sort_order - b.sort_order);
@@ -10,5 +11,7 @@ export const faqQuery = () =>
   queryOptions({
     queryKey: ["faq"],
     initialData: sorterade(demoStore.faq),
-    queryFn: async () => sorterade(await hamtaTabell<FaqPost>("faq", demoStore.faq, "sort_order")),
+    queryFn: async () =>
+      sorterade(await hamtaTabell<FaqPost>("faq", demoStore.faq, "sort_order")),
+    select: (data) => appliceraUtkast("faq", data),
   });

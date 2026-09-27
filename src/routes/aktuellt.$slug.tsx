@@ -63,8 +63,10 @@ export const Route = createFileRoute("/aktuellt/$slug")({
 });
 
 function ArtikelPage() {
-  const { artikel } = Route.useLoaderData();
+  const { artikel: laddad } = Route.useLoaderData();
   const { data: alla } = useSuspenseQuery(aktuelltQuery());
+  // Listan innehåller eventuella förhandsgranskningsutkast – den vinner.
+  const artikel = alla.find((a) => a.slug === laddad.slug) ?? laddad;
   const relaterade = alla.filter((a) => a.slug !== artikel.slug).slice(0, 3);
   const stycken = artikel.content.split("\n\n").filter(Boolean);
 

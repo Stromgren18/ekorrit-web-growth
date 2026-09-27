@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Plus, Save, Trash2 } from "lucide-react";
+import { Eye, Plus, Save, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { FaltForm } from "@/components/admin/EntityForm";
+import { Forhandsvisning } from "@/components/admin/Forhandsvisning";
 import { hamtaJson, sparaJson, useUppdateraSajt } from "@/lib/admin/api";
+import { sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
 import type { Sektion } from "@/lib/admin/sections";
 
 type EnkelTyp = "text" | "textarea" | "email" | "tel" | "url" | "image" | "stringList";
@@ -187,8 +189,20 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
   const [smutsig, setSmutsig] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [sparar, setSparar] = useState(false);
+  const [visarForhandsvisning, setVisarForhandsvisning] = useState(false);
+  const [forhandsVersion, setForhandsVersion] = useState(0);
   const uppdateraSajt = useUppdateraSajt();
   const laddning = useRef(0);
+
+  /** Utkastet lagras under tabellnamnet ("sidor"/"site") + vald nyckel. */
+  const utkastTabell = site ? "site" : "sidor";
+  const utkastId = site ? "site" : vald;
+  const forhandsSokvag = site ? "/kontakt" : vald === "hem" ? "/" : `/${vald}`;
+
+  const uppdateraUtkast = (varde: Record<string, unknown>) => {
+    sparaUtkast(utkastTabell, utkastId, varde);
+    setForhandsVersion((v) => v + 1);
+  };
 
   useEffect(() => {
     const id = ++laddning.current;
@@ -212,7 +226,12 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
   }, [smutsig]);
 
   const andra = (path: string[], varde: unknown) => {
-    setData((nu) => nu ? satt(nu, path, varde) : nu);
+    setData((nu) => {
+      if (!nu) return nu;
+      const nasta = satt(nu, path, varde);
+      if (visarForhandsvisning) uppdateraUtkast(nasta);
+      return nasta;
+    });
     setSmutsig(true);
     setStatus("Osparade ändringar");
   };
@@ -225,6 +244,7 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
     const resultat = await sparaJson(sektion, vald, data);
     setSparar(false);
     if (resultat.ok) {
+      tabortUtkast(utkastTabell, utkastId);
       setSmutsig(false);
       setStatus("Sparat");
       uppdateraSajt();
@@ -239,9 +259,9 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
 
   const grupper = site ? SITESCHEMA : SIDSCHEMAN[vald] ?? [hero()];
   return (
-    <div className="max-w-4xl">
+    <div className={visarForhandsvisning ? "grid gap-6 xl:grid-cols-[minmax(0,36rem)_1fr]" : "max-w-4xl"}>
       {!site ? (
-        <div className="mb-6">
+        <div className={visarForhandsvisning ? "mb-6 xl:col-span-2" : "mb-6"}>
           <Label htmlFor="sidval">Välj sida att redigera</Label>
           <select id="sidval" value={vald} onChange={(e) => bytSida(e.target.value)} className="mt-2 h-11 w-full max-w-sm rounded-xl border border-input bg-background px-3 text-sm">
             {sidNycklar.map((nyckel) => <option key={nyckel} value={nyckel}>{SIDNAMN[nyckel] ?? nyckel}</option>)}
@@ -268,10 +288,33 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
             <Button type="submit" className="rounded-full" disabled={sparar || !smutsig}>
               <Save className="size-4" aria-hidden /> {sparar ? "Sparar…" : "Spara ändringar"}
             </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-full"
+              onClick={() => {
+                if (visarForhandsvisning) {
+                  setVisarForhandsvisning(false);
+                } else if (data) {
+                  uppdateraUtkast(data);
+                  setVisarForhandsvisning(true);
+                }
+              }}
+            >
+              <Eye className="size-4" aria-hidden />
+              {visarForhandsvisning ? "Stäng förhandsgranskning" : "Förhandsgranska"}
+            </Button>
             <p className="text-sm text-muted-foreground" role="status">{status ?? "Alla ändringar är sparade"}</p>
           </div>
         </form>
       ) : <p className="text-sm text-muted-foreground">Laddar innehåll…</p>}
+      {visarForhandsvisning ? (
+        <Forhandsvisning
+          sokvag={forhandsSokvag}
+          version={forhandsVersion}
+          onStang={() => setVisarForhandsvisning(false)}
+        />
+      ) : null}
     </div>
   );
 }

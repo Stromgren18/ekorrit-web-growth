@@ -1,12 +1,14 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Plus, Save } from "lucide-react";
+import { Eye, Plus, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { FaltForm } from "@/components/admin/EntityForm";
 import { AdminJsonForm } from "@/components/admin/AdminJsonForms";
+import { Forhandsvisning } from "@/components/admin/Forhandsvisning";
 import { arAdmin } from "@/lib/admin/auth";
+import { radIdentitet, sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
 import { hittaSektion, SEKTIONER } from "@/lib/admin/sections";
 import {
   listaRader,
@@ -52,7 +54,35 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   const [nyRad, setNyRad] = useState(false);
   const [sparar, setSparar] = useState(false);
   const [meddelande, setMeddelande] = useState<string | null>(null);
+  const [visarForhandsvisning, setVisarForhandsvisning] = useState(false);
+  const [forhandsVersion, setForhandsVersion] = useState(0);
   const uppdateraSajt = useUppdateraSajt();
+
+  /** Publik sökväg där posten syns – används för förhandsgranskningen. */
+  const forhandsSokvag = (rad: Rad | null): string => {
+    const slug = rad?.["slug"] ? String(rad["slug"]) : "";
+    switch (sektion.tabell) {
+      case "aktuellt":
+        return slug ? `/aktuellt/${slug}` : "/aktuellt";
+      case "tjanster":
+        return slug ? `/tjanster/${slug}` : "/tjanster";
+      case "kundreferenser":
+        return "/kundreferenser";
+      case "faq":
+        return "/faq";
+      case "dokument":
+        return "/dokument";
+      case "medarbetare":
+        return "/medarbetare";
+      default:
+        return "/";
+    }
+  };
+
+  const uppdateraUtkast = (rad: Rad) => {
+    sparaUtkast(sektion.tabell!, radIdentitet(rad), rad);
+    setForhandsVersion((v) => v + 1);
+  };
 
   useEffect(() => {
     let aktivt = true;
@@ -78,8 +108,10 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
       return;
     }
     setRader(await listaRader(sektion));
+    tabortUtkast(sektion.tabell!, radIdentitet(rad));
     setRedigerar(null);
     setNyRad(false);
+    setVisarForhandsvisning(false);
     setMeddelande("Sparat!");
     uppdateraSajt();
   }
@@ -96,6 +128,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   if (redigerar || nyRad) {
     const rad: Rad = redigerar ?? { id: "", ...(tomRad(sektion, rader)) };
     return (
+      <div className={visarForhandsvisning ? "grid gap-6 xl:grid-cols-[minmax(0,28rem)_1fr]" : ""}>
       <div className="max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold">
           {nyRad ? (sektion.nyckel === "medarbetare" ? "Lägg till medarbetare" : "Ny post") : "Redigera"}
@@ -104,9 +137,13 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           <FaltForm
             falt={sektion.falt ?? []}
             rad={rad}
-            onAndra={(nyckel, varde) =>
-              setRedigerar((prev) => (prev ? { ...prev, [nyckel]: varde } : prev))
-            }
+            onAndra={(nyckel, varde) => {
+              setRedigerar((prev) => {
+                const nasta = prev ? { ...prev, [nyckel]: varde } : prev;
+                if (nasta && visarForhandsvisning) uppdateraUtkast(nasta);
+                return nasta;
+              });
+            }}
           />
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -120,9 +157,27 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
             <Save className="size-4" aria-hidden /> {sparar ? "Sparar…" : "Spara"}
           </Button>
           <Button
+            type="button"
             variant="outline"
             className="rounded-full"
             onClick={() => {
+              if (visarForhandsvisning) {
+                setVisarForhandsvisning(false);
+              } else {
+                uppdateraUtkast(rad);
+                setVisarForhandsvisning(true);
+              }
+            }}
+          >
+            <Eye className="size-4" aria-hidden />
+            {visarForhandsvisning ? "Stäng förhandsgranskning" : "Förhandsgranska"}
+          </Button>
+          <Button
+            variant="outline"
+            className="rounded-full"
+            onClick={() => {
+              tabortUtkast(sektion.tabell!, radIdentitet(rad));
+              setVisarForhandsvisning(false);
               setRedigerar(null);
               setNyRad(false);
             }}
@@ -136,6 +191,14 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           ) : null}
         </div>
         {meddelande ? <p className="mt-3 text-sm text-muted-foreground">{meddelande}</p> : null}
+      </div>
+      {visarForhandsvisning ? (
+        <Forhandsvisning
+          sokvag={forhandsSokvag(rad)}
+          version={forhandsVersion}
+          onStang={() => setVisarForhandsvisning(false)}
+        />
+      ) : null}
       </div>
     );
   }

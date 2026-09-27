@@ -17,6 +17,7 @@
 - [x] Verifiera formulärens sparning, mobilvy och admininloggning
 - [x] Skapa publik medarbetarsida med porträtt, roller och presentationer
 - [x] Lägg till enkel medarbetarredigering i adminpanelen och Supabase-scriptet
+- [x] Förhandsgranskning före publicering: delad vy, enhetsväxling, utkast i sessionStorage
 - [ ] Användaren skapar eget Supabase-projekt och klistrar in VITE_SUPABASE_URL /
       VITE_SUPABASE_PUBLISHABLE_KEY – blockerad: väntar på användarens nycklar
 - [ ] /admin-bygg för riktiga konton (Supabase Auth + user_roles) – väntar på databas
