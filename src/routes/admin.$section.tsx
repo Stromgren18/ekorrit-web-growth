@@ -128,6 +128,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   if (redigerar || nyRad) {
     const rad: Rad = redigerar ?? { id: "", ...(tomRad(sektion, rader)) };
     return (
+      <div className={visarForhandsvisning ? "grid gap-6 xl:grid-cols-[minmax(0,28rem)_1fr]" : ""}>
       <div className="max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold">
           {nyRad ? (sektion.nyckel === "medarbetare" ? "Lägg till medarbetare" : "Ny post") : "Redigera"}
@@ -136,9 +137,13 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           <FaltForm
             falt={sektion.falt ?? []}
             rad={rad}
-            onAndra={(nyckel, varde) =>
-              setRedigerar((prev) => (prev ? { ...prev, [nyckel]: varde } : prev))
-            }
+            onAndra={(nyckel, varde) => {
+              setRedigerar((prev) => {
+                const nasta = prev ? { ...prev, [nyckel]: varde } : prev;
+                if (nasta && visarForhandsvisning) uppdateraUtkast(nasta);
+                return nasta;
+              });
+            }}
           />
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -152,9 +157,27 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
             <Save className="size-4" aria-hidden /> {sparar ? "Sparar…" : "Spara"}
           </Button>
           <Button
+            type="button"
             variant="outline"
             className="rounded-full"
             onClick={() => {
+              if (visarForhandsvisning) {
+                setVisarForhandsvisning(false);
+              } else {
+                uppdateraUtkast(rad);
+                setVisarForhandsvisning(true);
+              }
+            }}
+          >
+            <Eye className="size-4" aria-hidden />
+            {visarForhandsvisning ? "Stäng förhandsgranskning" : "Förhandsgranska"}
+          </Button>
+          <Button
+            variant="outline"
+            className="rounded-full"
+            onClick={() => {
+              tabortUtkast(sektion.tabell!, rad.id || "ny");
+              setVisarForhandsvisning(false);
               setRedigerar(null);
               setNyRad(false);
             }}
