@@ -58,7 +58,10 @@ export const Route = createFileRoute("/tjanster/$slug")({
 });
 
 function TjanstPage() {
-  const { tjanst } = Route.useLoaderData();
+  const { tjanst: laddad } = Route.useLoaderData();
+  const { data: lista } = useSuspenseQuery(tjansterQuery());
+  // Listan innehåller eventuella förhandsgranskningsutkast – den vinner.
+  const tjanst = lista.find((t) => t.slug === laddad.slug) ?? laddad;
 
   return (
     <>
