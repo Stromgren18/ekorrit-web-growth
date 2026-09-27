@@ -1,12 +1,14 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Plus, Save } from "lucide-react";
+import { Eye, Plus, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { FaltForm } from "@/components/admin/EntityForm";
 import { AdminJsonForm } from "@/components/admin/AdminJsonForms";
+import { Forhandsvisning } from "@/components/admin/Forhandsvisning";
 import { arAdmin } from "@/lib/admin/auth";
+import { sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
 import { hittaSektion, SEKTIONER } from "@/lib/admin/sections";
 import {
   listaRader,
