@@ -189,8 +189,20 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
   const [smutsig, setSmutsig] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [sparar, setSparar] = useState(false);
+  const [visarForhandsvisning, setVisarForhandsvisning] = useState(false);
+  const [forhandsVersion, setForhandsVersion] = useState(0);
   const uppdateraSajt = useUppdateraSajt();
   const laddning = useRef(0);
+
+  /** Utkastet lagras under tabellnamnet ("sidor"/"site") + vald nyckel. */
+  const utkastTabell = site ? "site" : "sidor";
+  const utkastId = site ? "site" : vald;
+  const forhandsSokvag = site ? "/kontakt" : vald === "hem" ? "/" : `/${vald}`;
+
+  const uppdateraUtkast = (varde: Record<string, unknown>) => {
+    sparaUtkast(utkastTabell, utkastId, varde);
+    setForhandsVersion((v) => v + 1);
+  };
 
   useEffect(() => {
     const id = ++laddning.current;
@@ -214,7 +226,12 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
   }, [smutsig]);
 
   const andra = (path: string[], varde: unknown) => {
-    setData((nu) => nu ? satt(nu, path, varde) : nu);
+    setData((nu) => {
+      if (!nu) return nu;
+      const nasta = satt(nu, path, varde);
+      if (visarForhandsvisning) uppdateraUtkast(nasta);
+      return nasta;
+    });
     setSmutsig(true);
     setStatus("Osparade ändringar");
   };
@@ -227,6 +244,7 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
     const resultat = await sparaJson(sektion, vald, data);
     setSparar(false);
     if (resultat.ok) {
+      tabortUtkast(utkastTabell, utkastId);
       setSmutsig(false);
       setStatus("Sparat");
       uppdateraSajt();
