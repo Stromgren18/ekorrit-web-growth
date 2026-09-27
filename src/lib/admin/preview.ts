@@ -15,6 +15,13 @@ export function utkastNyckel(tabell: string, id: string): string {
   return `${PREFIX}${tabell}:${id}`;
 }
 
+/** Stabil identitet för en rad – demodata saknar ibland id. */
+export function radIdentitet(rad: Record<string, unknown>): string {
+  return String(
+    rad["id"] || rad["slug"] || rad["company_name"] || rad["question"] || rad["title"] || rad["name"] || "ny",
+  );
+}
+
 /** Aktiveras när en sida öppnas med ?forhandsvisning=1. Returnerar true om läget är på. */
 export function arForhandsvisningAktiv(): boolean {
   const l = lagring();

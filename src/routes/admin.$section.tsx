@@ -8,7 +8,7 @@ import { FaltForm } from "@/components/admin/EntityForm";
 import { AdminJsonForm } from "@/components/admin/AdminJsonForms";
 import { Forhandsvisning } from "@/components/admin/Forhandsvisning";
 import { arAdmin } from "@/lib/admin/auth";
-import { sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
+import { radIdentitet, sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
 import { hittaSektion, SEKTIONER } from "@/lib/admin/sections";
 import {
   listaRader,
@@ -80,7 +80,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   };
 
   const uppdateraUtkast = (rad: Rad) => {
-    sparaUtkast(sektion.tabell!, rad.id || "ny", rad);
+    sparaUtkast(sektion.tabell!, radIdentitet(rad), rad);
     setForhandsVersion((v) => v + 1);
   };
 
