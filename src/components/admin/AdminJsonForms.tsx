@@ -259,7 +259,7 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
 
   const grupper = site ? SITESCHEMA : SIDSCHEMAN[vald] ?? [hero()];
   return (
-    <div className="max-w-4xl">
+    <div className={visarForhandsvisning ? "grid gap-6 xl:grid-cols-[minmax(0,36rem)_1fr]" : "max-w-4xl"}>
       {!site ? (
         <div className="mb-6">
           <Label htmlFor="sidval">Välj sida att redigera</Label>
@@ -287,6 +287,22 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
           <div className="sticky bottom-3 flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card/95 p-3 shadow-lg backdrop-blur">
             <Button type="submit" className="rounded-full" disabled={sparar || !smutsig}>
               <Save className="size-4" aria-hidden /> {sparar ? "Sparar…" : "Spara ändringar"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-full"
+              onClick={() => {
+                if (visarForhandsvisning) {
+                  setVisarForhandsvisning(false);
+                } else if (data) {
+                  uppdateraUtkast(data);
+                  setVisarForhandsvisning(true);
+                }
+              }}
+            >
+              <Eye className="size-4" aria-hidden />
+              {visarForhandsvisning ? "Stäng förhandsgranskning" : "Förhandsgranska"}
             </Button>
             <p className="text-sm text-muted-foreground" role="status">{status ?? "Alla ändringar är sparade"}</p>
           </div>
