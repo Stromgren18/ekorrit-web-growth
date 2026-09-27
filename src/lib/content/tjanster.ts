@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { Tjanst } from "@/content/tjanster";
 import { demoStore } from "@/lib/demoStore";
+import { appliceraUtkast } from "@/lib/admin/preview";
 import { hamtaTabell } from "./backend";
 
 export const sorteraTjanster = (lista: Tjanst[]) =>
@@ -15,5 +16,10 @@ export const tjansterQuery = () =>
     queryKey: ["tjanster"],
     initialData: demoStore.tjanster,
     queryFn: async () =>
-      sorteraTjanster(await hamtaTabell<Tjanst>("tjanster", demoStore.tjanster, "sort_order")),
+      sorteraTjanster(
+        appliceraUtkast(
+          "tjanster",
+          await hamtaTabell<Tjanst>("tjanster", demoStore.tjanster, "sort_order"),
+        ),
+      ),
   });

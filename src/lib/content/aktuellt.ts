@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { Artikel } from "@/content/aktuellt";
 import { demoStore } from "@/lib/demoStore";
+import { appliceraUtkast } from "@/lib/admin/preview";
 import { hamtaTabell } from "./backend";
 
 /**
@@ -16,6 +17,9 @@ export const aktuelltQuery = () =>
     initialData: sorteraAktuellt(demoStore.aktuellt),
     queryFn: async () =>
       sorteraAktuellt(
-        await hamtaTabell<Artikel>("aktuellt", demoStore.aktuellt, "published_at"),
+        appliceraUtkast(
+          "aktuellt",
+          await hamtaTabell<Artikel>("aktuellt", demoStore.aktuellt, "published_at"),
+        ),
       ),
   });

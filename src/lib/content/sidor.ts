@@ -1,5 +1,6 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { demoStore } from "@/lib/demoStore";
+import { appliceraJsonUtkast } from "@/lib/admin/preview";
 import { hamtaJsonRad } from "./backend";
 
 /** Supabase-tabellen `sidor` (page + content jsonb) om kopplad, annars demoläget. */
@@ -9,7 +10,8 @@ export const sidaQuery = (page: string) =>
     initialData: demoStore.sidor[page] ?? {},
     queryFn: async () => {
       const db = await hamtaJsonRad("sidor", "page", "content", page);
-      return db ?? demoStore.sidor[page] ?? {};
+      const data = db ?? demoStore.sidor[page] ?? {};
+      return appliceraJsonUtkast("sidor", page, data);
     },
   });
 
