@@ -54,7 +54,35 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   const [nyRad, setNyRad] = useState(false);
   const [sparar, setSparar] = useState(false);
   const [meddelande, setMeddelande] = useState<string | null>(null);
+  const [visarForhandsvisning, setVisarForhandsvisning] = useState(false);
+  const [forhandsVersion, setForhandsVersion] = useState(0);
   const uppdateraSajt = useUppdateraSajt();
+
+  /** Publik sökväg där posten syns – används för förhandsgranskningen. */
+  const forhandsSokvag = (rad: Rad | null): string => {
+    const slug = rad?.["slug"] ? String(rad["slug"]) : "";
+    switch (sektion.tabell) {
+      case "aktuellt":
+        return slug ? `/aktuellt/${slug}` : "/aktuellt";
+      case "tjanster":
+        return slug ? `/tjanster/${slug}` : "/tjanster";
+      case "kundreferenser":
+        return "/kundreferenser";
+      case "faq":
+        return "/faq";
+      case "dokument":
+        return "/dokument";
+      case "medarbetare":
+        return "/medarbetare";
+      default:
+        return "/";
+    }
+  };
+
+  const uppdateraUtkast = (rad: Rad) => {
+    sparaUtkast(sektion.tabell!, rad.id || "ny", rad);
+    setForhandsVersion((v) => v + 1);
+  };
 
   useEffect(() => {
     let aktivt = true;
@@ -80,8 +108,10 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
       return;
     }
     setRader(await listaRader(sektion));
+    tabortUtkast(sektion.tabell!, rad.id || "ny");
     setRedigerar(null);
     setNyRad(false);
+    setVisarForhandsvisning(false);
     setMeddelande("Sparat!");
     uppdateraSajt();
   }
