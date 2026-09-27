@@ -84,7 +84,11 @@ export function appliceraUtkast<T>(tabell: string, lista: T[]): T[] {
   if (!arForhandsvisningAktiv()) return lista;
   const utkast = allaUtkast<T>(tabell);
   if (utkast.length === 0) return lista;
-  const idAv = (rad: T) => (rad as { id?: string }).id;
+  // Demodata saknar ibland id – fall tillbaka på slug eller rubrikliknande fält.
+  const idAv = (rad: T) => {
+    const r = rad as Record<string, unknown>;
+    return String(r["id"] ?? r["slug"] ?? r["company_name"] ?? r["question"] ?? r["title"] ?? r["name"] ?? "");
+  };
   const perId = new Map(utkast.map((u) => [idAv(u), u]));
   const sammanslagen = lista.map((rad) => perId.get(idAv(rad)) ?? rad);
   const kanda = new Set(lista.map(idAv));
