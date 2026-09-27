@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Plus, Save, Trash2 } from "lucide-react";
+import { Eye, Plus, Save, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { FaltForm } from "@/components/admin/EntityForm";
+import { Forhandsvisning } from "@/components/admin/Forhandsvisning";
 import { hamtaJson, sparaJson, useUppdateraSajt } from "@/lib/admin/api";
+import { sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
 import type { Sektion } from "@/lib/admin/sections";
 
 type EnkelTyp = "text" | "textarea" | "email" | "tel" | "url" | "image" | "stringList";
