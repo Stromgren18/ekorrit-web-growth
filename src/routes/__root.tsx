@@ -133,10 +133,26 @@ function RootComponent() {
   // Adminpanelen har egen ram – sajmensy och sidfot visas bara på de publika sidorna.
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const iAdmin = pathname.startsWith("/admin");
+  const forhandsvisning = !iAdmin && arForhandsvisningAktiv();
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
+        {forhandsvisning && (
+          <div className="sticky top-0 z-50 flex items-center justify-center gap-3 bg-amber-100 px-4 py-2 text-center text-xs font-medium text-amber-900">
+            <span>Förhandsgranskning – ändringarna är inte sparade ännu och syns bara för dig.</span>
+            <button
+              type="button"
+              className="rounded-full border border-amber-300 px-2.5 py-0.5 hover:bg-amber-200"
+              onClick={() => {
+                stangForhandsvisning();
+                window.location.href = window.location.pathname;
+              }}
+            >
+              Avsluta
+            </button>
+          </div>
+        )}
         {!iAdmin && <Header />}
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
