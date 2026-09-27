@@ -192,6 +192,14 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
         </div>
         {meddelande ? <p className="mt-3 text-sm text-muted-foreground">{meddelande}</p> : null}
       </div>
+      {visarForhandsvisning ? (
+        <Forhandsvisning
+          sokvag={forhandsSokvag(rad)}
+          version={forhandsVersion}
+          onStang={() => setVisarForhandsvisning(false)}
+        />
+      ) : null}
+      </div>
     );
   }
 
