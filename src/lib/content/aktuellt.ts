@@ -17,9 +17,7 @@ export const aktuelltQuery = () =>
     initialData: sorteraAktuellt(demoStore.aktuellt),
     queryFn: async () =>
       sorteraAktuellt(
-        appliceraUtkast(
-          "aktuellt",
-          await hamtaTabell<Artikel>("aktuellt", demoStore.aktuellt, "published_at"),
-        ),
+        await hamtaTabell<Artikel>("aktuellt", demoStore.aktuellt, "published_at"),
       ),
+    select: (data) => appliceraUtkast("aktuellt", data),
   });

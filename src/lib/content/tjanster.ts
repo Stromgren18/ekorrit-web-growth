@@ -16,10 +16,6 @@ export const tjansterQuery = () =>
     queryKey: ["tjanster"],
     initialData: demoStore.tjanster,
     queryFn: async () =>
-      sorteraTjanster(
-        appliceraUtkast(
-          "tjanster",
-          await hamtaTabell<Tjanst>("tjanster", demoStore.tjanster, "sort_order"),
-        ),
-      ),
+      sorteraTjanster(await hamtaTabell<Tjanst>("tjanster", demoStore.tjanster, "sort_order")),
+    select: (data) => appliceraUtkast("tjanster", data),
   });

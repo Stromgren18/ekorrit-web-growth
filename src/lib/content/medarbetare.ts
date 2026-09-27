@@ -10,8 +10,6 @@ export const medarbetareQuery = () =>
     queryKey: ["medarbetare"],
     initialData: demoStore.medarbetare,
     queryFn: async () =>
-      appliceraUtkast(
-        "medarbetare",
-        await hamtaTabell<Medarbetare>("medarbetare", demoStore.medarbetare, "sort_order"),
-      ),
+      hamtaTabell<Medarbetare>("medarbetare", demoStore.medarbetare, "sort_order"),
+    select: (data) => appliceraUtkast("medarbetare", data),
   });

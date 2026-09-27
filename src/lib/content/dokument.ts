@@ -16,10 +16,6 @@ export const dokumentQuery = () =>
     queryKey: ["dokument"],
     initialData: sorterade(demoStore.dokument),
     queryFn: async () =>
-      sorterade(
-        appliceraUtkast(
-          "dokument",
-          await hamtaTabell<Dokument>("dokument", demoStore.dokument, "sort_order"),
-        ),
-      ),
+      sorterade(await hamtaTabell<Dokument>("dokument", demoStore.dokument, "sort_order")),
+    select: (data) => appliceraUtkast("dokument", data),
   });

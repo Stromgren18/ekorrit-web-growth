@@ -16,8 +16,9 @@ export const siteQuery = () =>
         const db = await hamtaJsonRad("site_installningar", "key", "value", "site");
         if (db) data = { ...demoStore.site, ...db } as SiteContent;
       }
-      return appliceraJsonUtkast("site", "site", data);
+      return data;
     },
+    select: (data: SiteContent) => appliceraJsonUtkast("site", "site", data),
   });
 
 export function useSite(): SiteContent {

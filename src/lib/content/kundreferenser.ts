@@ -10,12 +10,10 @@ export const kundreferenserQuery = () =>
     queryKey: ["kundreferenser"],
     initialData: demoStore.kundreferenser,
     queryFn: async () =>
-      appliceraUtkast(
+      hamtaTabell<Kundreferens>(
         "kundreferenser",
-        await hamtaTabell<Kundreferens>(
-          "kundreferenser",
-          demoStore.kundreferenser,
-          "sort_order",
-        ),
+        demoStore.kundreferenser,
+        "sort_order",
       ),
+    select: (data) => appliceraUtkast("kundreferenser", data),
   });

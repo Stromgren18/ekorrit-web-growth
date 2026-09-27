@@ -10,9 +10,9 @@ export const sidaQuery = (page: string) =>
     initialData: demoStore.sidor[page] ?? {},
     queryFn: async () => {
       const db = await hamtaJsonRad("sidor", "page", "content", page);
-      const data = db ?? demoStore.sidor[page] ?? {};
-      return appliceraJsonUtkast("sidor", page, data);
+      return db ?? demoStore.sidor[page] ?? {};
     },
+    select: (data: Record<string, unknown>) => appliceraJsonUtkast("sidor", page, data),
   });
 
 /** Slår ihop sparat innehåll med standardvärdena så att saknade fält är trygga. */

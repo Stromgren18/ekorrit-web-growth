@@ -12,7 +12,6 @@ export const faqQuery = () =>
     queryKey: ["faq"],
     initialData: sorterade(demoStore.faq),
     queryFn: async () =>
-      sorterade(
-        appliceraUtkast("faq", await hamtaTabell<FaqPost>("faq", demoStore.faq, "sort_order")),
-      ),
+      sorterade(await hamtaTabell<FaqPost>("faq", demoStore.faq, "sort_order")),
+    select: (data) => appliceraUtkast("faq", data),
   });
