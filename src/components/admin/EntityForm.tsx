@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { upladdaBild } from "@/lib/admin/image";
+import { BeskarningsDialog } from "./Beskarning";
 import type { Falt, Rad } from "./EntityFormTypes";
 
 export type { Falt, Rad };
@@ -47,6 +48,18 @@ function FaltRad({
   const [laddar, setLaddar] = useState(false);
   const [fel, setFel] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
+  const [attBeskara, setAttBeskara] = useState<File | null>(null);
+
+  async function ladda(fil: File) {
+    setLaddar(true);
+    setFel(null);
+    setInfo(null);
+    const res = await upladdaBild(fil);
+    setLaddar(false);
+    if (res.url) onAndra(falt.nyckel, res.url);
+    if (res.info) setInfo(res.info);
+    if (res.fel) setFel(res.fel);
+  }
 
   switch (falt.typ) {
     case "text":
@@ -183,18 +196,23 @@ function FaltRad({
             type="file"
             accept="image/*"
             className="hidden"
-            onChange={async (e) => {
+            onChange={(e) => {
               const fil = e.target.files?.[0];
-              if (!fil) return;
-              setLaddar(true);
-              setFel(null);
-              setInfo(null);
-              const res = await upladdaBild(fil);
-              setLaddar(false);
-              if (res.url) onAndra(falt.nyckel, res.url);
-              if (res.info) setInfo(res.info);
-              if (res.fel) setFel(res.fel);
               e.target.value = "";
+              if (!fil) return;
+              if (fil.type === "image/svg+xml" || fil.type === "image/gif") void ladda(fil);
+              else setAttBeskara(fil);
+            }}
+          />
+          <BeskarningsDialog
+            fil={attBeskara}
+            startFormat={
+              /porträtt/i.test(falt.label) ? 4 / 5 : /logo/i.test(falt.label) ? 0 : 16 / 9
+            }
+            onAvbryt={() => setAttBeskara(null)}
+            onKlar={(f) => {
+              setAttBeskara(null);
+              void ladda(f);
             }}
           />
           <Input
