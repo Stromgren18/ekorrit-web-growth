@@ -46,6 +46,7 @@ function FaltRad({
   const filRef = useRef<HTMLInputElement>(null);
   const [laddar, setLaddar] = useState(false);
   const [fel, setFel] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
 
   switch (falt.typ) {
     case "text":
@@ -187,9 +188,11 @@ function FaltRad({
               if (!fil) return;
               setLaddar(true);
               setFel(null);
+              setInfo(null);
               const res = await upladdaBild(fil);
               setLaddar(false);
               if (res.url) onAndra(falt.nyckel, res.url);
+              if (res.info) setInfo(res.info);
               if (res.fel) setFel(res.fel);
               e.target.value = "";
             }}
@@ -200,7 +203,11 @@ function FaltRad({
             onChange={(e) => onAndra(falt.nyckel, e.target.value)}
             className="rounded-xl text-xs"
           />
+          {info ? <p className="text-xs font-medium text-primary">✓ {info}</p> : null}
           {fel ? <p className="text-xs text-destructive">{fel}</p> : null}
+          <p className="text-xs text-muted-foreground">
+            Bilder krymps automatiskt till max 1920 px och sparas i ett lätt format.
+          </p>
           <p className="text-xs text-muted-foreground">
             Utan kopplad databas sparas bilden bara under sessionen.
           </p>
