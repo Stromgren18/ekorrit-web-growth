@@ -8,7 +8,7 @@ import { hamtaTabell } from "./backend";
 export const kundreferenserQuery = () =>
   queryOptions({
     queryKey: ["kundreferenser"],
-    initialData: demoStore.kundreferenser,
+    placeholderData: demoStore.kundreferenser,
     queryFn: async () =>
       hamtaTabell<Kundreferens>(
         "kundreferenser",

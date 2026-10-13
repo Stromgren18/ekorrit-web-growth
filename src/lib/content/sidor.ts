@@ -7,7 +7,7 @@ import { hamtaJsonRad } from "./backend";
 export const sidaQuery = (page: string) =>
   queryOptions({
     queryKey: ["sidor", page],
-    initialData: demoStore.sidor[page] ?? {},
+    placeholderData: demoStore.sidor[page] ?? {},
     queryFn: async () => {
       const db = await hamtaJsonRad("sidor", "page", "content", page);
       return db ?? demoStore.sidor[page] ?? {};

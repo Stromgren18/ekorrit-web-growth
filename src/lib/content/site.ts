@@ -9,7 +9,7 @@ import { hamtaJsonRad } from "./backend";
 export const siteQuery = () =>
   queryOptions({
     queryKey: ["site"],
-    initialData: demoStore.site,
+    placeholderData: demoStore.site,
     queryFn: async () => {
       let data = demoStore.site;
       if (isSupabaseConfigured && supabase) {
