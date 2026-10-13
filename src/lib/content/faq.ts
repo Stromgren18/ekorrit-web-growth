@@ -10,7 +10,7 @@ const sorterade = (lista: FaqPost[]) => [...lista].sort((a, b) => a.sort_order -
 export const faqQuery = () =>
   queryOptions({
     queryKey: ["faq"],
-    initialData: sorterade(demoStore.faq),
+    placeholderData: sorterade(demoStore.faq),
     queryFn: async () =>
       sorterade(await hamtaTabell<FaqPost>("faq", demoStore.faq, "sort_order")),
     select: (data) => appliceraUtkast("faq", data),

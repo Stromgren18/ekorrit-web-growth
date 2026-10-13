@@ -14,7 +14,7 @@ const sorterade = (lista: Dokument[]) =>
 export const dokumentQuery = () =>
   queryOptions({
     queryKey: ["dokument"],
-    initialData: sorterade(demoStore.dokument),
+    placeholderData: sorterade(demoStore.dokument),
     queryFn: async () =>
       sorterade(await hamtaTabell<Dokument>("dokument", demoStore.dokument, "sort_order")),
     select: (data) => appliceraUtkast("dokument", data),

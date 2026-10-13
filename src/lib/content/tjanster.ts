@@ -14,7 +14,7 @@ export const sorteraTjanster = (lista: Tjanst[]) =>
 export const tjansterQuery = () =>
   queryOptions({
     queryKey: ["tjanster"],
-    initialData: demoStore.tjanster,
+    placeholderData: demoStore.tjanster,
     queryFn: async () =>
       sorteraTjanster(await hamtaTabell<Tjanst>("tjanster", demoStore.tjanster, "sort_order")),
     select: (data) => appliceraUtkast("tjanster", data),

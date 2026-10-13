@@ -8,7 +8,7 @@ import { hamtaTabell } from "./backend";
 export const medarbetareQuery = () =>
   queryOptions({
     queryKey: ["medarbetare"],
-    initialData: demoStore.medarbetare,
+    placeholderData: demoStore.medarbetare,
     queryFn: async () =>
       hamtaTabell<Medarbetare>("medarbetare", demoStore.medarbetare, "sort_order"),
     select: (data) => appliceraUtkast("medarbetare", data),

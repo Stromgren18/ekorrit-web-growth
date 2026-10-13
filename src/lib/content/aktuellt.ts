@@ -14,7 +14,7 @@ export const sorteraAktuellt = (lista: Artikel[]) =>
 export const aktuelltQuery = () =>
   queryOptions({
     queryKey: ["aktuellt"],
-    initialData: sorteraAktuellt(demoStore.aktuellt),
+    placeholderData: sorteraAktuellt(demoStore.aktuellt),
     queryFn: async () =>
       sorteraAktuellt(
         await hamtaTabell<Artikel>("aktuellt", demoStore.aktuellt, "published_at"),
