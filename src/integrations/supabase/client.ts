@@ -7,7 +7,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
  * med VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY som reserv.
  * Saknas de körs sajten i demoläge.
  */
-export type PublikSupabaseConfig = { url?: string; key?: string };
+export type PublikSupabaseConfig = { url?: string | undefined; key?: string | undefined };
 
 export function lasPublikConfig(): PublikSupabaseConfig {
   if (typeof window !== "undefined") {
