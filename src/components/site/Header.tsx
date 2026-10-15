@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Mail, Menu, Phone } from "lucide-react";
+import { Facebook, Instagram, Lock, Mail, Menu, Phone } from "lucide-react";
 import { useState } from "react";
 
 import { Logo } from "./Logo";
@@ -25,6 +25,12 @@ export function Header() {
             </a>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              to="/admin"
+              className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 transition-colors hover:bg-primary-foreground/10"
+            >
+              <Lock className="size-3.5" aria-hidden /> Admin
+            </Link>
             <a
               href={site.social.instagram}
               target="_blank"
