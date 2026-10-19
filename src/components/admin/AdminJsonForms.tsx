@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { FaltForm } from "@/components/admin/EntityForm";
 import { Forhandsvisning } from "@/components/admin/Forhandsvisning";
+import { useAdminEditor, useAdminNavigation } from "@/components/admin/AdminNavigation";
 import { hamtaJson, sparaJson, useUppdateraSajt } from "@/lib/admin/api";
 import { sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
 import type { Sektion } from "@/lib/admin/sections";
@@ -198,6 +199,21 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
   const utkastTabell = site ? "site" : "sidor";
   const utkastId = site ? "site" : vald;
   const forhandsSokvag = site ? "/kontakt" : vald === "hem" ? "/" : `/${vald}`;
+  const { confirmLeave } = useAdminNavigation();
+  useAdminEditor({
+    dirty: smutsig,
+    discard: () => tabortUtkast(utkastTabell, utkastId),
+    overview: () => {
+      const id = ++laddning.current;
+      setData(null);
+      setSmutsig(false);
+      setStatus(null);
+      setVisarForhandsvisning(false);
+      hamtaJson(sektion, vald).then((varde) => {
+        if (id === laddning.current) setData(structuredClone(varde));
+      });
+    },
+  });
 
   const uppdateraUtkast = (varde: Record<string, unknown>) => {
     sparaUtkast(utkastTabell, utkastId, varde);
@@ -215,15 +231,6 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
       }
     });
   }, [sektion, vald]);
-
-  useEffect(() => {
-    const varna = (event: BeforeUnloadEvent) => {
-      if (!smutsig) return;
-      event.preventDefault();
-    };
-    window.addEventListener("beforeunload", varna);
-    return () => window.removeEventListener("beforeunload", varna);
-  }, [smutsig]);
 
   const andra = (path: string[], varde: unknown) => {
     setData((nu) => {
@@ -253,7 +260,8 @@ export function AdminJsonForm({ sektion, sidNycklar }: { sektion: Sektion; sidNy
 
   function bytSida(ny: string) {
     if (ny === vald) return;
-    if (smutsig && !window.confirm("Du har osparade ändringar. Vill du lämna sidan utan att spara?")) return;
+    if (!confirmLeave()) return;
+    setVisarForhandsvisning(false);
     setVald(ny);
   }
 
