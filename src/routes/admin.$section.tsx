@@ -1,12 +1,14 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Eye, Plus, Save } from "lucide-react";
+import { ArrowLeft, Eye, Plus, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { FaltForm } from "@/components/admin/EntityForm";
 import { AdminJsonForm } from "@/components/admin/AdminJsonForms";
 import { Forhandsvisning } from "@/components/admin/Forhandsvisning";
+import { useAdminEditor, useAdminNavigation } from "@/components/admin/AdminNavigation";
+import { harAndringar } from "@/lib/admin/navigation";
 import { arAdmin } from "@/lib/admin/auth";
 import { radIdentitet, sparaUtkast, tabortUtkast } from "@/lib/admin/preview";
 import { hittaSektion, SEKTIONER } from "@/lib/admin/sections";
@@ -21,6 +23,11 @@ import {
 
 export const Route = createFileRoute("/admin/$section")({
   ssr: false,
+  head: ({ params }) => {
+    const title = `${hittaSektion(params.section)?.namn ?? "Innehåll"} – Admin | Ekorrit AB`;
+    const description = "Hantera och redigera Ekorrit AB:s webbplatsinnehåll.";
+    return { meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] };
+  },
   beforeLoad: async () => {
     if (!(await arAdmin())) {
       throw redirect({ to: "/admin/login" });
@@ -31,7 +38,8 @@ export const Route = createFileRoute("/admin/$section")({
 
 function SektionSida() {
   const { section } = Route.useParams();
-  const sektion = hittaSektion(section) ?? SEKTIONER[0]!;
+  const sektion = hittaSektion(section) ?? SEKTIONER[0];
+  if (!sektion) return null;
 
   return (
     <AdminShell>
@@ -39,9 +47,9 @@ function SektionSida() {
       <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{sektion.beskrivning}</p>
       <div className="mt-8">
         {sektion.slag === "tabell" ? (
-          <TabellVy sektion={sektion} />
+          <TabellVy key={section} sektion={sektion} />
         ) : (
-          <AdminJsonForm sektion={sektion} sidNycklar={[...sidNycklar]} />
+          <AdminJsonForm key={section} sektion={sektion} sidNycklar={[...sidNycklar]} />
         )}
       </div>
     </AdminShell>
@@ -51,12 +59,31 @@ function SektionSida() {
 function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSektion>> }) {
   const [rader, setRader] = useState<Rad[] | null>(null);
   const [redigerar, setRedigerar] = useState<Rad | null>(null);
+  const [original, setOriginal] = useState<Rad | null>(null);
   const [nyRad, setNyRad] = useState(false);
   const [sparar, setSparar] = useState(false);
   const [meddelande, setMeddelande] = useState<string | null>(null);
   const [visarForhandsvisning, setVisarForhandsvisning] = useState(false);
   const [forhandsVersion, setForhandsVersion] = useState(0);
   const uppdateraSajt = useUppdateraSajt();
+  const { overview } = useAdminNavigation();
+  const tabell = sektion.tabell;
+  const stangRedigering = () => {
+    setRedigerar(null);
+    setOriginal(null);
+    setNyRad(false);
+    setVisarForhandsvisning(false);
+  };
+  useAdminEditor({
+    dirty: redigerar !== null && harAndringar(original, redigerar),
+    discard: () => {
+      if (tabell && redigerar) {
+        tabortUtkast(tabell, radIdentitet(redigerar));
+        if (original) tabortUtkast(tabell, radIdentitet(original));
+      }
+    },
+    overview: stangRedigering,
+  });
 
   /** Publik sökväg där posten syns – används för förhandsgranskningen. */
   const forhandsSokvag = (rad: Rad | null): string => {
@@ -80,7 +107,8 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   };
 
   const uppdateraUtkast = (rad: Rad) => {
-    sparaUtkast(sektion.tabell!, radIdentitet(rad), rad);
+    if (!tabell) return;
+    sparaUtkast(tabell, radIdentitet(original ?? rad), rad);
     setForhandsVersion((v) => v + 1);
   };
 
@@ -108,10 +136,11 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
       return;
     }
     setRader(await listaRader(sektion));
-    tabortUtkast(sektion.tabell!, radIdentitet(rad));
-    setRedigerar(null);
-    setNyRad(false);
-    setVisarForhandsvisning(false);
+    if (tabell) {
+      tabortUtkast(tabell, radIdentitet(rad));
+      if (original) tabortUtkast(tabell, radIdentitet(original));
+    }
+    stangRedigering();
     setMeddelande("Sparat!");
     uppdateraSajt();
   }
@@ -128,6 +157,10 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   if (redigerar || nyRad) {
     const rad: Rad = redigerar ?? { id: "", ...(tomRad(sektion, rader)) };
     return (
+      <div>
+      <Button type="button" variant="ghost" className="mb-4 rounded-full" onClick={overview} disabled={sparar}>
+        <ArrowLeft className="size-4" aria-hidden /> Tillbaka
+      </Button>
       <div className={visarForhandsvisning ? "grid gap-6 xl:grid-cols-[minmax(0,28rem)_1fr]" : ""}>
       <div className="max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold">
@@ -175,12 +208,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           <Button
             variant="outline"
             className="rounded-full"
-            onClick={() => {
-              tabortUtkast(sektion.tabell!, radIdentitet(rad));
-              setVisarForhandsvisning(false);
-              setRedigerar(null);
-              setNyRad(false);
-            }}
+            onClick={overview}
           >
             Avbryt
           </Button>
@@ -191,6 +219,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           ) : null}
         </div>
         {meddelande ? <p className="mt-3 text-sm text-muted-foreground">{meddelande}</p> : null}
+      </div>
       </div>
       {visarForhandsvisning ? (
         <Forhandsvisning
@@ -207,7 +236,12 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
     <div>
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">{rader.length} poster</p>
-        <Button size="sm" className="rounded-full" onClick={() => setNyRad(true)}>
+        <Button size="sm" className="rounded-full" onClick={() => {
+          const ny = { id: "", ...tomRad(sektion, rader) };
+          setOriginal(ny);
+          setRedigerar(ny);
+          setNyRad(true);
+        }}>
           <Plus className="size-4" aria-hidden />
           {sektion.nyckel === "medarbetare" ? "Lägg till medarbetare" : "Ny post"}
         </Button>
@@ -220,6 +254,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
               className="flex w-full items-center justify-between gap-3 px-5 py-3.5 text-left transition-colors hover:bg-secondary/60"
               onClick={() => {
                 setRedigerar(rad);
+                setOriginal(rad);
                 setNyRad(false);
               }}
             >
@@ -242,7 +277,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
 
 function tomRad(sektion: NonNullable<ReturnType<typeof hittaSektion>>, rader: Rad[]): Record<string, unknown> {
   const falt = sektion.falt ?? [];
-  const mall: Record<string, unknown> = rader.length > 0 ? rader[0]! : {};
+  const mall: Record<string, unknown> = rader[0] ?? {};
   const ut: Record<string, unknown> = {};
   for (const f of falt) {
     if (f.typ === "boolean") ut[f.nyckel] = false;
