@@ -1,20 +1,21 @@
-import { describe, expect, test } from "bun:test";
+import { describe, it as test } from "node:test";
+import { strict as assert } from "node:assert";
 import { bekraftaLamna, harAndringar } from "./navigation";
 
 describe("osparade ändringar", () => {
   test("nekat sidbyte behåller redigeringen", () => {
-    expect(bekraftaLamna(true, () => false)).toBe(false);
+    assert.equal(bekraftaLamna(true, () => false), false);
   });
   test("godkänt sidbyte tillåter att ändringarna kastas", () => {
-    expect(bekraftaLamna(true, () => true)).toBe(true);
+    assert.equal(bekraftaLamna(true, () => true), true);
   });
   test("oförändrad post lämnas utan fråga", () => {
-    expect(bekraftaLamna(false, () => { throw new Error("Ska inte fråga"); })).toBe(true);
+    assert.equal(bekraftaLamna(false, () => { throw new Error("Ska inte fråga"); }), true);
   });
   test("ändrat artikelinnehåll upptäcks", () => {
-    expect(harAndringar({ title: "Artikel" }, { title: "Ny rubrik" })).toBe(true);
+    assert.equal(harAndringar({ title: "Artikel" }, { title: "Ny rubrik" }), true);
   });
   test("återställd artikel är inte osparad", () => {
-    expect(harAndringar({ title: "Artikel" }, { title: "Artikel" })).toBe(false);
+    assert.equal(harAndringar({ title: "Artikel" }, { title: "Artikel" }), false);
   });
 });
