@@ -8,6 +8,7 @@
 - [x] Verifiera alla publika sidor och responsiva vyer
 
 ## Adminpanel + förberedd Supabase-koppling
+- [ ] Tillbaka, kategoriöversikt och bekräftelse vid osparade ändringar
 - [x] Dubbelmode för publika sidor (Supabase om kopplat, annars demoläge)
 - [x] Adminpanel: auth, sektioner, tabell- och JSON-redigering, bilduppladdning
 - [x] Fixa formulärs-/layoutbuggar (tomRad, AdminShell, gömma sajmensy på /admin)
