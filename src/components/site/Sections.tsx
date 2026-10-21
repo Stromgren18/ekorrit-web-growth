@@ -74,7 +74,7 @@ export function TrustBand() {
                 <Icon className="size-4" aria-hidden />
               </span>
               <span className="min-w-0">
-                <span className="block truncate text-sm font-semibold text-primary-foreground">{cert.name}</span>
+                <span className="block text-sm font-semibold leading-snug text-primary-foreground lg:truncate">{cert.name}</span>
                 <span className="block text-xs leading-snug text-primary-foreground/75 lg:truncate">{cert.note}</span>
               </span>
             </div>
