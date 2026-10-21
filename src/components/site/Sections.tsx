@@ -57,6 +57,34 @@ export function TrustBar() {
   );
 }
 
+/** Frostat trygghetsband som ligger i nederkanten av en helbilds-hero. */
+export function TrustBand() {
+  const site = useSite();
+  return (
+    <div
+      aria-label="Certifieringar och utmärkelser"
+      className="absolute inset-x-0 bottom-0 z-10 border-t border-primary-foreground/15 bg-primary/45 backdrop-blur-md"
+    >
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-3 px-4 py-4 sm:gap-x-8 lg:grid-cols-4">
+        {site.certifications.map((cert, i) => {
+          const Icon = icons[i % icons.length]!;
+          return (
+            <div key={cert.name} className="flex items-center gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-foreground/15 text-primary-foreground">
+                <Icon className="size-4" aria-hidden />
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-semibold text-primary-foreground">{cert.name}</span>
+                <span className="block truncate text-xs text-primary-foreground/75">{cert.note}</span>
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function ArtikelCard({ artikel }: { artikel: Artikel }) {
   return (
     <Card className="group overflow-hidden rounded-2xl border-border/70 p-0 transition-shadow hover:shadow-lg">
