@@ -75,7 +75,7 @@ export function TrustBand() {
               </span>
               <span className="min-w-0">
                 <span className="block truncate text-sm font-semibold text-primary-foreground">{cert.name}</span>
-                <span className="block truncate text-xs text-primary-foreground/75">{cert.note}</span>
+                <span className="block text-xs leading-snug text-primary-foreground/75 lg:truncate">{cert.note}</span>
               </span>
             </div>
           );
