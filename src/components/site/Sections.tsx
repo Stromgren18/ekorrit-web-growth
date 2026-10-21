@@ -61,9 +61,9 @@ export function TrustBar() {
 export function TrustBand() {
   const site = useSite();
   return (
-    <div aria-label="Certifieringar och utmärkelser" className="absolute inset-x-0 bottom-0 z-10">
-      <div className="trust-fade pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-64" aria-hidden />
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-3 px-4 pb-10 pt-14 sm:gap-x-8 lg:grid-cols-4">
+    <div aria-label="Certifieringar och utmärkelser" className="relative isolate w-full">
+      <div className="trust-fade pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[calc(100%+6rem)]" aria-hidden />
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-3 px-4 pb-10 pt-4 sm:gap-x-8 lg:grid-cols-4">
         {site.certifications.map((cert, i) => {
           const Icon = icons[i % icons.length]!;
           return (
