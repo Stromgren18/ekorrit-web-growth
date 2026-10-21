@@ -187,6 +187,20 @@
   background: linear-gradient(to bottom, transparent, var(--background));
 }
 
+/*
+ * Mjuk toning under trygghetsbandet i hero: ingen platta och ingen kantlinje,
+ * bara en gradient som mörknar snällt nedåt så texten får kontrast mot fjället.
+ */
+@utility trust-fade {
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--sage-dark) 80%, transparent) 0%,
+    color-mix(in oklab, var(--sage-dark) 58%, transparent) 38%,
+    color-mix(in oklab, var(--sage-dark) 22%, transparent) 70%,
+    transparent 100%
+  );
+}
+
 
 @utility reveal {
   animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
