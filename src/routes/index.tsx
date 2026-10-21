@@ -145,7 +145,7 @@ function Index() {
         <div className="hero-fade pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24" aria-hidden />
         <TrustBand />
         <span
-          className="pointer-events-none absolute bottom-24 left-1/2 hidden -translate-x-1/2 text-primary-foreground/70 lg:block"
+          className="pointer-events-none absolute bottom-44 left-1/2 hidden -translate-x-1/2 text-primary-foreground/70 lg:block"
           aria-hidden
         >
           <ChevronDown className="size-6 animate-bounce" />
