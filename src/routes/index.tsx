@@ -12,7 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { ArtikelCard, CtaSection, SectionHeading, TrustBar } from "@/components/site/Sections";
+import { ArtikelCard, CtaSection, SectionHeading, TrustBand } from "@/components/site/Sections";
 import { aktuelltQuery } from "@/lib/content/aktuellt";
 import { kundreferenserQuery } from "@/lib/content/kundreferenser";
 import { tjansterQuery } from "@/lib/content/tjanster";
@@ -143,16 +143,14 @@ function Index() {
           </div>
         </div>
         <div className="hero-fade pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24" aria-hidden />
+        <TrustBand />
         <span
-          className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-primary-foreground/70"
+          className="pointer-events-none absolute bottom-24 left-1/2 hidden -translate-x-1/2 text-primary-foreground/70 lg:block"
           aria-hidden
         >
           <ChevronDown className="size-6 animate-bounce" />
         </span>
       </section>
-
-
-      <TrustBar />
 
       <section className="section-y">
         <div className="mx-auto max-w-6xl px-4">
