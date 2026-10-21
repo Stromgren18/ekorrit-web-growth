@@ -67,13 +67,13 @@ export function TrustBand() {
         {site.certifications.map((cert, i) => {
           const Icon = icons[i % icons.length]!;
           return (
-            <div key={cert.name} className="flex items-center gap-3">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-foreground/15 text-primary-foreground">
-                <Icon className="size-4" aria-hidden />
+            <div key={cert.name} className="flex items-center gap-3 drop-shadow-sm">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full text-primary-foreground">
+                <Icon className="size-5" aria-hidden />
               </span>
               <span className="min-w-0">
                 <span className="block text-sm font-semibold leading-snug text-primary-foreground lg:truncate">{cert.name}</span>
-                <span className="block text-xs leading-snug text-primary-foreground/75 lg:truncate">{cert.note}</span>
+                <span className="block text-xs leading-snug text-primary-foreground/80 lg:truncate">{cert.note}</span>
               </span>
             </div>
           );
