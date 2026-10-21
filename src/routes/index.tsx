@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowRight, Calculator, ChevronDown, FileText, Landmark, Users } from "lucide-react";
+import { ArrowRight, Calculator, FileText, Landmark, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
