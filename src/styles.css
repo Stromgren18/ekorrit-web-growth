@@ -194,9 +194,10 @@
 @utility trust-fade {
   background: linear-gradient(
     to top,
-    color-mix(in oklab, var(--sage-dark) 58%, transparent) 0%,
-    color-mix(in oklab, var(--sage-dark) 80%, transparent) 26%,
-    color-mix(in oklab, var(--sage-dark) 52%, transparent) 62%,
+    color-mix(in oklab, var(--background) 96%, var(--sage-dark)) 0%,
+    color-mix(in oklab, var(--background) 55%, var(--sage-dark)) 7%,
+    color-mix(in oklab, var(--sage-dark) 80%, transparent) 17%,
+    color-mix(in oklab, var(--sage-dark) 52%, transparent) 60%,
     transparent 100%
   );
 }
