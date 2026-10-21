@@ -104,7 +104,7 @@ function Index() {
 
   return (
     <>
-      <section className="relative isolate flex min-h-[78vh] items-center overflow-hidden md:min-h-[80vh]">
+      <section className="relative isolate flex min-h-[85vh] flex-col overflow-hidden">
         <img
           ref={imgRef}
           src={hem.hero.image}
@@ -116,7 +116,7 @@ function Index() {
           className="absolute inset-0 -z-20 size-full scale-[1.08] object-cover object-center will-change-transform"
         />
         <div className="hero-overlay absolute inset-0 -z-10" aria-hidden />
-        <div className="mx-auto w-full max-w-6xl px-4 py-24 md:py-32">
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 items-center px-4 pb-12 pt-20 md:pb-16 md:pt-28">
           <div className="reveal max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/85">
               {hem.hero.eyebrow}
@@ -142,14 +142,7 @@ function Index() {
             </div>
           </div>
         </div>
-        <div className="hero-fade pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24" aria-hidden />
         <TrustBand />
-        <span
-          className="pointer-events-none absolute bottom-44 left-1/2 hidden -translate-x-1/2 text-primary-foreground/70 lg:block"
-          aria-hidden
-        >
-          <ChevronDown className="size-6 animate-bounce" />
-        </span>
       </section>
 
       <section className="section-y">
