@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowRight, Calculator, FileText, Landmark, Users } from "lucide-react";
+import { ArrowRight, Calculator, FileText, Landmark, Quote, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -181,30 +181,71 @@ function Index() {
         </div>
       </section>
 
-      <section className="section-y bg-secondary/50">
+      <section className="section-y bg-sage-dark text-primary-foreground">
         <div className="mx-auto max-w-6xl px-4">
-          <SectionHeading eyebrow={hem.referenser.eyebrow} title={hem.referenser.title} center />
-          <Carousel className="mx-auto mt-12 max-w-4xl" opts={{ loop: true }}>
-            <CarouselContent>
-              {featured.map((ref) => (
-                <CarouselItem key={ref.id}>
-                  <figure className="rounded-2xl bg-card p-8 text-center shadow-sm md:p-12">
-                    <blockquote className="font-display text-xl leading-relaxed text-balance md:text-2xl">
+          <div className="mx-auto max-w-2xl text-center">
+            {hem.referenser.eyebrow ? (
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/70">
+                {hem.referenser.eyebrow}
+              </p>
+            ) : null}
+            <h2 className="mt-3 text-3xl leading-tight text-balance md:text-4xl">{hem.referenser.title}</h2>
+          </div>
+          <Carousel className="mt-12" opts={{ loop: featured.length > 3, align: "start" }}>
+            <CarouselContent className="-ml-6 items-stretch">
+              {featured.map((ref, i) => (
+                <CarouselItem key={ref.id} className="pl-6 md:basis-1/2 lg:basis-1/3">
+                  <figure
+                    className={`flex h-full flex-col rounded-2xl p-7 shadow-sm ${
+                      i % 3 === 1
+                        ? "bg-card text-card-foreground lg:-translate-y-3 lg:shadow-xl"
+                        : "border border-primary-foreground/15 bg-primary-foreground/5"
+                    }`}
+                  >
+                    <Quote
+                      className={`size-7 ${i % 3 === 1 ? "text-primary" : "text-primary-foreground/60"}`}
+                      aria-hidden
+                    />
+                    <blockquote className="mt-4 flex-1 font-display text-lg leading-relaxed">
                       ”{ref.quote}”
                     </blockquote>
-                    <figcaption className="mt-6 text-sm text-muted-foreground">
-                      <span className="font-semibold text-foreground">{ref.client_name}</span>
-                      <span className="block">{ref.company_name}</span>
+                    <figcaption
+                      className={`mt-6 flex items-center gap-3 border-t pt-4 text-sm ${
+                        i % 3 === 1 ? "border-border/60" : "border-primary-foreground/15"
+                      }`}
+                    >
+                      <span
+                        className={`flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold ${
+                          i % 3 === 1 ? "bg-secondary text-primary" : "bg-primary-foreground/10"
+                        }`}
+                        aria-hidden
+                      >
+                        {ref.client_name
+                          .split(" ")
+                          .map((d) => d[0])
+                          .join("")
+                          .slice(0, 2)}
+                      </span>
+                      <span>
+                        <span className="block font-semibold">{ref.client_name}</span>
+                        <span className={i % 3 === 1 ? "text-muted-foreground" : "text-primary-foreground/70"}>
+                          {ref.company_name}
+                        </span>
+                      </span>
                     </figcaption>
                   </figure>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
+            {featured.length > 1 ? (
+              <>
+                <CarouselPrevious className="hidden text-foreground sm:flex lg:hidden" />
+                <CarouselNext className="hidden text-foreground sm:flex lg:hidden" />
+              </>
+            ) : null}
           </Carousel>
-          <div className="mt-8 text-center">
-            <Button asChild variant="outline" className="rounded-full bg-background">
+          <div className="mt-10 text-center">
+            <Button asChild variant="secondary" className="rounded-full">
               <Link to="/kundreferenser">Fler kundreferenser</Link>
             </Button>
           </div>
