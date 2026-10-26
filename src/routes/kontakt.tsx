@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
+import { z } from "zod";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,11 +75,73 @@ export const Route = createFileRoute("/kontakt")({
 });
 
 
+const TJANSTER = [
+  "Löpande bokföring",
+  "Bokslut & årsredovisning",
+  "Lönehantering",
+  "Rådgivning",
+  "Byta redovisningsbyrå",
+  "Annat",
+] as const;
+
+const formSchema = z.object({
+  namn: z.string().trim().min(1, "Fyll i ditt namn").max(100),
+  foretag: z.string().trim().max(150),
+  epost: z.string().trim().email("Ange en giltig e-postadress").max(255),
+  telefon: z.string().trim().max(40),
+  tjanst: z.string().min(1).max(80),
+  kontor: z.string().min(1).max(80),
+  meddelande: z.string().trim().min(1, "Skriv ett kort meddelande").max(3000, "Max 3000 tecken"),
+  samtycke: z.literal(true, { errorMap: () => ({ message: "Du behöver godkänna villkoren" }) }),
+});
+
 function KontaktPage() {
   const site = useSite();
   const sida = useSida<HeroSida>("kontakt", KONTAKT_FALLBACK);
   const [skickat, setSkickat] = useState(false);
   const [arende, setArende] = useState("Digitalt eller allmänt");
+  const [tjanst, setTjanst] = useState<string>(TJANSTER[0]);
+  const [samtycke, setSamtycke] = useState(false);
+  const [skickar, setSkickar] = useState(false);
+  const [fel, setFel] = useState<string | null>(null);
+
+  const skicka = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFel(null);
+    const f = new FormData(e.currentTarget);
+    const res = formSchema.safeParse({
+      namn: f.get("namn") ?? "",
+      foretag: f.get("foretag") ?? "",
+      epost: f.get("epost") ?? "",
+      telefon: f.get("telefon") ?? "",
+      tjanst,
+      kontor: arende,
+      meddelande: f.get("meddelande") ?? "",
+      samtycke,
+    });
+    if (!res.success) {
+      setFel(res.error.issues[0]?.message ?? "Kontrollera fälten");
+      return;
+    }
+    if (!isSupabaseConfigured || !supabase) {
+      setFel(`Formuläret är inte aktiverat ännu. Mejla oss på ${site.email} eller ring ${site.phone}.`);
+      return;
+    }
+    setSkickar(true);
+    const d = res.data;
+    const { error } = await supabase.from("kontaktmeddelanden").insert({
+      ...d,
+      foretag: d.foretag || null,
+      telefon: d.telefon || null,
+    });
+    setSkickar(false);
+    if (error) {
+      setFel(`Det gick inte att skicka just nu. Mejla oss på ${site.email} eller ring ${site.phone}.`);
+      return;
+    }
+    setSkickat(true);
+    setSamtycke(false);
+  };
 
   return (
     <>
@@ -136,7 +202,7 @@ function KontaktPage() {
               >
                 <p className="font-semibold text-foreground">Tack för ditt meddelande!</p>
                 <p className="mt-1.5 text-muted-foreground">
-                  Vi har tagit emot din förfrågan till {arende} och återkommer så snart vi kan.
+                  Vi har tagit emot ditt meddelande och återkommer så snart vi kan.
                 </p>
                 <Button
                   variant="outline"
@@ -149,10 +215,8 @@ function KontaktPage() {
             ) : (
               <form
                 className="mt-6 space-y-5"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSkickat(true);
-                }}
+                onSubmit={skicka}
+                noValidate
               >
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="space-y-2">
@@ -181,7 +245,23 @@ function KontaktPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="arende">Ärendet gäller</Label>
+                  <Label htmlFor="tjanst">Vad är du intresserad av?</Label>
+                  <Select value={tjanst} onValueChange={setTjanst}>
+                    <SelectTrigger id="tjanst" className="w-full rounded-xl">
+                      <SelectValue placeholder="Välj tjänst" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TJANSTER.map((t) => (
+                        <SelectItem key={t} value={t}>
+                          {t}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="arende">Kontor</Label>
                   <Select value={arende} onValueChange={setArende}>
                     <SelectTrigger id="arende" className="w-full rounded-xl">
                       <SelectValue placeholder="Välj ärende" />
@@ -198,15 +278,34 @@ function KontaktPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="meddelande">Meddelande</Label>
-                  <Textarea id="meddelande" name="meddelande" required rows={5} className="rounded-xl" />
+                  <Textarea id="meddelande" name="meddelande" required maxLength={3000} rows={5} className="rounded-xl" />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full rounded-full">
-                  Skicka meddelande
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="samtycke"
+                    checked={samtycke}
+                    onCheckedChange={(v) => setSamtycke(v === true)}
+                    className="mt-0.5"
+                  />
+                  <Label htmlFor="samtycke" className="text-sm font-normal leading-relaxed text-muted-foreground">
+                    Jag godkänner att Ekorrit sparar mina uppgifter för att kunna besvara mitt meddelande, enligt{" "}
+                    <a href="/integritetspolicy" className="text-primary underline underline-offset-2">
+                      integritetspolicyn
+                    </a>
+                    .
+                  </Label>
+                </div>
+
+                {fel && (
+                  <p role="alert" className="rounded-xl bg-destructive/10 p-3 text-sm text-destructive">
+                    {fel}
+                  </p>
+                )}
+
+                <Button type="submit" size="lg" disabled={skickar} className="w-full rounded-full">
+                  {skickar ? "Skickar…" : "Skicka meddelande"}
                 </Button>
-                <p className="text-xs text-muted-foreground">
-                  Vi behandlar dina uppgifter enligt vår integritetspolicy.
-                </p>
               </form>
             )}
           </div>
