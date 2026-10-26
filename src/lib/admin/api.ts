@@ -19,7 +19,12 @@ export async function listaRader(sektion: Sektion): Promise<Rad[]> {
   if (isSupabaseConfigured && supabase) {
     try {
       const { data, error } = await supabase.from(tabell).select("*");
-      if (!error && data) return data as Rad[];
+      if (!error && data) {
+        const rader = data as Rad[];
+        if (tabell === "kontaktmeddelanden")
+          rader.sort((a, b) => String(b["created_at"] ?? "").localeCompare(String(a["created_at"] ?? "")));
+        return rader;
+      }
     } catch {
       /* faller tillbaka till demoläget */
     }

@@ -40,8 +40,8 @@ export const SIDOR: Record<string, Record<string, unknown>> = {
       title: "Vi kan ekonomi – räkna med oss",
       subtitle:
         "Hos oss vet du vem du pratar med. Fem auktoriserade redovisningskonsulter lär känna ditt företag och blir ett tryggt ekonomiskt bollplank – i Jämtland eller digitalt i hela Sverige.",
-      image: "/images/hero-fjall.jpg",
-      imageAlt: "Snötäckta jämtländska fjälltoppar i mjukt morgonljus",
+      image: "/images/hero-team.jpg",
+      imageAlt: "Ekorrits medarbetare samlade kring ett bord med utsikt över sjö och snötäckta fjäll",
     },
     tjanster: {
       eyebrow: "Våra tjänster",

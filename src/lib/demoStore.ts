@@ -44,7 +44,9 @@ export const demoStore: {
   dokument: typeof dokumentSeed;
   sidor: Record<string, Record<string, unknown>>;
   site: SiteContent;
+  kontaktmeddelanden: Record<string, unknown>[];
 } = {
+  kontaktmeddelanden: [],
   aktuellt: [...aktuelltSeed],
   kundreferenser: kundreferenserSeed.map((k) => ({ ...k })),
   medarbetare: medarbetareSeed.map((m) => ({ ...m })),
