@@ -22,7 +22,7 @@ export async function listaRader(sektion: Sektion): Promise<Rad[]> {
       if (!error && data) {
         const rader = data as Rad[];
         if (tabell === "kontaktmeddelanden")
-          rader.sort((a, b) => String(b.created_at ?? "").localeCompare(String(a.created_at ?? "")));
+          rader.sort((a, b) => String(b["created_at"] ?? "").localeCompare(String(a["created_at"] ?? "")));
         return rader;
       }
     } catch {
