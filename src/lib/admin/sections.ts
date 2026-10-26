@@ -41,6 +41,27 @@ export type Sektion = {
 
 export const SEKTIONER: Sektion[] = [
   {
+    nyckel: "inkorg",
+    namn: "Inkorg (kontaktformulär)",
+    beskrivning:
+      "Meddelanden som skickats via kontaktformuläret, nyaste först. Markera som besvarat när ni har återkopplat.",
+    slag: "tabell",
+    tabell: "kontaktmeddelanden",
+    rubrikNyckel: "namn",
+    falt: [
+      { nyckel: "besvarad", label: "Besvarat", typ: "boolean" },
+      { nyckel: "anteckning", label: "Intern anteckning", typ: "textarea", hjalp: "Syns bara i adminpanelen." },
+      { nyckel: "namn", label: "Namn", typ: "text" },
+      { nyckel: "foretag", label: "Företag", typ: "text" },
+      { nyckel: "epost", label: "E-post", typ: "text" },
+      { nyckel: "telefon", label: "Telefon", typ: "text" },
+      { nyckel: "tjanst", label: "Intresserad av", typ: "text" },
+      { nyckel: "kontor", label: "Kontor", typ: "text" },
+      { nyckel: "meddelande", label: "Meddelande", typ: "textarea" },
+      { nyckel: "created_at", label: "Mottaget", typ: "text" },
+    ],
+  },
+  {
     nyckel: "medarbetare",
     namn: "Medarbetare",
     beskrivning: "Porträtt, roller och personliga presentationer på medarbetarsidan.",
