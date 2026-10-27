@@ -13,7 +13,7 @@ const TITLE = "Kundreferenser – vad våra kunder säger | Ekorrit AB";
 const DESCRIPTION =
   "Läs vad företagare säger om personlig kontakt, kontinuitet och ekonomisk rådgivning från Ekorrit AB.";
 
-export const Route = createFileRoute("/kundreferenser")({
+export const Route = createFileRoute("/kundreferenser/")({
   head: () => ({
     meta: [
       { title: TITLE },
