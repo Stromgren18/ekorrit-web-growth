@@ -25,6 +25,8 @@ import { Route as AdminSectionRouteImport } from './routes/admin.$section'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AktuelltIndexRouteImport } from './routes/aktuellt.index'
 import { Route as AktuelltSlugRouteImport } from './routes/aktuellt.$slug'
+import { Route as KundreferenserIndexRouteImport } from './routes/kundreferenser.index'
+import { Route as KundreferenserSlugRouteImport } from './routes/kundreferenser.$slug'
 import { Route as TjansterIndexRouteImport } from './routes/tjanster.index'
 import { Route as TjansterSlugRouteImport } from './routes/tjanster.$slug'
 
@@ -108,6 +110,16 @@ const AktuelltSlugRoute = AktuelltSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => AktuelltRoute,
 } as any)
+const KundreferenserIndexRoute = KundreferenserIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => KundreferenserRoute,
+} as any)
+const KundreferenserSlugRoute = KundreferenserSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => KundreferenserRoute,
+} as any)
 const TjansterIndexRoute = TjansterIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -127,16 +139,18 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
-  '/kundreferenser': typeof KundreferenserRoute
+  '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
   '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/kundreferenser/$slug': typeof KundreferenserSlugRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/aktuellt/': typeof AktuelltIndexRoute
+  '/kundreferenser/': typeof KundreferenserIndexRoute
   '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRoutesByTo {
@@ -145,15 +159,16 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
-  '/kundreferenser': typeof KundreferenserRoute
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
   '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/kundreferenser/$slug': typeof KundreferenserSlugRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
   '/admin': typeof AdminIndexRoute
   '/aktuellt': typeof AktuelltIndexRoute
+  '/kundreferenser': typeof KundreferenserIndexRoute
   '/tjanster': typeof TjansterIndexRoute
 }
 export interface FileRoutesById {
@@ -165,16 +180,18 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
-  '/kundreferenser': typeof KundreferenserRoute
+  '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
   '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/kundreferenser/$slug': typeof KundreferenserSlugRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/aktuellt/': typeof AktuelltIndexRoute
+  '/kundreferenser/': typeof KundreferenserIndexRoute
   '/tjanster/': typeof TjansterIndexRoute
 }
 export interface FileRouteTypes {
@@ -194,9 +211,11 @@ export interface FileRouteTypes {
     | '/admin/$section'
     | '/admin/login'
     | '/aktuellt/$slug'
+    | '/kundreferenser/$slug'
     | '/tjanster/$slug'
     | '/admin/'
     | '/aktuellt/'
+    | '/kundreferenser/'
     | '/tjanster/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -205,15 +224,16 @@ export interface FileRouteTypes {
     | '/faq'
     | '/integritetspolicy'
     | '/kontakt'
-    | '/kundreferenser'
     | '/medarbetare'
     | '/om-oss'
     | '/admin/$section'
     | '/admin/login'
     | '/aktuellt/$slug'
+    | '/kundreferenser/$slug'
     | '/tjanster/$slug'
     | '/admin'
     | '/aktuellt'
+    | '/kundreferenser'
     | '/tjanster'
   id:
     | '__root__'
@@ -231,9 +251,11 @@ export interface FileRouteTypes {
     | '/admin/$section'
     | '/admin/login'
     | '/aktuellt/$slug'
+    | '/kundreferenser/$slug'
     | '/tjanster/$slug'
     | '/admin/'
     | '/aktuellt/'
+    | '/kundreferenser/'
     | '/tjanster/'
   fileRoutesById: FileRoutesById
 }
@@ -245,7 +267,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
-  KundreferenserRoute: typeof KundreferenserRoute
+  KundreferenserRoute: typeof KundreferenserRouteWithChildren
   MedarbetareRoute: typeof MedarbetareRoute
   OmOssRoute: typeof OmOssRoute
   TjansterRoute: typeof TjansterRouteWithChildren
@@ -365,6 +387,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AktuelltSlugRouteImport
       parentRoute: typeof AktuelltRoute
     }
+    '/kundreferenser/': {
+      id: '/kundreferenser/'
+      path: '/'
+      fullPath: '/kundreferenser/'
+      preLoaderRoute: typeof KundreferenserIndexRouteImport
+      parentRoute: typeof KundreferenserRoute
+    }
+    '/kundreferenser/$slug': {
+      id: '/kundreferenser/$slug'
+      path: '/$slug'
+      fullPath: '/kundreferenser/$slug'
+      preLoaderRoute: typeof KundreferenserSlugRouteImport
+      parentRoute: typeof KundreferenserRoute
+    }
     '/tjanster/': {
       id: '/tjanster/'
       path: '/'
@@ -410,6 +446,20 @@ const AktuelltRouteWithChildren = AktuelltRoute._addFileChildren(
   AktuelltRouteChildren,
 )
 
+interface KundreferenserRouteChildren {
+  KundreferenserSlugRoute: typeof KundreferenserSlugRoute
+  KundreferenserIndexRoute: typeof KundreferenserIndexRoute
+}
+
+const KundreferenserRouteChildren: KundreferenserRouteChildren = {
+  KundreferenserSlugRoute: KundreferenserSlugRoute,
+  KundreferenserIndexRoute: KundreferenserIndexRoute,
+}
+
+const KundreferenserRouteWithChildren = KundreferenserRoute._addFileChildren(
+  KundreferenserRouteChildren,
+)
+
 interface TjansterRouteChildren {
   TjansterSlugRoute: typeof TjansterSlugRoute
   TjansterIndexRoute: typeof TjansterIndexRoute
@@ -432,7 +482,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
-  KundreferenserRoute: KundreferenserRoute,
+  KundreferenserRoute: KundreferenserRouteWithChildren,
   MedarbetareRoute: MedarbetareRoute,
   OmOssRoute: OmOssRoute,
   TjansterRoute: TjansterRouteWithChildren,

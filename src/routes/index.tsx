@@ -15,6 +15,7 @@ import {
 import { ArtikelCard, CtaSection, SectionHeading, TrustBand } from "@/components/site/Sections";
 import { aktuelltQuery } from "@/lib/content/aktuellt";
 import { kundreferenserQuery } from "@/lib/content/kundreferenser";
+import { caseSlug } from "@/content/kundreferenser";
 import { tjansterQuery } from "@/lib/content/tjanster";
 import { useSida } from "@/lib/content/sidor";
 import { siteQuery } from "@/lib/content/site";
@@ -233,6 +234,15 @@ function Index() {
                         </span>
                       </span>
                     </figcaption>
+                    {ref.challenge ? (
+                      <Link
+                        to="/kundreferenser/$slug"
+                        params={{ slug: caseSlug(ref) }}
+                        className={`mt-4 text-sm font-semibold underline-offset-4 hover:underline ${i % 3 === 1 ? "text-primary" : "text-primary-foreground"}`}
+                      >
+                        Läs hela caset →
+                      </Link>
+                    ) : null}
                   </figure>
                 </CarouselItem>
               ))}
