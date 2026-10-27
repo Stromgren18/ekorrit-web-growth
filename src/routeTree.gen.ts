@@ -16,6 +16,7 @@ import { Route as DokumentRouteImport } from './routes/dokument'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
 import { Route as MedarbetareRouteImport } from './routes/medarbetare'
 import { Route as OmOssRouteImport } from './routes/om-oss'
 import { Route as TjansterRouteImport } from './routes/tjanster'
@@ -25,6 +26,7 @@ import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AktuelltIndexRouteImport } from './routes/aktuellt.index'
 import { Route as AktuelltSlugRouteImport } from './routes/aktuellt.$slug'
 import { Route as KundreferenserIndexRouteImport } from './routes/kundreferenser.index'
+import { Route as KundreferenserSlugRouteImport } from './routes/kundreferenser.$slug'
 import { Route as TjansterIndexRouteImport } from './routes/tjanster.index'
 import { Route as TjansterSlugRouteImport } from './routes/tjanster.$slug'
 
@@ -61,6 +63,11 @@ const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
 const KontaktRoute = KontaktRouteImport.update({
   id: '/kontakt',
   path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KundreferenserRoute = KundreferenserRouteImport.update({
+  id: '/kundreferenser',
+  path: '/kundreferenser',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MedarbetareRoute = MedarbetareRouteImport.update({
@@ -104,9 +111,14 @@ const AktuelltSlugRoute = AktuelltSlugRouteImport.update({
   getParentRoute: () => AktuelltRoute,
 } as any)
 const KundreferenserIndexRoute = KundreferenserIndexRouteImport.update({
-  id: '/kundreferenser/',
-  path: '/kundreferenser/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => KundreferenserRoute,
+} as any)
+const KundreferenserSlugRoute = KundreferenserSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => KundreferenserRoute,
 } as any)
 const TjansterIndexRoute = TjansterIndexRouteImport.update({
   id: '/',
@@ -127,12 +139,14 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
+  '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
   '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/kundreferenser/$slug': typeof KundreferenserSlugRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/aktuellt/': typeof AktuelltIndexRoute
@@ -150,6 +164,7 @@ export interface FileRoutesByTo {
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
   '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/kundreferenser/$slug': typeof KundreferenserSlugRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
   '/admin': typeof AdminIndexRoute
   '/aktuellt': typeof AktuelltIndexRoute
@@ -165,12 +180,14 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
+  '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
   '/aktuellt/$slug': typeof AktuelltSlugRoute
+  '/kundreferenser/$slug': typeof KundreferenserSlugRoute
   '/tjanster/$slug': typeof TjansterSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/aktuellt/': typeof AktuelltIndexRoute
@@ -187,12 +204,14 @@ export interface FileRouteTypes {
     | '/faq'
     | '/integritetspolicy'
     | '/kontakt'
+    | '/kundreferenser'
     | '/medarbetare'
     | '/om-oss'
     | '/tjanster'
     | '/admin/$section'
     | '/admin/login'
     | '/aktuellt/$slug'
+    | '/kundreferenser/$slug'
     | '/tjanster/$slug'
     | '/admin/'
     | '/aktuellt/'
@@ -210,6 +229,7 @@ export interface FileRouteTypes {
     | '/admin/$section'
     | '/admin/login'
     | '/aktuellt/$slug'
+    | '/kundreferenser/$slug'
     | '/tjanster/$slug'
     | '/admin'
     | '/aktuellt'
@@ -224,12 +244,14 @@ export interface FileRouteTypes {
     | '/faq'
     | '/integritetspolicy'
     | '/kontakt'
+    | '/kundreferenser'
     | '/medarbetare'
     | '/om-oss'
     | '/tjanster'
     | '/admin/$section'
     | '/admin/login'
     | '/aktuellt/$slug'
+    | '/kundreferenser/$slug'
     | '/tjanster/$slug'
     | '/admin/'
     | '/aktuellt/'
@@ -245,10 +267,10 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
+  KundreferenserRoute: typeof KundreferenserRouteWithChildren
   MedarbetareRoute: typeof MedarbetareRoute
   OmOssRoute: typeof OmOssRoute
   TjansterRoute: typeof TjansterRouteWithChildren
-  KundreferenserIndexRoute: typeof KundreferenserIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -300,6 +322,13 @@ declare module '@tanstack/react-router' {
       path: '/kontakt'
       fullPath: '/kontakt'
       preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kundreferenser': {
+      id: '/kundreferenser'
+      path: '/kundreferenser'
+      fullPath: '/kundreferenser'
+      preLoaderRoute: typeof KundreferenserRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/medarbetare': {
@@ -360,10 +389,17 @@ declare module '@tanstack/react-router' {
     }
     '/kundreferenser/': {
       id: '/kundreferenser/'
-      path: '/kundreferenser'
+      path: '/'
       fullPath: '/kundreferenser/'
       preLoaderRoute: typeof KundreferenserIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof KundreferenserRoute
+    }
+    '/kundreferenser/$slug': {
+      id: '/kundreferenser/$slug'
+      path: '/$slug'
+      fullPath: '/kundreferenser/$slug'
+      preLoaderRoute: typeof KundreferenserSlugRouteImport
+      parentRoute: typeof KundreferenserRoute
     }
     '/tjanster/': {
       id: '/tjanster/'
@@ -410,6 +446,20 @@ const AktuelltRouteWithChildren = AktuelltRoute._addFileChildren(
   AktuelltRouteChildren,
 )
 
+interface KundreferenserRouteChildren {
+  KundreferenserSlugRoute: typeof KundreferenserSlugRoute
+  KundreferenserIndexRoute: typeof KundreferenserIndexRoute
+}
+
+const KundreferenserRouteChildren: KundreferenserRouteChildren = {
+  KundreferenserSlugRoute: KundreferenserSlugRoute,
+  KundreferenserIndexRoute: KundreferenserIndexRoute,
+}
+
+const KundreferenserRouteWithChildren = KundreferenserRoute._addFileChildren(
+  KundreferenserRouteChildren,
+)
+
 interface TjansterRouteChildren {
   TjansterSlugRoute: typeof TjansterSlugRoute
   TjansterIndexRoute: typeof TjansterIndexRoute
@@ -432,10 +482,10 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
+  KundreferenserRoute: KundreferenserRouteWithChildren,
   MedarbetareRoute: MedarbetareRoute,
   OmOssRoute: OmOssRoute,
   TjansterRoute: TjansterRouteWithChildren,
-  KundreferenserIndexRoute: KundreferenserIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
