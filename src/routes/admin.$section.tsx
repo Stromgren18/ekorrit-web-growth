@@ -228,6 +228,30 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           onStang={() => setVisarForhandsvisning(false)}
         />
       ) : null}
+      <AlertDialog open={bekraftaRadering} onOpenChange={setBekraftaRadering}>
+        <AlertDialogContent className="rounded-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Radera "{String(rad[sektion.rubrikNyckel] ?? "posten")}"?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Posten tas bort permanent och försvinner från webbplatsen. Du kan inte ångra
+              raderingen.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-full">Avbryt</AlertDialogCancel>
+            <AlertDialogAction
+              className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => {
+                if (rad.id) void taBort(rad.id);
+              }}
+            >
+              Radera
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       </div>
     );
   }
