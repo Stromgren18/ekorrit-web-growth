@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Admin editors register unsaved state and discard/overview callbacks with the shared AdminNavigationProvider; all category returns and route exits use this guard to prevent silent loss and clear discarded previews.
+- Generated customer-case images are bundled imports in the reference seed data; existing content merging supplies them only when no customer image is set, preserving editorial replacements.
