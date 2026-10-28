@@ -49,6 +49,7 @@ function FaltRad({
   const [fel, setFel] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [attBeskara, setAttBeskara] = useState<File | null>(null);
+  const [raderaAvsnitt, setRaderaAvsnitt] = useState<number | null>(null);
 
   async function ladda(fil: File) {
     setLaddar(true);

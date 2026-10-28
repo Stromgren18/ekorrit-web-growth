@@ -62,6 +62,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   const [original, setOriginal] = useState<Rad | null>(null);
   const [nyRad, setNyRad] = useState(false);
   const [sparar, setSparar] = useState(false);
+  const [bekraftaRadering, setBekraftaRadering] = useState(false);
   const [meddelande, setMeddelande] = useState<string | null>(null);
   const [visarForhandsvisning, setVisarForhandsvisning] = useState(false);
   const [forhandsVersion, setForhandsVersion] = useState(0);
