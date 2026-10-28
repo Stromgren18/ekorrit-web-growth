@@ -213,7 +213,11 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
             Avbryt
           </Button>
           {!nyRad && rad.id ? (
-            <Button variant="ghost" className="rounded-full text-destructive" onClick={() => void taBort(rad.id)}>
+            <Button
+              variant="ghost"
+              className="rounded-full text-destructive"
+              onClick={() => setBekraftaRadering(true)}
+            >
               Radera
             </Button>
           ) : null}

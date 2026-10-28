@@ -313,6 +313,37 @@ function FaltRad({
           >
             <Plus className="size-4" aria-hidden /> Nytt avsnitt
           </Button>
+          <AlertDialog
+            open={raderaAvsnitt !== null}
+            onOpenChange={(oppet) => {
+              if (!oppet) setRaderaAvsnitt(null);
+            }}
+          >
+            <AlertDialogContent className="rounded-2xl">
+              <AlertDialogHeader>
+                <AlertDialogTitle>Ta bort avsnitt {raderaAvsnitt !== null ? raderaAvsnitt + 1 : ""}?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Avsnittet tas bort från formuläret. Innehållet försvinner när du sparar ändringarna.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="rounded-full">Avbryt</AlertDialogCancel>
+                <AlertDialogAction
+                  className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  onClick={() => {
+                    if (raderaAvsnitt !== null) {
+                      const kopia = [...poster];
+                      kopia.splice(raderaAvsnitt, 1);
+                      onAndra(falt.nyckel, kopia);
+                    }
+                    setRaderaAvsnitt(null);
+                  }}
+                >
+                  Ta bort
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       );
     }
