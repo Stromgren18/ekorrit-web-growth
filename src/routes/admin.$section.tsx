@@ -3,6 +3,16 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, Eye, Plus, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { FaltForm } from "@/components/admin/EntityForm";
 import { AdminJsonForm } from "@/components/admin/AdminJsonForms";
@@ -62,6 +72,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   const [original, setOriginal] = useState<Rad | null>(null);
   const [nyRad, setNyRad] = useState(false);
   const [sparar, setSparar] = useState(false);
+  const [bekraftaRadering, setBekraftaRadering] = useState(false);
   const [meddelande, setMeddelande] = useState<string | null>(null);
   const [visarForhandsvisning, setVisarForhandsvisning] = useState(false);
   const [forhandsVersion, setForhandsVersion] = useState(0);
@@ -146,6 +157,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   }
 
   async function taBort(id: string) {
+    setBekraftaRadering(false);
     await taBortRad(sektion, id);
     setRader(await listaRader(sektion));
     setRedigerar(null);
@@ -213,7 +225,11 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
             Avbryt
           </Button>
           {!nyRad && rad.id ? (
-            <Button variant="ghost" className="rounded-full text-destructive" onClick={() => void taBort(rad.id)}>
+            <Button
+              variant="ghost"
+              className="rounded-full text-destructive"
+              onClick={() => setBekraftaRadering(true)}
+            >
               Radera
             </Button>
           ) : null}
@@ -228,6 +244,30 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
           onStang={() => setVisarForhandsvisning(false)}
         />
       ) : null}
+      <AlertDialog open={bekraftaRadering} onOpenChange={setBekraftaRadering}>
+        <AlertDialogContent className="rounded-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Radera "{String(rad[sektion.rubrikNyckel] ?? "posten")}"?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Posten tas bort permanent och försvinner från webbplatsen. Du kan inte ångra
+              raderingen.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-full">Avbryt</AlertDialogCancel>
+            <AlertDialogAction
+              className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => {
+                if (rad.id) void taBort(rad.id);
+              }}
+            >
+              Radera
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       </div>
     );
   }

@@ -15,6 +15,7 @@
 
 ## Adminpanel + förberedd Supabase-koppling
 - [x] Tillbaka, kategoriöversikt och bekräftelse vid osparade ändringar
+- [x] Bekräftelsefråga innan poster och textavsnitt raderas i adminpanelen
 - [x] Dubbelmode för publika sidor (Supabase om kopplat, annars demoläge)
 - [x] Adminpanel: auth, sektioner, tabell- och JSON-redigering, bilduppladdning
 - [x] Fixa formulärs-/layoutbuggar (tomRad, AdminShell, gömma sajmensy på /admin)

@@ -7,6 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -49,6 +59,7 @@ function FaltRad({
   const [fel, setFel] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [attBeskara, setAttBeskara] = useState<File | null>(null);
+  const [raderaAvsnitt, setRaderaAvsnitt] = useState<number | null>(null);
 
   async function ladda(fil: File) {
     setLaddar(true);
@@ -266,11 +277,7 @@ function FaltRad({
                   variant="ghost"
                   size="sm"
                   className="rounded-full text-destructive"
-                  onClick={() => {
-                    const kopia = [...poster];
-                    kopia.splice(i, 1);
-                    onAndra(falt.nyckel, kopia);
-                  }}
+                  onClick={() => setRaderaAvsnitt(i)}
                 >
                   <Trash2 className="size-4" aria-hidden /> Ta bort
                 </Button>
@@ -313,6 +320,37 @@ function FaltRad({
           >
             <Plus className="size-4" aria-hidden /> Nytt avsnitt
           </Button>
+          <AlertDialog
+            open={raderaAvsnitt !== null}
+            onOpenChange={(oppet) => {
+              if (!oppet) setRaderaAvsnitt(null);
+            }}
+          >
+            <AlertDialogContent className="rounded-2xl">
+              <AlertDialogHeader>
+                <AlertDialogTitle>Ta bort avsnitt {raderaAvsnitt !== null ? raderaAvsnitt + 1 : ""}?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Avsnittet tas bort från formuläret. Innehållet försvinner när du sparar ändringarna.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="rounded-full">Avbryt</AlertDialogCancel>
+                <AlertDialogAction
+                  className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  onClick={() => {
+                    if (raderaAvsnitt !== null) {
+                      const kopia = [...poster];
+                      kopia.splice(raderaAvsnitt, 1);
+                      onAndra(falt.nyckel, kopia);
+                    }
+                    setRaderaAvsnitt(null);
+                  }}
+                >
+                  Ta bort
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       );
     }
