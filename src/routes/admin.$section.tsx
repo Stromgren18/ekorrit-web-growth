@@ -3,6 +3,16 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, Eye, Plus, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { FaltForm } from "@/components/admin/EntityForm";
 import { AdminJsonForm } from "@/components/admin/AdminJsonForms";
