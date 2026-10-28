@@ -146,6 +146,7 @@ function TabellVy({ sektion }: { sektion: NonNullable<ReturnType<typeof hittaSek
   }
 
   async function taBort(id: string) {
+    setBekraftaRadering(false);
     await taBortRad(sektion, id);
     setRader(await listaRader(sektion));
     setRedigerar(null);

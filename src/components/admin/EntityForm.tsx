@@ -266,11 +266,7 @@ function FaltRad({
                   variant="ghost"
                   size="sm"
                   className="rounded-full text-destructive"
-                  onClick={() => {
-                    const kopia = [...poster];
-                    kopia.splice(i, 1);
-                    onAndra(falt.nyckel, kopia);
-                  }}
+                  onClick={() => setRaderaAvsnitt(i)}
                 >
                   <Trash2 className="size-4" aria-hidden /> Ta bort
                 </Button>
