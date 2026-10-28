@@ -197,53 +197,72 @@ function Index() {
               {featured.map((ref, i) => (
                 <CarouselItem key={ref.id} className="pl-6 md:basis-1/2 lg:basis-1/3">
                   <figure
-                    className={`flex h-full flex-col rounded-2xl p-7 shadow-sm ${
+                    className={`group flex h-full flex-col overflow-hidden rounded-2xl shadow-sm ${
                       i % 3 === 1
                         ? "bg-card text-card-foreground lg:-translate-y-3 lg:shadow-xl"
                         : "border border-primary-foreground/15 bg-primary-foreground/5"
                     }`}
                   >
-                    <Quote
-                      className={`size-7 ${i % 3 === 1 ? "text-primary" : "text-primary-foreground/60"}`}
-                      aria-hidden
-                    />
-                    <blockquote className="mt-4 flex-1 font-display text-lg leading-relaxed">
-                      ”{ref.quote}”
-                    </blockquote>
-                    <figcaption
-                      className={`mt-6 flex items-center gap-3 border-t pt-4 text-sm ${
-                        i % 3 === 1 ? "border-border/60" : "border-primary-foreground/15"
-                      }`}
-                    >
-                      <span
-                        className={`flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold ${
-                          i % 3 === 1 ? "bg-secondary text-primary" : "bg-primary-foreground/10"
-                        }`}
-                        aria-hidden
-                      >
-                        {ref.client_name
-                          .split(" ")
-                          .map((d) => d[0])
-                          .join("")
-                          .slice(0, 2)}
-                      </span>
-                      <span>
-                        <span className="block font-semibold">{ref.client_name}</span>
-                        <span className={i % 3 === 1 ? "text-muted-foreground" : "text-primary-foreground/70"}>
-                          {ref.company_name}
-                        </span>
-                      </span>
-                    </figcaption>
-                    {ref.challenge ? (
-                      <Link
-                        to="/kundreferenser/$slug"
-                        params={{ slug: caseSlug(ref) }}
-                        className={`mt-4 text-sm font-semibold underline-offset-4 hover:underline ${i % 3 === 1 ? "text-primary" : "text-primary-foreground"}`}
-                      >
-                        Läs hela caset →
-                      </Link>
+                    {ref.image_url ? (
+                      <div className="relative h-44 shrink-0 overflow-hidden sm:h-48">
+                        <img
+                          src={ref.image_url}
+                          alt={`${ref.company_name}${ref.industry ? ` – ${ref.industry}` : ""}`}
+                          loading="lazy"
+                          className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                        />
+                        <div className="case-photo-fade absolute inset-0" aria-hidden />
+                        {ref.industry || ref.location ? (
+                          <span className="absolute bottom-3 left-4 rounded-full bg-background/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">
+                            {[ref.industry, ref.location].filter(Boolean).join(" · ")}
+                          </span>
+                        ) : null}
+                      </div>
                     ) : null}
+                    <div className="flex flex-1 flex-col p-7">
+                      <Quote
+                        className={`size-7 ${i % 3 === 1 ? "text-primary" : "text-primary-foreground/60"}`}
+                        aria-hidden
+                      />
+                      <blockquote className="mt-4 flex-1 font-display text-lg leading-relaxed">
+                        ”{ref.quote}”
+                      </blockquote>
+                      <figcaption
+                        className={`mt-6 flex items-center gap-3 border-t pt-4 text-sm ${
+                          i % 3 === 1 ? "border-border/60" : "border-primary-foreground/15"
+                        }`}
+                      >
+                        <span
+                          className={`flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold ${
+                            i % 3 === 1 ? "bg-secondary text-primary" : "bg-primary-foreground/10"
+                          }`}
+                          aria-hidden
+                        >
+                          {ref.client_name
+                            .split(" ")
+                            .map((d) => d[0])
+                            .join("")
+                            .slice(0, 2)}
+                        </span>
+                        <span>
+                          <span className="block font-semibold">{ref.client_name}</span>
+                          <span className={i % 3 === 1 ? "text-muted-foreground" : "text-primary-foreground/70"}>
+                            {ref.company_name}
+                          </span>
+                        </span>
+                      </figcaption>
+                      {ref.challenge ? (
+                        <Link
+                          to="/kundreferenser/$slug"
+                          params={{ slug: caseSlug(ref) }}
+                          className={`mt-4 text-sm font-semibold underline-offset-4 hover:underline ${i % 3 === 1 ? "text-primary" : "text-primary-foreground"}`}
+                        >
+                          Läs hela caset →
+                        </Link>
+                      ) : null}
+                    </div>
                   </figure>
+
                 </CarouselItem>
               ))}
             </CarouselContent>
