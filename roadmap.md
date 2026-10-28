@@ -1,5 +1,9 @@
 # Ekorrit AB – roadmap
 
+## Kundcasebilder
+- [x] Generera och visa branschanpassade bilder för de tre exempelcasen
+- [x] Kontrollera bilder på översikten och caseundersidorna
+
 ## Innehållsanpassning
 - [x] Uppdatera kärnbudskap och metadata
 - [x] Anpassa tjänster, om oss och gemensamma uppmaningar

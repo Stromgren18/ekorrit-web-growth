@@ -1,3 +1,7 @@
+import byggBild from "@/assets/case-bygg.jpg";
+import akeriBild from "@/assets/case-akeri.jpg";
+import installationBild from "@/assets/case-installation.jpg";
+
 /** Speglar den kommande Supabase-tabellen `kundreferenser`. */
 export type Kundreferens = {
   id: string;
@@ -35,6 +39,7 @@ export const kundreferenser: Kundreferens[] = [
   {
     id: "1",
     slug: "lindgrens-bygg",
+    image_url: byggBild,
     industry: "Bygg & entreprenad",
     location: "Strömsund",
     excerpt: "Exempelcase: Ett växande byggföretag fick ordning på projektredovisning och löner – och ett bollplank inför varje anbud.",
@@ -53,6 +58,7 @@ export const kundreferenser: Kundreferens[] = [
   {
     id: "2",
     slug: "sundins-akeri",
+    image_url: akeriBild,
     industry: "Transport & åkeri",
     location: "Strömsund",
     excerpt: "Exempelcase: Ett familjeåkeri fick snabba svar, koll på likviditeten och ett tryggt bokslut.",
@@ -71,6 +77,7 @@ export const kundreferenser: Kundreferens[] = [
   {
     id: "3",
     slug: "fjallkraft-installation",
+    image_url: installationBild,
     industry: "Installation & service",
     location: "Östersund",
     excerpt: "Exempelcase: Ett installationsföretag använde bokslutet som startpunkt för en tydlig plan framåt.",
