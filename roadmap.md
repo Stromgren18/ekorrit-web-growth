@@ -3,6 +3,8 @@
 ## Kundcasebilder
 - [x] Generera och visa branschanpassade bilder för de tre exempelcasen
 - [x] Kontrollera bilder på översikten och caseundersidorna
+- [x] Visa casebilderna i startsidans referenssektion med bransch- och ortstagg
+
 
 ## Innehållsanpassning
 - [x] Uppdatera kärnbudskap och metadata

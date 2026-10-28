@@ -188,6 +188,20 @@
 }
 
 /*
+ * Mjuk övergång från ett case-foto ner mot kortets text: en låg gradient i
+ * botten av bilden så branschtaggen får kontrast utan hård kant.
+ */
+@utility case-photo-fade {
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--sage-dark) 62%, transparent) 0%,
+    color-mix(in oklab, var(--sage-dark) 24%, transparent) 34%,
+    transparent 70%
+  );
+}
+
+
+/*
  * Mjuk toning under trygghetsbandet i hero: ingen platta och ingen kantlinje,
  * bara en gradient som mörknar snällt nedåt så texten får kontrast mot fjället.
  */
