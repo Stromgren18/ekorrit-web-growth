@@ -11,7 +11,7 @@ export function Footer() {
     <footer className="mt-auto border-t border-border/60 bg-sage-dark text-primary-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-4">
         <div className="md:col-span-1">
-          <Logo className="text-primary-foreground" />
+          <Logo onDark />
           <p className="mt-4 text-sm text-primary-foreground/75">
             Personlig, jämtländsk redovisningsbyrå för företag i hela Sverige. Vi kan ekonomi – räkna med oss.
           </p>
