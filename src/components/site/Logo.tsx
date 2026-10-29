@@ -1,19 +1,32 @@
-export function Logo({ className }: { className?: string }) {
-  return (
-    <span className={`flex items-center gap-2.5 ${className ?? ""}`}>
-      <span
-        aria-hidden
-        className="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground"
-      >
-        <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.6">
-          <path d="M14 3c-3 1-5 3.5-5 6.5 0 1.2.3 2.2.8 3" strokeLinecap="round" />
-          <path d="M9.8 12.5C7.5 13.5 6 15.6 6 18v3h9c3.3 0 6-2.7 6-6 0-2.3-1.3-4.3-3.2-5.3" strokeLinecap="round" />
-          <path d="M13 21c0-3 1.5-5.5 4-7" strokeLinecap="round" />
-        </svg>
-      </span>
-      <span className="font-display text-xl leading-none tracking-tight">
-        Ekorrit <span className="text-muted-foreground">AB</span>
-      </span>
-    </span>
+import logoAsset from "@/assets/ekorrit-logo.png.asset.json";
+
+export function Logo({
+  className,
+  onDark = false,
+}: {
+  className?: string;
+  /** Mörk bakgrund: logotypen får en ljus platta bakom sig så den syns. */
+  onDark?: boolean;
+}) {
+  const img = (
+    <img
+      src={logoAsset.url}
+      alt="Ekorrit AB – ekonomi & rådgivning"
+      width={279}
+      height={113}
+      className={onDark ? "h-8 w-auto" : "h-9 w-auto"}
+    />
   );
+
+  if (onDark) {
+    return (
+      <span
+        className={`inline-flex items-center rounded-2xl bg-background px-3.5 py-2.5 ${className ?? ""}`}
+      >
+        {img}
+      </span>
+    );
+  }
+
+  return <span className={`inline-flex items-center ${className ?? ""}`}>{img}</span>;
 }
