@@ -17,7 +17,6 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
-import { Route as LayoutCheckRouteImport } from './routes/layout-check'
 import { Route as MedarbetareRouteImport } from './routes/medarbetare'
 import { Route as OmOssRouteImport } from './routes/om-oss'
 import { Route as TjansterRouteImport } from './routes/tjanster'
@@ -69,11 +68,6 @@ const KontaktRoute = KontaktRouteImport.update({
 const KundreferenserRoute = KundreferenserRouteImport.update({
   id: '/kundreferenser',
   path: '/kundreferenser',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LayoutCheckRoute = LayoutCheckRouteImport.update({
-  id: '/layout-check',
-  path: '/layout-check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MedarbetareRoute = MedarbetareRouteImport.update({
@@ -146,7 +140,6 @@ export interface FileRoutesByFullPath {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRouteWithChildren
-  '/layout-check': typeof LayoutCheckRoute
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
@@ -166,7 +159,6 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
-  '/layout-check': typeof LayoutCheckRoute
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/admin/$section': typeof AdminSectionRoute
@@ -189,7 +181,6 @@ export interface FileRoutesById {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/kundreferenser': typeof KundreferenserRouteWithChildren
-  '/layout-check': typeof LayoutCheckRoute
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
   '/tjanster': typeof TjansterRouteWithChildren
@@ -214,7 +205,6 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
-    | '/layout-check'
     | '/medarbetare'
     | '/om-oss'
     | '/tjanster'
@@ -234,7 +224,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/integritetspolicy'
     | '/kontakt'
-    | '/layout-check'
     | '/medarbetare'
     | '/om-oss'
     | '/admin/$section'
@@ -256,7 +245,6 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/kundreferenser'
-    | '/layout-check'
     | '/medarbetare'
     | '/om-oss'
     | '/tjanster'
@@ -280,7 +268,6 @@ export interface RootRouteChildren {
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   KundreferenserRoute: typeof KundreferenserRouteWithChildren
-  LayoutCheckRoute: typeof LayoutCheckRoute
   MedarbetareRoute: typeof MedarbetareRoute
   OmOssRoute: typeof OmOssRoute
   TjansterRoute: typeof TjansterRouteWithChildren
@@ -342,13 +329,6 @@ declare module '@tanstack/react-router' {
       path: '/kundreferenser'
       fullPath: '/kundreferenser'
       preLoaderRoute: typeof KundreferenserRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/layout-check': {
-      id: '/layout-check'
-      path: '/layout-check'
-      fullPath: '/layout-check'
-      preLoaderRoute: typeof LayoutCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/medarbetare': {
@@ -503,7 +483,6 @@ const rootRouteChildren: RootRouteChildren = {
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   KundreferenserRoute: KundreferenserRouteWithChildren,
-  LayoutCheckRoute: LayoutCheckRoute,
   MedarbetareRoute: MedarbetareRoute,
   OmOssRoute: OmOssRoute,
   TjansterRoute: TjansterRouteWithChildren,
