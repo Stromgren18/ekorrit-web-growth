@@ -23,10 +23,10 @@ export function AdminShell({ children }: { children?: ReactNode }) {
   };
   return (
     <div className="flex min-h-screen bg-muted/40">
-      <aside className="hidden w-64 shrink-0 flex-col border-r border-border bg-card p-4 md:flex">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-y-auto border-r border-border bg-card p-4 md:flex">
         <Logo className="scale-90 origin-left" />
         <p className="mt-1 px-3 text-xs text-muted-foreground">Adminpanel</p>
-        <nav aria-label="Admin-sektioner" className="mt-6 flex flex-1 flex-col gap-1">
+        <nav aria-label="Admin-sektioner" className="mt-6 flex flex-col gap-1">
           {SEKTIONER.map((s) => (
             <Link
               key={s.nyckel}
