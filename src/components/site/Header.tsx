@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Lock, Mail, Menu, Phone } from "lucide-react";
 import { useState } from "react";
 
-import { Logo } from "./Logo";
+import logoAsset from "@/assets/ekorrit-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { navigation } from "@/content/site";
@@ -54,8 +54,14 @@ export function Header() {
       </div>
 
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3.5">
-        <Link to="/" aria-label="Ekorrit AB – till startsidan">
-          <Logo />
+        <Link to="/" aria-label="Ekorrit AB – till startsidan" className="shrink-0">
+          <img
+            src={logoAsset.url}
+            alt="Ekorrit – ekonomi & rådgivning"
+            width={279}
+            height={113}
+            className="h-11 w-auto sm:h-12"
+          />
         </Link>
 
         <nav aria-label="Huvudmeny" className="ml-auto hidden items-center gap-1 xl:flex">
