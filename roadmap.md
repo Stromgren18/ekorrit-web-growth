@@ -1,5 +1,9 @@
 # Ekorrit AB – roadmap
 
+## Förenklad navigering
+- [ ] Samla sidhuvudets länkar med dropdownmenyer och utfällbara grupper på mobil
+- [ ] Kontrollera menyval, sidbyten och mobilutseende
+
 ## Kundcasebilder
 - [x] Generera och visa branschanpassade bilder för de tre exempelcasen
 - [x] Kontrollera bilder på översikten och caseundersidorna
