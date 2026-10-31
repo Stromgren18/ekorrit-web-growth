@@ -16,6 +16,7 @@ import { ArtikelCard, CtaSection, SectionHeading, TrustBand } from "@/components
 import { aktuelltQuery } from "@/lib/content/aktuellt";
 import { kundreferenserQuery } from "@/lib/content/kundreferenser";
 import { caseSlug } from "@/content/kundreferenser";
+import { medarbetareQuery } from "@/lib/content/medarbetare";
 import { tjansterQuery } from "@/lib/content/tjanster";
 import { useSida } from "@/lib/content/sidor";
 import { siteQuery } from "@/lib/content/site";
@@ -182,6 +183,8 @@ function Index() {
         </div>
       </section>
 
+      <TeamSection />
+
       <section className="section-y bg-sage-dark text-primary-foreground">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
@@ -299,5 +302,59 @@ function Index() {
 
       <CtaSection />
     </>
+  );
+}
+
+function TeamSection() {
+  const { data } = useSuspenseQuery(medarbetareQuery());
+  const team = (data ?? []).filter((m) => m.is_visible);
+  if (team.length === 0) return null;
+  return (
+    <section className="section-y bg-secondary/40">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="max-w-2xl">
+          <h2 className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
+            Möt personerna bakom siffrorna
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Hos oss får du en personlig kontakt som känner ditt företag – på plats i Strömsund
+            och Östersund.
+          </p>
+        </div>
+        <Carousel className="mt-10" opts={{ align: "start", loop: team.length > 4 }}>
+          <CarouselContent className="-ml-5">
+            {team.map((m) => (
+              <CarouselItem key={m.id} className="basis-[70%] pl-5 sm:basis-1/3 lg:basis-1/4">
+                <Link to="/medarbetare" className="group block">
+                  <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-muted">
+                    {m.image_url && (
+                      <img
+                        src={m.image_url}
+                        alt={`Porträtt av ${m.name}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
+                  </div>
+                  <p className="mt-4 font-semibold text-foreground">{m.name}</p>
+                  <p className="text-sm text-muted-foreground">{m.role}</p>
+                </Link>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="mt-6 hidden justify-end gap-2 sm:flex">
+            <CarouselPrevious className="static translate-y-0" />
+            <CarouselNext className="static translate-y-0" />
+          </div>
+        </Carousel>
+        <div className="mt-10 text-center">
+          <Button asChild className="rounded-full">
+            <Link to="/medarbetare">
+              Lär känna hela teamet <ArrowRight className="ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </section>
   );
 }
