@@ -50,3 +50,24 @@ export const navigation = [
   { label: "Dokument", to: "/dokument" },
   { label: "Kontakt", to: "/kontakt" },
 ] as const;
+
+export const headerNavigation = [
+  { label: "Hem", to: "/" },
+  { label: "Tjänster", to: "/tjanster" },
+  {
+    label: "Om oss",
+    children: [
+      { label: "Om Ekorrit", to: "/om-oss" },
+      { label: "Medarbetare", to: "/medarbetare" },
+    ],
+  },
+  { label: "Våra kunder", to: "/kundreferenser" },
+  {
+    label: "Kunskap & inspiration",
+    children: [
+      { label: "Aktuellt", to: "/aktuellt" },
+      { label: "Frågor & svar", to: "/faq" },
+      { label: "Dokument", to: "/dokument" },
+    ],
+  },
+] as const;
