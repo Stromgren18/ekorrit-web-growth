@@ -19,6 +19,7 @@ import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
 import { Route as MedarbetareRouteImport } from './routes/medarbetare'
 import { Route as OmOssRouteImport } from './routes/om-oss'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TjansterRouteImport } from './routes/tjanster'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminSectionRouteImport } from './routes/admin.$section'
@@ -78,6 +79,11 @@ const MedarbetareRoute = MedarbetareRouteImport.update({
 const OmOssRoute = OmOssRouteImport.update({
   id: '/om-oss',
   path: '/om-oss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TjansterRoute = TjansterRouteImport.update({
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/kontakt': typeof KontaktRoute
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
   '/aktuellt/$slug': typeof AktuelltSlugRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
@@ -207,6 +216,7 @@ export interface FileRouteTypes {
     | '/kundreferenser'
     | '/medarbetare'
     | '/om-oss'
+    | '/sitemap.xml'
     | '/tjanster'
     | '/admin/$section'
     | '/admin/login'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/medarbetare'
     | '/om-oss'
+    | '/sitemap.xml'
     | '/admin/$section'
     | '/admin/login'
     | '/aktuellt/$slug'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/kundreferenser'
     | '/medarbetare'
     | '/om-oss'
+    | '/sitemap.xml'
     | '/tjanster'
     | '/admin/$section'
     | '/admin/login'
@@ -270,6 +282,7 @@ export interface RootRouteChildren {
   KundreferenserRoute: typeof KundreferenserRouteWithChildren
   MedarbetareRoute: typeof MedarbetareRoute
   OmOssRoute: typeof OmOssRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TjansterRoute: typeof TjansterRouteWithChildren
 }
 
@@ -343,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/om-oss'
       fullPath: '/om-oss'
       preLoaderRoute: typeof OmOssRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tjanster': {
@@ -485,6 +505,7 @@ const rootRouteChildren: RootRouteChildren = {
   KundreferenserRoute: KundreferenserRouteWithChildren,
   MedarbetareRoute: MedarbetareRoute,
   OmOssRoute: OmOssRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TjansterRoute: TjansterRouteWithChildren,
 }
 export const routeTree = rootRouteImport

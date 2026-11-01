@@ -7,7 +7,7 @@ import { CtaSection } from "@/components/site/Sections";
 import { kundreferenserQuery } from "@/lib/content/kundreferenser";
 import { caseSlug } from "@/content/kundreferenser";
 
-const BAS = "https://ekorrit.lovable.app/kundreferenser";
+const BAS = "https://ekorrit.frilansnorr.se/kundreferenser";
 
 const TJANST_LANK: Record<string, string> = {
   Bokföring: "bokforing",

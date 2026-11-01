@@ -43,10 +43,10 @@ export const Route = createFileRoute("/")({
         { property: "og:title", content: TITLE },
         { property: "og:description", content: DESCRIPTION },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: "/" },
+        { property: "og:url", content: "https://ekorrit.frilansnorr.se/" },
         { name: "twitter:card", content: "summary_large_image" },
       ],
-      links: [{ rel: "canonical", href: "/" }],
+      links: [{ rel: "canonical", href: "https://ekorrit.frilansnorr.se/" }],
       scripts: [
         {
           type: "application/ld+json",

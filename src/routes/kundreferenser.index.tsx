@@ -10,7 +10,7 @@ import { useSida } from "@/lib/content/sidor";
 import { SIDOR, type HeroSida } from "@/content/sidor";
 
 const KR_FALLBACK = SIDOR["kundreferenser"] as unknown as HeroSida;
-const URL = "https://ekorrit.lovable.app/kundreferenser";
+const URL = "https://ekorrit.frilansnorr.se/kundreferenser";
 const TITLE = "Kundcase & referenser – redovisning i Jämtland | Ekorrit AB";
 const DESCRIPTION =
   "Se hur Ekorrit AB hjälper företag i Strömsund, Östersund och Jämtland med bokföring, löner, bokslut och rådgivning.";

@@ -30,10 +30,10 @@ export const Route = createFileRoute("/faq")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/faq" },
+      { property: "og:url", content: "https://ekorrit.frilansnorr.se/faq" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/faq" }],
+    links: [{ rel: "canonical", href: "https://ekorrit.frilansnorr.se/faq" }],
   }),
   component: FaqPage,
 });

@@ -23,10 +23,10 @@ export const Route = createFileRoute("/aktuellt/")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/aktuellt" },
+      { property: "og:url", content: "https://ekorrit.frilansnorr.se/aktuellt" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/aktuellt" }],
+    links: [{ rel: "canonical", href: "https://ekorrit.frilansnorr.se/aktuellt" }],
   }),
   component: AktuelltPage,
 });

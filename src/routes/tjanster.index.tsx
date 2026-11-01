@@ -23,10 +23,10 @@ export const Route = createFileRoute("/tjanster/")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/tjanster" },
+      { property: "og:url", content: "https://ekorrit.frilansnorr.se/tjanster" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/tjanster" }],
+    links: [{ rel: "canonical", href: "https://ekorrit.frilansnorr.se/tjanster" }],
   }),
   component: TjansterPage,
 });

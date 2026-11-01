@@ -29,10 +29,10 @@ export const Route = createFileRoute("/aktuellt/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: artikel.excerpt },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: `/aktuellt/${params.slug}` },
+        { property: "og:url", content: `https://ekorrit.frilansnorr.se/aktuellt/${params.slug}` },
         { name: "twitter:card", content: "summary_large_image" },
       ],
-      links: [{ rel: "canonical", href: `/aktuellt/${params.slug}` }],
+      links: [{ rel: "canonical", href: `https://ekorrit.frilansnorr.se/aktuellt/${params.slug}` }],
       scripts: [
         {
           type: "application/ld+json",
