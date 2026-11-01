@@ -27,10 +27,10 @@ export const Route = createFileRoute("/tjanster/$slug")({
         { property: "og:title", content: tjanst.meta_title },
         { property: "og:description", content: tjanst.meta_description },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: `/tjanster/${params.slug}` },
+        { property: "og:url", content: `https://ekorrit.frilansnorr.se/tjanster/${params.slug}` },
         { name: "twitter:card", content: "summary_large_image" },
       ],
-      links: [{ rel: "canonical", href: `/tjanster/${params.slug}` }],
+      links: [{ rel: "canonical", href: `https://ekorrit.frilansnorr.se/tjanster/${params.slug}` }],
       scripts: [
         {
           type: "application/ld+json",

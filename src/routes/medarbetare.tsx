@@ -22,7 +22,7 @@ export const Route = createFileRoute("/medarbetare")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/medarbetare" }],
+    links: [{ rel: "canonical", href: "https://ekorrit.frilansnorr.se/medarbetare" }],
   }),
   component: MedarbetarePage,
 });

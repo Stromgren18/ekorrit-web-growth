@@ -21,10 +21,10 @@ export const Route = createFileRoute("/dokument")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/dokument" },
+      { property: "og:url", content: "https://ekorrit.frilansnorr.se/dokument" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/dokument" }],
+    links: [{ rel: "canonical", href: "https://ekorrit.frilansnorr.se/dokument" }],
   }),
   component: DokumentPage,
 });
