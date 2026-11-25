@@ -19,8 +19,6 @@ import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KundreferenserRouteImport } from './routes/kundreferenser'
 import { Route as MedarbetareRouteImport } from './routes/medarbetare'
 import { Route as OmOssRouteImport } from './routes/om-oss'
-import { Route as RedovisningsbyraOstersundRouteImport } from './routes/redovisningsbyra-ostersund'
-import { Route as RedovisningsbyraStromsundRouteImport } from './routes/redovisningsbyra-stromsund'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TjansterRouteImport } from './routes/tjanster'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -83,18 +81,6 @@ const OmOssRoute = OmOssRouteImport.update({
   path: '/om-oss',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RedovisningsbyraOstersundRoute =
-  RedovisningsbyraOstersundRouteImport.update({
-    id: '/redovisningsbyra-ostersund',
-    path: '/redovisningsbyra-ostersund',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RedovisningsbyraStromsundRoute =
-  RedovisningsbyraStromsundRouteImport.update({
-    id: '/redovisningsbyra-stromsund',
-    path: '/redovisningsbyra-stromsund',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -162,8 +148,6 @@ export interface FileRoutesByFullPath {
   '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
-  '/redovisningsbyra-ostersund': typeof RedovisningsbyraOstersundRoute
-  '/redovisningsbyra-stromsund': typeof RedovisningsbyraStromsundRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
@@ -184,8 +168,6 @@ export interface FileRoutesByTo {
   '/kontakt': typeof KontaktRoute
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
-  '/redovisningsbyra-ostersund': typeof RedovisningsbyraOstersundRoute
-  '/redovisningsbyra-stromsund': typeof RedovisningsbyraStromsundRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/$section': typeof AdminSectionRoute
   '/admin/login': typeof AdminLoginRoute
@@ -209,8 +191,6 @@ export interface FileRoutesById {
   '/kundreferenser': typeof KundreferenserRouteWithChildren
   '/medarbetare': typeof MedarbetareRoute
   '/om-oss': typeof OmOssRoute
-  '/redovisningsbyra-ostersund': typeof RedovisningsbyraOstersundRoute
-  '/redovisningsbyra-stromsund': typeof RedovisningsbyraStromsundRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tjanster': typeof TjansterRouteWithChildren
   '/admin/$section': typeof AdminSectionRoute
@@ -236,8 +216,6 @@ export interface FileRouteTypes {
     | '/kundreferenser'
     | '/medarbetare'
     | '/om-oss'
-    | '/redovisningsbyra-ostersund'
-    | '/redovisningsbyra-stromsund'
     | '/sitemap.xml'
     | '/tjanster'
     | '/admin/$section'
@@ -258,8 +236,6 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/medarbetare'
     | '/om-oss'
-    | '/redovisningsbyra-ostersund'
-    | '/redovisningsbyra-stromsund'
     | '/sitemap.xml'
     | '/admin/$section'
     | '/admin/login'
@@ -282,8 +258,6 @@ export interface FileRouteTypes {
     | '/kundreferenser'
     | '/medarbetare'
     | '/om-oss'
-    | '/redovisningsbyra-ostersund'
-    | '/redovisningsbyra-stromsund'
     | '/sitemap.xml'
     | '/tjanster'
     | '/admin/$section'
@@ -308,8 +282,6 @@ export interface RootRouteChildren {
   KundreferenserRoute: typeof KundreferenserRouteWithChildren
   MedarbetareRoute: typeof MedarbetareRoute
   OmOssRoute: typeof OmOssRoute
-  RedovisningsbyraOstersundRoute: typeof RedovisningsbyraOstersundRoute
-  RedovisningsbyraStromsundRoute: typeof RedovisningsbyraStromsundRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TjansterRoute: typeof TjansterRouteWithChildren
 }
@@ -384,20 +356,6 @@ declare module '@tanstack/react-router' {
       path: '/om-oss'
       fullPath: '/om-oss'
       preLoaderRoute: typeof OmOssRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/redovisningsbyra-ostersund': {
-      id: '/redovisningsbyra-ostersund'
-      path: '/redovisningsbyra-ostersund'
-      fullPath: '/redovisningsbyra-ostersund'
-      preLoaderRoute: typeof RedovisningsbyraOstersundRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/redovisningsbyra-stromsund': {
-      id: '/redovisningsbyra-stromsund'
-      path: '/redovisningsbyra-stromsund'
-      fullPath: '/redovisningsbyra-stromsund'
-      preLoaderRoute: typeof RedovisningsbyraStromsundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -547,8 +505,6 @@ const rootRouteChildren: RootRouteChildren = {
   KundreferenserRoute: KundreferenserRouteWithChildren,
   MedarbetareRoute: MedarbetareRoute,
   OmOssRoute: OmOssRoute,
-  RedovisningsbyraOstersundRoute: RedovisningsbyraOstersundRoute,
-  RedovisningsbyraStromsundRoute: RedovisningsbyraStromsundRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TjansterRoute: TjansterRouteWithChildren,
 }

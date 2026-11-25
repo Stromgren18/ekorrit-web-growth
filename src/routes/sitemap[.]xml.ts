@@ -8,7 +8,6 @@ const BASE = "https://ekorrit.frilansnorr.se";
 const statiska = [
   "/", "/tjanster", "/om-oss", "/medarbetare", "/kundreferenser",
   "/faq", "/aktuellt", "/dokument", "/kontakt", "/integritetspolicy",
-  "/redovisningsbyra-stromsund", "/redovisningsbyra-ostersund",
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({
