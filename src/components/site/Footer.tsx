@@ -40,6 +40,14 @@ export function Footer() {
         {site.offices.map((office) => (
           <div key={office.id}>
             <h2 className="font-display text-base">{office.city}</h2>
+            {(office.id === "stromsund" || office.id === "ostersund") && (
+              <Link
+                to={office.id === "stromsund" ? "/redovisningsbyra-stromsund" : "/redovisningsbyra-ostersund"}
+                className="mt-2 inline-block text-sm text-primary-foreground/75 underline underline-offset-4 hover:text-primary-foreground"
+              >
+                Redovisningsbyrå i {office.city}
+              </Link>
+            )}
             <p className="mt-1 text-xs text-primary-foreground/60">{office.role}</p>
             <address className="mt-3 space-y-1 text-sm not-italic text-primary-foreground/75">
               <p>{office.street}</p>

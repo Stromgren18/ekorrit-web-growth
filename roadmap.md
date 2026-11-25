@@ -1,5 +1,10 @@
 # Ekorrit AB – roadmap
 
+## Lokala landningssidor
+- [x] Skapa separata sidor för Strömsund och Östersund med lokala texter och kontaktvägar
+- [x] Ge varje sida unik metadata och länka från sidfoten
+- [x] Kontrollera sidor och kontaktlänkar på mobil och dator
+
 ## Förenklad navigering
 - [x] Samla sidhuvudets länkar med dropdownmenyer och utfällbara grupper på mobil
 - [x] Kontrollera menyval, sidbyten och mobilutseende
