@@ -3,6 +3,7 @@ import { Facebook, Instagram } from "lucide-react";
 
 import { Logo } from "./Logo";
 import { navigation } from "@/content/site";
+import { localPages } from "@/content/local-pages";
 import { useSite } from "@/lib/content/site";
 
 export function Footer() {
@@ -39,7 +40,13 @@ export function Footer() {
 
         {site.offices.map((office) => (
           <div key={office.id}>
-            <h2 className="font-display text-base">{office.city}</h2>
+            <h2 className="font-display text-base">
+              {office.city === "Strömsund" || office.city === "Östersund" ? (
+                <Link to={office.city === "Strömsund" ? localPages.stromsund.path : localPages.ostersund.path} className="hover:underline">
+                  {office.city}
+                </Link>
+              ) : office.city}
+            </h2>
             <p className="mt-1 text-xs text-primary-foreground/60">{office.role}</p>
             <address className="mt-3 space-y-1 text-sm not-italic text-primary-foreground/75">
               <p>{office.street}</p>
